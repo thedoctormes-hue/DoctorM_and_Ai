@@ -1,0 +1,36 @@
+#!/bin/bash
+# Pre-push hook: secret scan перед каждым push
+# Установка: git config core.hooksPath .githooks
+
+echo "🔍 Проверка на секреты перед push..."
+
+# Паттерны для поиска
+PATTERNS=(
+    'ghp_[A-Za-z0-9]{36}'                    # GitHub PAT
+    '[0-9]{9,10}:[A-Za-z0-9_-]{35}'          # Telegram bot token
+    'password\s*=\s*["\x27][^"\x27]+["\x27]' # password = "..."
+    'api_key\s*=\s*["\x27][^"\x27]+["\x27]'  # api_key = "..."
+    'secret\s*=\s*["\x27][^"\x27]+["\x27]'   # secret = "..."
+    'token\s*=\s*["\x27][^"\x27]+["\x27]'    # token = "..."
+)
+
+FOUND=0
+for pattern in "${PATTERNS[@]}"; do
+    MATCHES=$(git diff --cached --name-only | xargs grep -lE "$pattern" 2>/dev/null | grep -v '.env.example' | grep -v 'node_modules' | grep -v 'venv')
+    if [ -n "$MATCHES" ]; then
+        echo "❌ НАЙДЕНЫ СЕКРЕТЫ в файлах:"
+        echo "$MATCHES"
+        FOUND=1
+    fi
+done
+
+if [ "$FOUND" -eq 1 ]; then
+    echo ""
+    echo "🔴 PUSH ЗАБЛОКИРОН!"
+    echo "Удалите секреты из файлов и используйте .env"
+    echo "Подробнее: rules/RUL-001-no-tokens-in-git.md"
+    exit 1
+fi
+
+echo "✅ Секретов не обнаружено"
+exit 0

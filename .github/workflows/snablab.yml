@@ -1,0 +1,130 @@
+name: СнабЛаб CI/CD
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'projects/snablab/**'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'projects/snablab/**'
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '20'
+
+jobs:
+  # ===== Backend: lint + test =====
+  backend:
+    name: Backend — lint & test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: snablab_test
+          POSTGRES_USER: snablab
+          POSTGRES_PASSWORD: snablab
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: projects/snablab/backend/requirements.txt
+
+      - name: Install dependencies
+        working-directory: projects/snablab/backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff pytest pytest-asyncio httpx
+
+      - name: Lint (ruff)
+        working-directory: projects/snablab/backend
+        run: ruff check app/ --output-format=github
+
+      - name: Run tests
+        working-directory: projects/snablab/backend
+        env:
+          DATABASE_URL: postgresql+asyncpg://snablab:snablab@localhost:5432/snablab_test
+        run: |
+          cd /root/LabDoctorM/projects/snablab/backend || true
+          python -m pytest tests/ -v --tb=short 2>&1 | tail -30
+
+  # ===== Frontend: lint + build =====
+  frontend:
+    name: Frontend — lint & build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: projects/snablab/frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: projects/snablab/frontend
+        run: npm ci
+
+      - name: Type check (tsc)
+        working-directory: projects/snablab/frontend
+        run: npx tsc --noEmit
+
+      - name: Build
+        working-directory: projects/snablab/frontend
+        run: npm run build
+
+  # ===== Deploy to production =====
+  deploy:
+    name: Deploy → production
+    needs: [backend, frontend]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+            echo "=== Deploying СнабЛаб ==="
+
+            # Backend
+            cd /root/LabDoctorM/projects/snablab
+            git pull origin main
+            source /root/LabDoctorM/venv/bin/activate
+            pip install -r backend/requirements.txt --quiet
+            systemctl restart snablab
+            sleep 2
+            curl -sf http://localhost:8001/health || exit 1
+            echo "✅ Backend deployed"
+
+            # Frontend
+            cd /root/LabDoctorM/projects/snablab/frontend
+            npm ci --silent
+            npm run build 2>&1 | tail -3
+            cp -r dist/* /var/www/snablab/
+            echo "✅ Frontend deployed"
+
+            echo "=== Deploy complete ==="

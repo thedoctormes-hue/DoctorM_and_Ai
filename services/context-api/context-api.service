@@ -1,0 +1,29 @@
+[Unit]
+Description=LabDoctorM Context API v1.2.0
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/LabDoctorM/services/context-api
+EnvironmentFile=/etc/context-api.env
+ExecStart=/usr/bin/python3 -m uvicorn main:app --host 127.0.0.1 --port 8100
+Restart=on-failure
+RestartSec=5
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+# Логирование
+StandardOutput=append:/var/log/context-api.log
+StandardError=append:/var/log/context-api.error.log
+
+# Безопасность
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/log
+
+# Ресурсы
+MemoryMax=128M
+CPUQuota=50%
+
+[Install]
+WantedBy=multi-user.target

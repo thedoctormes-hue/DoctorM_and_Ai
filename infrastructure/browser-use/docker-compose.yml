@@ -1,0 +1,19 @@
+
+services:
+  browser-use:
+    image: browseruse/browser-use:latest
+    container_name: browser-use
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+    volumes:
+      - /root/LabDoctorM/infrastructure/browser-use/data:/app/data
+      - /root/LabDoctorM/infrastructure/browser-use/profiles:/app/profiles
+    networks:
+      - automation_net
+
+networks:
+  automation_net:
+    driver: bridge

@@ -1,0 +1,282 @@
+name: 🛡️ Git Guardian Enforce (server-side)
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # ─── 1. Блокировка прямых push в main ─────────────────────────────
+  block-direct-push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - name: ❌ Block direct push to main
+        run: |
+          echo "::error::ПРЯМОЙ PUSH В MAIN ЗАПРЕЩЁН!"
+          echo "::error::Работай в feature-ветке и делай Pull Request."
+          echo "::error::Только Муравей (тимлид) или ЗавЛаб мержат в main."
+          exit 1
+
+  # ─── 2. Проверка Conventional Commits ──────────────────────────────
+  check-conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        run: |
+          VALID_TYPES="feat|fix|test|docs|refactor|chore|perf|ci|build|revert"
+          FORBIDDEN_WORDS="snapshot|checkpoint|wip|WIP|forget|temp|tmp"
+
+          # Получаем коммиты для проверки
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            COMMITS=$(git log --format="%s" ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+          else
+            COMMITS=$(git log --format="%s" -10)
+          fi
+
+          ERRORS=0
+          while IFS= read -r subject; do
+            [ -z "$subject" ] && continue
+
+            # Пропускаем merge-commits
+            echo "$subject" | grep -qE "^Merge " && continue
+
+            # Проверка формата
+            if ! echo "$subject" | grep -qE "^(${VALID_TYPES})\([^)]+\)!?: .+"; then
+              echo "::error::Неверный формат: ${subject}"
+              echo "::error::Ожидается: <type>(<scope>): <описание>"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # Проверка длины
+            if [ ${#subject} -gt 72 ]; then
+              echo "::error::Слишком длинное сообщение (${#subject} > 72): ${subject}"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # Проверка запрещённых слов
+            if echo "$subject" | grep -qiE "(${FORBIDDEN_WORDS})"; then
+              echo "::error::Запрещённое слово: ${subject}"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # Проверка точки в конце
+            if echo "$subject" | grep -qE '\.$'; then
+              echo "::error::Точка в конце: ${subject}"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done <<< "$COMMITS"
+
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::Найдено ${ERRORS} ошибок в сообщениях коммитов"
+            exit 1
+          fi
+          echo "✅ Все сообщения коммитов соответствуют Conventional Commits"
+
+  # ─── 3. Проверка размера коммитов ──────────────────────────────────
+  check-commit-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Check commit size limits
+        run: |
+          MAX_FILES=30
+          MAX_LINES=500
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+            HEAD="${{ github.sha }}"
+          fi
+
+          # Проверяем каждый коммит
+          COMMITS=$(git rev-list ${BASE}..${HEAD} 2>/dev/null || git rev-list HEAD~5..HEAD)
+          ERRORS=0
+
+          for commit in $COMMITS; do
+            FILES=$(git diff-tree --no-commit-id --name-only -r $commit | wc -l)
+            LINES=$(git diff-tree --no-commit-id -r $commit --stat 2>/dev/null | tail -1 | grep -oE '[0-9]+' | head -1)
+            LINES=${LINES:-0}
+
+            if [ "$FILES" -gt "$MAX_FILES" ]; then
+              MSG=$(git log --format="%s" -1 $commit)
+              echo "::error::Коммит ${commit:0:7}: ${FILES} файлов (лимит ${MAX_FILES}) — ${MSG}"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            if [ "$LINES" -gt "$MAX_LINES" ]; then
+              MSG=$(git log --format="%s" -1 $commit)
+              echo "::error::Коммит ${commit:0:7}: ~${LINES} строк (лимит ${MAX_LINES}) — ${MSG}"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::Найдено ${ERRORS} коммитов с превышением лимитов"
+            exit 1
+          fi
+          echo "✅ Все коммиты в пределах лимитов"
+
+  # ─── 4. Проверка запрещённых файлов ───────────────────────────────
+  check-forbidden-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Check for forbidden config files
+        run: |
+          FORBIDDEN_PATTERNS=(
+            'config\.yaml$'
+            'config\.yml$'
+            'config\.json$'
+            '\.env$'
+            '\.env\.local$'
+            '\.env\.production$'
+            'secrets\.yaml$'
+            'secrets\.yml$'
+            'credentials\.json$'
+            'credentials\.yaml$'
+            '\.env\.dev$'
+            '\.env\.staging$'
+            '\.env\.test$'
+            '.*_secret\.*'
+            '.*\.secret\.*'
+            '.*\.key$'
+            '.*\.pem$'
+            '.*\.p12$'
+            '.*\.pfx$'
+          )
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+          else
+            FILES=$(git diff --name-only HEAD~1..HEAD)
+          fi
+
+          ERRORS=0
+          for pattern in "${FORBIDDEN_PATTERNS[@]}"; do
+            FOUND=$(echo "$FILES" | grep -E "$pattern" || true)
+            if [ -n "$FOUND" ]; then
+              echo "::error::Запрещённый файл найден (pattern: ${pattern}):"
+              echo "$FOUND" | while IFS= read -r f; do echo "::error::  ${f}"; done
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::Найдено запрещённых файлов: ${ERRORS}"
+            exit 1
+          fi
+          echo "✅ Запрещённые файлы не обнаружены"
+
+  # ─── 5. Проверка секретов (усиленная) ─────────────────────────────
+  check-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Scan for secrets in changed files
+        run: |
+          SECRET_PATTERNS=(
+            'password\s*[:=]\s*["\x27][^"\x27]{3,}["\x27]'
+            'token\s*[:=]\s*["\x27][^"\x27]{3,}["\x27]'
+            'api[_-]?key\s*[:=]\s*["\x27][^"\x27]{3,}["\x27]'
+            'secret\s*[:=]\s*["\x27][^"\x27]{3,}["\x27]'
+            'BEGIN\s+(RSA|DSA|EC|OPENSSH)\s+PRIVATE\s+KEY'
+            'ghp_[a-zA-Z0-9]{36}'
+            'gho_[a-zA-Z0-9]{36}'
+            'xoxb-[a-zA-Z0-9-]+'
+            'sk-[a-zA-Z0-9]{48}'
+            'AKIA[0-9A-Z]{16}'
+            'connection[_-]?string\s*[:=]\s*["\x27]'
+            'DATABASE_URL\s*[:=]\s*["\x27]'
+            'postgres://[^:]+:[^@]+@'
+            'mysql://[^:]+:[^@]+@'
+            'redis://:[^@]+@'
+            'mongodb(\+srv)?://[^:]+:[^@]+@'
+          )
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            FILES=$(git diff --name-only --diff-filter=ACM ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+          else
+            FILES=$(git diff --name-only --diff-filter=ACM HEAD~1..HEAD)
+          fi
+
+          # Исключаем .md файлы
+          FILES=$(echo "$FILES" | grep -v '\.md$' || true)
+
+          ERRORS=0
+          for file in $FILES; do
+            [ ! -f "$file" ] && continue
+            for pattern in "${SECRET_PATTERNS[@]}"; do
+              if grep -qiP "$pattern" "$file" 2>/dev/null; then
+                echo "::error::Секрет в ${file}: паттерн ${pattern}"
+                ERRORS=$((ERRORS + 1))
+                break
+              fi
+            done
+          done
+
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::Найдено секретов: ${ERRORS}"
+            exit 1
+          fi
+          echo "✅ Секреты не обнаружены"
+
+  # ─── 6. TruffleHog (профессиональный сканер) ──────────────────────
+  trufflehog-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: TruffleHog OSS
+        uses: trufflesecurity/trufflehog@0fa069c12f0c7baf431041cd1e564a9c5058846c
+        with:
+          path: ./
+          base: ${{ github.event.pull_request.base.sha || github.event.before }}
+          head: ${{ github.event.pull_request.head.sha || github.sha }}
+          extra_args: --only-verified --fail
+
+  # ─── 7. Проверка дубликатов коммитов ───────────────────────────────
+  check-duplicate-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Check for duplicate commits
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            COMMITS=$(git log --oneline ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+          else
+            COMMITS=$(git log --oneline -10)
+          fi
+
+          DUPLICATES=$(echo "$COMMITS" | sort | uniq -d)
+          if [ -n "$DUPLICATES" ]; then
+            echo "::error::Найдены дубликаты коммитов:"
+            echo "$DUPLICATES" | while IFS= read -r line; do echo "::error::  ${line}"; done
+            exit 1
+          fi
+          echo "✅ Дубликаты не обнаружены"

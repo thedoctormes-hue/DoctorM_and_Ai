@@ -1,0 +1,46 @@
+#!/bin/bash
+# Pre-commit hook: проверка свежести изменённых .md файлов
+# Режим: WARN (не блокирует коммит, но предупреждает)
+
+set -euo pipefail
+
+FRESHNESS_SCRIPT="/root/LabDoctorM/tools/doc-freshness/freshness.py"
+
+# Проверяем, что скрипт существует
+if [ ! -f "$FRESHNESS_SCRIPT" ]; then
+    exit 0
+fi
+
+# Получаем список изменённых .md файлов
+CHANGED_MD=$(git diff --cached --name-only --diff-filter=ACM | grep '\.md$' || true)
+
+if [ -z "$CHANGED_MD" ]; then
+    exit 0
+fi
+
+WARNINGS=0
+
+for file in $CHANGED_MD; do
+    [ ! -f "$file" ] && continue
+
+    RESULT=$(python3 "$FRESHNESS_SCRIPT" check "$file" 2>/dev/null || echo '{"score": 50, "status": "unknown"}')
+    SCORE=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('score', 50))" 2>/dev/null || echo 50)
+    STATUS=$(echo "$RESULT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('status', 'unknown'))" 2>/dev/null || echo "unknown")
+
+    if [ "$STATUS" = "expired" ]; then
+        echo "⚠️  STALE DOC: $file (score: $SCORE/100)"
+        echo "    Документ устарел. Обновите или запустите: python3 $FRESHNESS_SCRIPT check $file"
+        WARNINGS=$((WARNINGS + 1))
+    fi
+done
+
+if [ "$WARNINGS" -gt 0 ]; then
+    echo ""
+    echo "📋 Найдено $WARNINGS устаревших документов."
+    echo "   Запустите: python3 $FRESHNESS_SCRIPT scan . --output .fresh/report.json"
+    echo "   Для пропуска: git commit --no-verify"
+    echo ""
+fi
+
+# НЕ блокируем коммит — только предупреждаем
+exit 0

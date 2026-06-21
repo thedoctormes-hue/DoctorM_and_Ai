@@ -1,0 +1,6 @@
+[submodule "projects/artifact-pulse"]
+	path = projects/artifact-pulse
+	url = git@github.com:thedoctormes-hue/artifact-pulse.git
+[submodule "shared/git-rules"]
+	path = projects/DoctorM_and_Ai/shared/git-rules
+	url = ./shared/git-rules

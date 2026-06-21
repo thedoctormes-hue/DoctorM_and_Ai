@@ -1,0 +1,15 @@
+# ═══════════════════════════════════════════════════
+# Git attributes для подавления контекстного шума
+# ═══════════════════════════════════════════════════
+
+# Автогенерируемые файлы — скрыть из diff на GitHub
+.qwen/artifacts/artifact_stats.json linguist-generated=true diff=json
+ARTIFACT_CHANGELOG.md linguist-generated=true
+
+# Файлы состояния агентов — скрыть из diff
+projects/*/CHECKPOINT.md linguist-generated=true
+projects/*/SESSION_HANDOFF.md linguist-generated=true
+projects/*/SOUL-compact.md linguist-generated=true
+
+# JSON файлы — нормализованный diff
+*.json diff=json

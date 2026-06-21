@@ -1,0 +1,22 @@
+# VPN-серверы лаборатории
+# Используется vpnscan, dpi-bypass
+# При изменении IP — обновить этот файл, НЕ скиллы.
+
+servers:
+  - name: Warsaw
+    ip: 89.169.4.51
+    protocol: xhttp+REALITY
+    region: EU
+    primary: true
+
+  - name: Florida
+    ip: 185.174.137.133
+    protocol: xhttp+REALITY
+    region: US
+    primary: true
+
+# Пороги алертов
+thresholds:
+  latency_warn_ms: 3000
+  latency_crit_ms: 10000
+  unreachable_alert_min: 5

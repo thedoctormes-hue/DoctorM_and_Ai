@@ -1,0 +1,1553 @@
+{
+  "messages": {
+    "tts": {
+      "auto": "off",
+      "provider": "microsoft",
+      "providers": {
+        "microsoft": {
+          "enabled": true,
+          "speakerVoice": "ru-RU-DmitryNeural",
+          "lang": "ru-RU",
+          "outputFormat": "audio-24khz-48kbitrate-mono-mp3",
+          "rate": "+0%",
+          "pitch": "+0%"
+        }
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/owl-alpha",
+        "fallbacks": [
+          "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+          "openrouter/openai/gpt-oss-120b:free",
+          "openrouter/openai/gpt-oss-20b:free",
+          "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free"
+        ]
+      },
+      "contextInjection": "continuation-skip",
+      "compaction": {
+        "memoryFlush": {
+          "enabled": true,
+          "softThresholdTokens": 6000,
+          "model": "openrouter/openai/gpt-oss-20b:free"
+        },
+        "notifyUser": true,
+        "postCompactionSections": [
+          "AGENTS",
+          "SOUL",
+          "IDENTITY"
+        ],
+        "mode": "safeguard",
+        "qualityGuard": {
+          "enabled": true,
+          "maxRetries": 1
+        },
+        "identifierPolicy": "strict"
+      },
+      "contextLimits": {
+        "toolResultMaxChars": 32000
+      },
+      "bootstrapMaxChars": 25000,
+      "startupContext": {
+        "enabled": true,
+        "applyOn": [
+          "new",
+          "reset"
+        ],
+        "dailyMemoryDays": 2,
+        "maxFileBytes": 16384,
+        "maxFileChars": 10000,
+        "maxTotalChars": 6000
+      },
+      "timeoutSeconds": 600,
+      "memorySearch": {
+        "provider": "ollama",
+        "model": "bge-m3-cpu-512",
+        "remote": {
+          "baseUrl": "http://127.0.0.1:11434",
+          "apiKey": "ollama-local",
+          "nonBatchConcurrency": 2
+        },
+        "fallback": "none",
+        "sync": {
+          "embeddingBatchTimeoutSeconds": 600
+        },
+        "extraPaths": [
+          "/root/LabDoctorM/workspaces/antcat/memory",
+          "/root/LabDoctorM/workspaces/bestia/memory",
+          "/root/LabDoctorM/workspaces/dominika/memory",
+          "/root/LabDoctorM/workspaces/kotolizator/memory",
+          "/root/LabDoctorM/workspaces/mangust/memory",
+          "/root/LabDoctorM/workspaces/owl/memory",
+          "/root/LabDoctorM/workspaces/raven/memory",
+          "/root/LabDoctorM/workspaces/streikbrecher/memory"
+        ]
+      },
+      "skills": [
+        "agent-acceptance-protocol",
+        "canvas",
+        "diagram-maker",
+        "gh-issues",
+        "git-hygiene",
+        "git-lab",
+        "github",
+        "healthcheck",
+        "himalaya",
+        "lab-search",
+        "meme-maker",
+        "node-inspect-debugger",
+        "python-debugpy",
+        "session-logs",
+        "skill-creator",
+        "spike",
+        "summarize",
+        "taskflow",
+        "tavily",
+        "tmux",
+        "video-frames",
+        "weather",
+        "nano-pdf",
+        "oracle",
+        "mcporter"
+      ],
+      "bootstrapTotalMaxChars": 120000,
+      "heartbeat": {
+        "isolatedSession": true,
+        "lightContext": true
+      },
+      "contextTokens": 200000,
+      "maxConcurrent": 3,
+      "thinkingDefault": "low",
+      "verboseDefault": "off",
+      "reasoningDefault": "off",
+      "elevatedDefault": "on",
+      "toolProgressDetail": "explain",
+      "params": {
+        "cacheRetention": "long"
+      },
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "1h"
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "workspace": "/root/.openclaw/workspaces/main",
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "git-hygiene",
+          "git-lab",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "spike",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "session-logs",
+          "summarize",
+          "github",
+          "healthcheck",
+          "gh-issues",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ]
+      },
+      {
+        "id": "mangust",
+        "name": "mangust",
+        "workspace": "/root/LabDoctorM/workspaces/mangust",
+        "agentDir": "/root/.openclaw/agents/mangust/agent",
+        "tts": {
+          "auto": "off",
+          "provider": "tts-local-cli",
+          "providers": {
+            "tts-local-cli": {
+              "command": "/root/.openclaw/tools/sherpa-onnx-tts/runtime/bin/sherpa-onnx-offline-tts",
+              "args": [
+                "--runtime-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+                "--model-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru",
+                "--supertonic-duration-predictor",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/duration_predictor.int8.onnx",
+                "--supertonic-text-encoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/text_encoder.int8.onnx",
+                "--supertonic-vector-estimator",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vector_estimator.int8.onnx",
+                "--supertonic-vocoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vocoder.int8.onnx",
+                "--supertonic-tts-json",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/tts.json",
+                "--supertonic-unicode-indexer",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/unicode_indexer.bin",
+                "--supertonic-voice-style",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/voice.bin",
+                "--lang",
+                "ru",
+                "--num-steps",
+                "8",
+                "--speed",
+                "1.0",
+                "--sid",
+                "1",
+                "--output-filename",
+                "{{OutputPath}}",
+                "{{Text}}"
+              ],
+              "outputFormat": "wav",
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "gh-issues",
+          "git-hygiene",
+          "git-lab",
+          "github",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "spike",
+          "summarize",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "session-logs",
+          "healthcheck",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ]
+      },
+      {
+        "id": "dominika",
+        "name": "dominika",
+        "workspace": "/root/LabDoctorM/workspaces/dominika",
+        "agentDir": "/root/.openclaw/agents/dominika/agent",
+        "tts": {
+          "auto": "off",
+          "provider": "tts-local-cli",
+          "providers": {
+            "tts-local-cli": {
+              "command": "/root/.openclaw/tools/sherpa-onnx-tts/runtime/bin/sherpa-onnx-offline-tts",
+              "args": [
+                "--runtime-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+                "--model-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru",
+                "--supertonic-duration-predictor",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/duration_predictor.int8.onnx",
+                "--supertonic-text-encoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/text_encoder.int8.onnx",
+                "--supertonic-vector-estimator",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vector_estimator.int8.onnx",
+                "--supertonic-vocoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vocoder.int8.onnx",
+                "--supertonic-tts-json",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/tts.json",
+                "--supertonic-unicode-indexer",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/unicode_indexer.bin",
+                "--supertonic-voice-style",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/voice.bin",
+                "--lang",
+                "ru",
+                "--num-steps",
+                "8",
+                "--speed",
+                "1.0",
+                "--sid",
+                "2",
+                "--output-filename",
+                "{{OutputPath}}",
+                "{{Text}}"
+              ],
+              "outputFormat": "wav",
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "git-hygiene",
+          "git-lab",
+          "healthcheck",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "session-logs",
+          "spike",
+          "summarize",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "github",
+          "gh-issues",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ]
+      },
+      {
+        "id": "kotolizator",
+        "name": "kotolizator",
+        "workspace": "/root/LabDoctorM/workspaces/kotolizator",
+        "agentDir": "/root/.openclaw/agents/kotolizator/agent",
+        "tts": {
+          "auto": "off",
+          "provider": "tts-local-cli",
+          "providers": {
+            "tts-local-cli": {
+              "command": "/root/.openclaw/tools/sherpa-onnx-tts/runtime/bin/sherpa-onnx-offline-tts",
+              "args": [
+                "--runtime-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+                "--model-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru",
+                "--supertonic-duration-predictor",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/duration_predictor.int8.onnx",
+                "--supertonic-text-encoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/text_encoder.int8.onnx",
+                "--supertonic-vector-estimator",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vector_estimator.int8.onnx",
+                "--supertonic-vocoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vocoder.int8.onnx",
+                "--supertonic-tts-json",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/tts.json",
+                "--supertonic-unicode-indexer",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/unicode_indexer.bin",
+                "--supertonic-voice-style",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/voice.bin",
+                "--lang",
+                "ru",
+                "--num-steps",
+                "8",
+                "--speed",
+                "1.0",
+                "--sid",
+                "0",
+                "--output-filename",
+                "{{OutputPath}}",
+                "{{Text}}"
+              ],
+              "outputFormat": "wav",
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "gh-issues",
+          "git-hygiene",
+          "git-lab",
+          "github",
+          "healthcheck",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "skill-creator",
+          "spike",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "lab-audit",
+          "lab-report",
+          "lab-sync",
+          "session-logs",
+          "summarize",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ],
+        "heartbeat": {
+          "every": "30m",
+          "target": "telegram",
+          "directPolicy": "allow"
+        }
+      },
+      {
+        "id": "antcat",
+        "name": "antcat",
+        "workspace": "/root/LabDoctorM/workspaces/antcat",
+        "agentDir": "/root/.openclaw/agents/antcat/agent",
+        "tts": {
+          "auto": "off",
+          "provider": "tts-local-cli",
+          "providers": {
+            "tts-local-cli": {
+              "command": "/root/.openclaw/tools/sherpa-onnx-tts/runtime/bin/sherpa-onnx-offline-tts",
+              "args": [
+                "--runtime-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+                "--model-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru",
+                "--supertonic-duration-predictor",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/duration_predictor.int8.onnx",
+                "--supertonic-text-encoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/text_encoder.int8.onnx",
+                "--supertonic-vector-estimator",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vector_estimator.int8.onnx",
+                "--supertonic-vocoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vocoder.int8.onnx",
+                "--supertonic-tts-json",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/tts.json",
+                "--supertonic-unicode-indexer",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/unicode_indexer.bin",
+                "--supertonic-voice-style",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/voice.bin",
+                "--lang",
+                "ru",
+                "--num-steps",
+                "8",
+                "--speed",
+                "1.0",
+                "--sid",
+                "3",
+                "--output-filename",
+                "{{OutputPath}}",
+                "{{Text}}"
+              ],
+              "outputFormat": "wav",
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "gh-issues",
+          "git-hygiene",
+          "git-lab",
+          "github",
+          "healthcheck",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "spike",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "session-logs",
+          "summarize",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ],
+        "contextLimits": {
+          "toolResultMaxChars": 64000
+        }
+      },
+      {
+        "id": "bestia",
+        "name": "bestia",
+        "workspace": "/root/LabDoctorM/workspaces/bestia",
+        "agentDir": "/root/.openclaw/agents/bestia/agent",
+        "tts": {
+          "auto": "off",
+          "provider": "tts-local-cli",
+          "providers": {
+            "tts-local-cli": {
+              "command": "/root/.openclaw/tools/sherpa-onnx-tts/runtime/bin/sherpa-onnx-offline-tts",
+              "args": [
+                "--runtime-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+                "--model-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru",
+                "--supertonic-duration-predictor",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/duration_predictor.int8.onnx",
+                "--supertonic-text-encoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/text_encoder.int8.onnx",
+                "--supertonic-vector-estimator",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vector_estimator.int8.onnx",
+                "--supertonic-vocoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vocoder.int8.onnx",
+                "--supertonic-tts-json",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/tts.json",
+                "--supertonic-unicode-indexer",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/unicode_indexer.bin",
+                "--supertonic-voice-style",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/voice.bin",
+                "--lang",
+                "ru",
+                "--num-steps",
+                "8",
+                "--speed",
+                "1.0",
+                "--sid",
+                "4",
+                "--output-filename",
+                "{{OutputPath}}",
+                "{{Text}}"
+              ],
+              "outputFormat": "wav",
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "git-hygiene",
+          "git-lab",
+          "healthcheck",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "spike",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "session-logs",
+          "summarize",
+          "github",
+          "gh-issues",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ]
+      },
+      {
+        "id": "owl",
+        "name": "owl",
+        "workspace": "/root/LabDoctorM/workspaces/owl",
+        "agentDir": "/root/.openclaw/agents/owl/agent",
+        "tts": {
+          "auto": "off",
+          "provider": "tts-local-cli",
+          "providers": {
+            "tts-local-cli": {
+              "command": "/root/.openclaw/tools/sherpa-onnx-tts/runtime/bin/sherpa-onnx-offline-tts",
+              "args": [
+                "--runtime-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+                "--model-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru",
+                "--supertonic-duration-predictor",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/duration_predictor.int8.onnx",
+                "--supertonic-text-encoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/text_encoder.int8.onnx",
+                "--supertonic-vector-estimator",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vector_estimator.int8.onnx",
+                "--supertonic-vocoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vocoder.int8.onnx",
+                "--supertonic-tts-json",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/tts.json",
+                "--supertonic-unicode-indexer",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/unicode_indexer.bin",
+                "--supertonic-voice-style",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/voice.bin",
+                "--lang",
+                "ru",
+                "--num-steps",
+                "8",
+                "--speed",
+                "1.0",
+                "--sid",
+                "5",
+                "--output-filename",
+                "{{OutputPath}}",
+                "{{Text}}"
+              ],
+              "outputFormat": "wav",
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "gh-issues",
+          "git-hygiene",
+          "git-lab",
+          "github",
+          "healthcheck",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "skill-creator",
+          "spike",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "session-logs",
+          "summarize",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ],
+        "heartbeat": {
+          "every": "30m",
+          "target": "telegram",
+          "directPolicy": "allow"
+        }
+      },
+      {
+        "id": "raven",
+        "name": "raven",
+        "workspace": "/root/LabDoctorM/workspaces/raven",
+        "agentDir": "/root/.openclaw/agents/raven/agent",
+        "tts": {
+          "auto": "off",
+          "provider": "tts-local-cli",
+          "providers": {
+            "tts-local-cli": {
+              "command": "/root/.openclaw/tools/sherpa-onnx-tts/runtime/bin/sherpa-onnx-offline-tts",
+              "args": [
+                "--runtime-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+                "--model-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru",
+                "--supertonic-duration-predictor",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/duration_predictor.int8.onnx",
+                "--supertonic-text-encoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/text_encoder.int8.onnx",
+                "--supertonic-vector-estimator",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vector_estimator.int8.onnx",
+                "--supertonic-vocoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vocoder.int8.onnx",
+                "--supertonic-tts-json",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/tts.json",
+                "--supertonic-unicode-indexer",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/unicode_indexer.bin",
+                "--supertonic-voice-style",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/voice.bin",
+                "--lang",
+                "ru",
+                "--num-steps",
+                "8",
+                "--speed",
+                "1.0",
+                "--sid",
+                "6",
+                "--output-filename",
+                "{{OutputPath}}",
+                "{{Text}}"
+              ],
+              "outputFormat": "wav",
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "git-hygiene",
+          "git-lab",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "spike",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "session-logs",
+          "summarize",
+          "github",
+          "healthcheck",
+          "gh-issues",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ]
+      },
+      {
+        "id": "streikbrecher",
+        "name": "streikbrecher",
+        "workspace": "/root/LabDoctorM/workspaces/streikbrecher",
+        "agentDir": "/root/.openclaw/agents/streikbrecher/agent",
+        "tts": {
+          "auto": "off",
+          "provider": "tts-local-cli",
+          "providers": {
+            "tts-local-cli": {
+              "command": "/root/.openclaw/tools/sherpa-onnx-tts/runtime/bin/sherpa-onnx-offline-tts",
+              "args": [
+                "--runtime-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+                "--model-dir",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru",
+                "--supertonic-duration-predictor",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/duration_predictor.int8.onnx",
+                "--supertonic-text-encoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/text_encoder.int8.onnx",
+                "--supertonic-vector-estimator",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vector_estimator.int8.onnx",
+                "--supertonic-vocoder",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/vocoder.int8.onnx",
+                "--supertonic-tts-json",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/tts.json",
+                "--supertonic-unicode-indexer",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/unicode_indexer.bin",
+                "--supertonic-voice-style",
+                "/root/.openclaw/tools/sherpa-onnx-tts/models/supertonic-3-ru/voice.bin",
+                "--lang",
+                "ru",
+                "--num-steps",
+                "8",
+                "--speed",
+                "1.0",
+                "--sid",
+                "7",
+                "--output-filename",
+                "{{OutputPath}}",
+                "{{Text}}"
+              ],
+              "outputFormat": "wav",
+              "timeoutMs": 120000
+            }
+          }
+        },
+        "skills": [
+          "agent-acceptance-protocol",
+          "canvas",
+          "diagram-maker",
+          "gh-issues",
+          "git-hygiene",
+          "git-lab",
+          "github",
+          "himalaya",
+          "lab-search",
+          "meme-maker",
+          "node-inspect-debugger",
+          "python-debugpy",
+          "skill-creator",
+          "spike",
+          "taskflow",
+          "tavily",
+          "tmux",
+          "video-frames",
+          "weather",
+          "session-logs",
+          "summarize",
+          "healthcheck",
+          "nano-pdf",
+          "oracle",
+          "mcporter"
+        ],
+        "contextLimits": {
+          "toolResultMaxChars": 64000
+        }
+      }
+    ]
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "313265301f7332657c399bc894f9e29f0221e821d2901854"
+    },
+    "port": 18789,
+    "bind": "loopback",
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "reload": {
+      "mode": "hybrid",
+      "debounceMs": 300
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer",
+    "maintenance": {
+      "mode": "enforce",
+      "pruneAfter": "30d",
+      "maxEntries": 500
+    },
+    "reset": {
+      "mode": "idle",
+      "idleMinutes": 10080
+    }
+  },
+  "tools": {
+    "profile": "coding",
+    "web": {
+      "search": {
+        "enabled": true,
+        "provider": "tavily",
+        "cacheTtlMinutes": 30,
+        "maxResults": 5,
+        "timeoutSeconds": 30
+      },
+      "fetch": {
+        "firecrawl": {
+          "apiKey": "fc-1277a4dd022a49ff8143b64e4270c497",
+          "baseUrl": "https://api.firecrawl.dev/v2",
+          "onlyMainContent": true,
+          "maxAgeMs": 172800000,
+          "timeoutSeconds": 60
+        }
+      }
+    },
+    "sessions": {
+      "visibility": "all"
+    },
+    "agentToAgent": {
+      "enabled": true
+    },
+    "media": {
+      "audio": {
+        "enabled": true,
+        "models": [
+          {
+            "type": "cli",
+            "command": "/root/.openclaw/tools/whisper/transcribe.sh",
+            "args": [
+              "{{MediaPath}}"
+            ],
+            "timeoutSeconds": 120
+          }
+        ]
+      }
+    },
+    "loopDetection": {
+      "enabled": true,
+      "historySize": 30,
+      "warningThreshold": 10,
+      "criticalThreshold": 20,
+      "globalCircuitBreakerThreshold": 30,
+      "detectors": {
+        "genericRepeat": true,
+        "knownPollNoProgress": true,
+        "pingPong": true
+      }
+    },
+    "experimental": {
+      "planTool": true
+    },
+    "sessions_spawn": {
+      "attachments": {
+        "enabled": true,
+        "maxTotalBytes": 5242880,
+        "maxFiles": 50,
+        "maxFileBytes": 1048576
+      }
+    }
+  },
+  "hooks": {
+    "internal": {
+      "entries": {
+        "session-memory": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "compaction-notifier": {
+          "enabled": true
+        },
+        "boot-md": {
+          "enabled": true
+        }
+      },
+      "enabled": true
+    }
+  },
+  "plugins": {
+    "entries": {
+      "arcee": {
+        "enabled": true
+      },
+      "telegram": {
+        "enabled": true
+      },
+      "openrouter": {
+        "enabled": true
+      },
+      "parallel": {
+        "enabled": true
+      },
+      "canvas": {
+        "enabled": true
+      },
+      "browser": {
+        "enabled": true
+      },
+      "intention-hint": {
+        "enabled": true,
+        "config": {
+          "model": "openrouter/nvidia/nemotron-nano-9b-v2:free",
+          "modelFallback": "openrouter/openai/gpt-oss-20b:free",
+          "thinking": "low",
+          "timeoutMs": 10000,
+          "queryMode": "recent",
+          "allowedChatTypes": [
+            "direct"
+          ],
+          "agents": [
+            "streikbrecher"
+          ]
+        }
+      },
+      "tavily": {
+        "enabled": true,
+        "config": {
+          "webSearch": {
+            "apiKey": "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",
+            "baseUrl": "https://api.tavily.com"
+          }
+        }
+      },
+      "memory-core": {
+        "config": {
+          "dreaming": {
+            "enabled": true,
+            "frequency": "0 3 * * *",
+            "timezone": "UTC"
+          }
+        }
+      },
+      "microsoft": {
+        "enabled": true
+      },
+      "tts-local-cli": {
+        "enabled": true
+      },
+      "memory-wiki": {
+        "enabled": true,
+        "config": {
+          "vaultMode": "bridge",
+          "vault": {
+            "path": "~/.openclaw/wiki/main",
+            "renderMode": "obsidian"
+          },
+          "bridge": {
+            "enabled": true,
+            "readMemoryArtifacts": true,
+            "indexDreamReports": true,
+            "indexDailyNotes": true,
+            "indexMemoryRoot": true,
+            "followMemoryEvents": true
+          },
+          "ingest": {
+            "autoCompile": true,
+            "maxConcurrentJobs": 1
+          },
+          "search": {
+            "backend": "shared",
+            "corpus": "all"
+          },
+          "context": {
+            "includeCompiledDigestPrompt": false
+          },
+          "render": {
+            "createDashboards": true
+          }
+        }
+      },
+      "duckduckgo": {
+        "enabled": true
+      },
+      "searxng": {
+        "enabled": true,
+        "config": {
+          "webSearch": {
+            "baseUrl": "http://localhost:8889"
+          }
+        }
+      },
+      "perplexity": {
+        "enabled": false,
+        "config": {
+          "webSearch": {
+            "apiKey": "PERPLEXITY_KEY_PLACEHOLDER"
+          }
+        }
+      },
+      "minimax": {
+        "enabled": false,
+        "config": {
+          "webSearch": {
+            "apiKey": "MINIMAX_KEY_PLACEHOLDER"
+          }
+        }
+      },
+      "firecrawl": {
+        "enabled": true,
+        "config": {
+          "webSearch": {
+            "apiKey": "fc-1277a4dd022a49ff8143b64e4270c497",
+            "baseUrl": "https://api.firecrawl.dev/v2"
+          },
+          "webFetch": {
+            "baseUrl": "https://api.firecrawl.dev/v2",
+            "onlyMainContent": true,
+            "maxAgeMs": 172800000,
+            "timeoutSeconds": 60
+          }
+        }
+      }
+    },
+    "allow": [
+      "intention-hint",
+      "tavily",
+      "openrouter",
+      "microsoft",
+      "tts-local-cli",
+      "browser",
+      "arcee",
+      "canvas",
+      "memory-core",
+      "parallel",
+      "telegram",
+      "memory-wiki"
+    ],
+    "bundledDiscovery": "compat"
+  },
+  "auth": {
+    "profiles": {
+      "openrouter:default": {
+        "provider": "openrouter",
+        "mode": "api_key"
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "arcee": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "arcee/trinity-mini",
+            "name": "Trinity Mini 26B",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0.045,
+              "output": 0.15,
+              "cacheRead": 0.045,
+              "cacheWrite": 0.045
+            },
+            "contextWindow": 131072,
+            "maxTokens": 80000
+          },
+          {
+            "id": "arcee/trinity-large-preview",
+            "name": "Trinity Large Preview",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0.25,
+              "output": 1,
+              "cacheRead": 0.25,
+              "cacheWrite": 0.25
+            },
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "arcee/trinity-large-thinking",
+            "name": "Trinity Large Thinking",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0.25,
+              "output": 0.9,
+              "cacheRead": 0.25,
+              "cacheWrite": 0.25
+            },
+            "contextWindow": 262144,
+            "maxTokens": 80000,
+            "compat": {
+              "supportsTools": false,
+              "supportsReasoningEffort": false
+            }
+          }
+        ]
+      },
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "openrouter/owl-alpha",
+            "name": "OWL Alpha",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 1048756,
+            "maxTokens": 32768
+          },
+          {
+            "id": "nvidia/nemotron-3-super-120b-a12b:free",
+            "name": "Nemotron 3 Super 120B (Free)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 262144,
+            "maxTokens": 16384
+          },
+          {
+            "id": "nex-agi/nex-n2-pro:free",
+            "name": "Nex N2 Pro (Free)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 262144,
+            "maxTokens": 16384
+          },
+          {
+            "id": "openai/gpt-oss-120b:free",
+            "name": "GPT OSS 120B (Free)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          },
+          {
+            "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+            "name": "Nemotron 3 Ultra 550B (Free)",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 1000000,
+            "maxTokens": 16384
+          },
+          {
+            "id": "google/gemma-4-31b-it:free",
+            "name": "Gemma 4 31B IT (Free)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 262144,
+            "maxTokens": 16384
+          },
+          {
+            "id": "openai/gpt-oss-20b:free",
+            "name": "GPT OSS 20B (Free)",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "contextWindow": 131072,
+            "maxTokens": 16384
+          }
+        ],
+        "apiKey": "${OPENROUTER_API_KEY}",
+        "timeoutSeconds": 60
+      }
+    }
+  },
+  "skills": {
+    "install": {
+      "nodeManager": "npm"
+    },
+    "entries": {
+      "sherpa-onnx-tts": {
+        "env": {
+          "SHERPA_ONNX_RUNTIME_DIR": "/root/.openclaw/tools/sherpa-onnx-tts/runtime",
+          "SHERPA_ONNX_MODEL_DIR": "/root/.openclaw/tools/sherpa-onnx-tts/models/vits-piper-ru_RU-dmitri-medium"
+        }
+      },
+      "1password": {
+        "enabled": false
+      },
+      "apple-notes": {
+        "enabled": false
+      },
+      "apple-reminders": {
+        "enabled": false
+      },
+      "bear-notes": {
+        "enabled": false
+      },
+      "blogwatcher": {
+        "enabled": false
+      },
+      "blucli": {
+        "enabled": false
+      },
+      "camsnap": {
+        "enabled": false
+      },
+      "clawhub": {
+        "enabled": false
+      },
+      "coding-agent": {
+        "enabled": false
+      },
+      "discord": {
+        "enabled": false
+      },
+      "eightctl": {
+        "enabled": false
+      },
+      "gemini": {
+        "enabled": false
+      },
+      "gifgrep": {
+        "enabled": false
+      },
+      "gog": {
+        "enabled": false
+      },
+      "goplaces": {
+        "enabled": false
+      },
+      "imsg": {
+        "enabled": false
+      },
+      "mcporter": {
+        "enabled": false
+      },
+      "model-usage": {
+        "enabled": false
+      },
+      "nano-pdf": {
+        "enabled": false
+      },
+      "obsidian": {
+        "enabled": false
+      },
+      "openai-whisper": {
+        "enabled": false
+      },
+      "openai-whisper-api": {
+        "enabled": false
+      },
+      "openhue": {
+        "enabled": false
+      },
+      "oracle": {
+        "enabled": false
+      },
+      "ordercli": {
+        "enabled": false
+      },
+      "peekaboo": {
+        "enabled": false
+      },
+      "sag": {
+        "enabled": false
+      },
+      "session-logs": {
+        "enabled": true
+      },
+      "slack": {
+        "enabled": false
+      },
+      "songsee": {
+        "enabled": false
+      },
+      "sonoscli": {
+        "enabled": false
+      },
+      "spotify-player": {
+        "enabled": false
+      },
+      "summarize": {
+        "enabled": true
+      },
+      "things-mac": {
+        "enabled": false
+      },
+      "trello": {
+        "enabled": false
+      },
+      "voice-call": {
+        "enabled": false
+      },
+      "wacli": {
+        "enabled": false
+      },
+      "xurl": {
+        "enabled": false
+      },
+      "git-hygiene": {
+        "enabled": true
+      },
+      "git-lab": {
+        "enabled": true
+      }
+    },
+    "workshop": {
+      "approvalPolicy": "auto"
+    },
+    "load": {
+      "extraDirs": [
+        "~/.openclaw/workspace/skills"
+      ]
+    },
+    "allowBundled": [
+      "agent-acceptance-protocol",
+      "browser-automation",
+      "canvas",
+      "diagram-maker",
+      "gh-issues",
+      "git-hygiene",
+      "git-lab",
+      "github",
+      "healthcheck",
+      "himalaya",
+      "lab-search",
+      "meme-maker",
+      "node-inspect-debugger",
+      "notion",
+      "python-debugpy",
+      "session-logs",
+      "skill-creator",
+      "spike",
+      "summarize",
+      "taskflow",
+      "tavily",
+      "tmux",
+      "video-frames",
+      "weather"
+    ]
+  },
+  "wizard": {
+    "lastRunAt": "2026-06-19T19:56:49.243Z",
+    "lastRunVersion": "2026.6.9-beta.1",
+    "lastRunCommand": "doctor",
+    "lastRunMode": "local"
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.6.9-beta.1",
+    "lastTouchedAt": "2026-06-19T19:56:49.546Z"
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "173681771"
+      ],
+      "groupPolicy": "disabled",
+      "groups": {},
+      "streaming": {
+        "mode": "partial",
+        "preview": {
+          "toolProgress": true
+        },
+        "block": {
+          "enabled": true
+        }
+      },
+      "accounts": {
+        "dominika": {
+          "botToken": "8853645180:AAGxJVt9Nq_8GbiFMmYDaULvz5B6HYV7AFQ",
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "173681771"
+          ],
+          "groupAllowFrom": [
+            "173681771"
+          ]
+        },
+        "kotolizator": {
+          "botToken": "8603332363:AAEIVjmN90GSMXQZ-dPbcooSSl5-B084MwQ",
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "173681771"
+          ],
+          "groupAllowFrom": [
+            "173681771"
+          ]
+        },
+        "antcat": {
+          "botToken": "8649218949:AAGs_p3qW4xqtnS8Oephl3NQbGt1GKDmXlU",
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "173681771"
+          ],
+          "groupAllowFrom": [
+            "173681771"
+          ]
+        },
+        "bestia": {
+          "botToken": "8851181713:AAG_p5uoF3NLuUDENgkWZXkYKScl0HBM2gU",
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "173681771"
+          ],
+          "groupAllowFrom": [
+            "173681771"
+          ]
+        },
+        "owl": {
+          "botToken": "8957743288:AAGwESXsQJJGuYzYVHritH61K2BM9qxpMfw",
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "173681771"
+          ],
+          "groupAllowFrom": [
+            "173681771"
+          ]
+        },
+        "raven": {
+          "botToken": "8805430199:AAHnqZuVPaKvXuX8f4vI_AJwMZ_ejqdttBM",
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "173681771"
+          ],
+          "groupAllowFrom": [
+            "173681771"
+          ]
+        },
+        "streikbrecher": {
+          "botToken": "8820611040:AAGzEBBPONicOR8IaDUFtQAiWlrJkOT1_e0",
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "173681771"
+          ],
+          "groupAllowFrom": [
+            "173681771"
+          ]
+        },
+        "default": {
+          "botToken": "7955682161:AAFVyyo1T_uqib9j88b1DlDKMRo6qo3F4PE"
+        }
+      },
+      "defaultAccount": "default",
+      "groupAllowFrom": [
+        "173681771"
+      ]
+    }
+  },
+  "commands": {
+    "ownerAllowFrom": [
+      "telegram:173681771"
+    ]
+  },
+  "bindings": [
+    {
+      "type": "route",
+      "agentId": "mangust",
+      "match": {
+        "channel": "telegram",
+        "accountId": "mangust"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "dominika",
+      "match": {
+        "channel": "telegram",
+        "accountId": "dominika"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "kotolizator",
+      "match": {
+        "channel": "telegram",
+        "accountId": "kotolizator"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "antcat",
+      "match": {
+        "channel": "telegram",
+        "accountId": "antcat"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "bestia",
+      "match": {
+        "channel": "telegram",
+        "accountId": "bestia"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "owl",
+      "match": {
+        "channel": "telegram",
+        "accountId": "owl"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "raven",
+      "match": {
+        "channel": "telegram",
+        "accountId": "raven"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "streikbrecher",
+      "match": {
+        "channel": "telegram",
+        "accountId": "streikbrecher"
+      }
+    }
+  ]
+}

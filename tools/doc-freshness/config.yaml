@@ -1,0 +1,81 @@
+# Doc Freshness Configuration
+# Слой 1 (Возраст) + Слой 3 (Структура)
+
+scan:
+  include:
+    - "**/*.md"
+  exclude:
+    - "node_modules/**"
+    - "venv*/**"
+    - ".venv/**"
+    - ".git/**"
+    - "**/vendor/**"
+    - "**/*-template.md"
+    - "**/CHANGELOG.md"
+    - ".fresh/**"
+    - "tools/doc-freshness/**"
+    - "cascade/pool/**"
+    - "projects/*/inbox/**"
+    - "**/node_modules/**"
+    - "**/.pytest_cache/**"
+    - "**/.mypy_cache/**"
+    - "**/__pycache__/**"
+    - "**/.ruff_cache/**"
+
+# Слой 1: Возраст
+age:
+  # Полупериод распада (дни). Через это время score упадёт вдвое.
+  half_life_days: 30
+  # Пороги возраста (дни) для штрафов
+  fresh_days: 7       # 0-7 дней — свежий
+  stale_days: 30      # 8-30 — начинает устаревать
+  rotten_days: 90     # 31-90 — устаревший
+  dead_days: 180      # 90+ — мёртвый
+
+# Слой 3: Структура
+structure:
+  # Штраф за каждую битую внутреннюю ссылку
+  broken_link_penalty: 15
+  # Штраф за каждый несуществующий API reference
+  missing_ref_penalty: 10
+  # Максимальный штраф за структуру
+  max_structure_penalty: 50
+
+# Пороги score
+thresholds:
+  fresh: 70       # >= 70 — свежий, включаем в контекст
+  stale: 40       # 40-69 — устревающий, предупреждение
+  # < 40 — устаревший, исключаем из контекста
+
+# Frontmatter: обязательные поля
+frontmatter:
+  required:
+    - last_reviewed
+    - last_code_change
+  optional:
+    - status
+    - type
+    - owner
+    - review_cycle
+
+# Маппинг: директория кода → связанные документы
+# Если код в директории менялся, а документ нет — штраф
+# Директория должна существовать в репозитории (resolve_code_dir делает fallback вверх)
+code_doc_mapping:
+  "projects/myrmex-control": ["projects/myrmex-control/README.md", "projects/myrmex-control/README.ru.md", "projects/myrmex-control/README.zh.md"]
+  ".qwen/hooks": ["QWEN.md"]
+  "projects/antcat": ["projects/antcat/IDENTITY.md", "projects/antcat/SOUL.md"]
+
+# Нетехнические директории: age score не считается по коду (всегда нейтральный 50)
+# Для них оценивается только структура и зависимости
+non_code_dirs:
+  - "patterns/"
+  - "specs/"
+  - "adr/"
+  - "incidents/"
+  - "rules/"
+  - ".qwen/skills/"
+  - ".qwen/agents/"
+  - ".qwen/memory/"
+  - "cascade/"
+  - "metrics/"

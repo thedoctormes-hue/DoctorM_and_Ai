@@ -1,0 +1,22 @@
+repository:
+  name: LabDoctorM
+  description: "Лаборатория ЗавЛаб — AI-агенты, автоматизация, инфраструктура"
+  homepage: https://shtab-ai.ru
+  topics:
+    - ai-agents
+    - automation
+    - telegram-bot
+    - vpn
+    - self-evolution
+    - multi-agent
+
+features:
+  issues: true
+  projects: true
+  wiki: false
+  discussions: false
+
+merge_settings:
+  allow_merge_commit: false
+  allow_squash_merge: true
+  allow_rebase_merge: true

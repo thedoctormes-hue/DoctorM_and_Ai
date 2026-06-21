@@ -1,0 +1,17 @@
+[Unit]
+Description=Monitor Qwen Code serve/daemon/ACP development
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /root/LabDoctorM/.qwen/scripts/watch-qwen-serve.sh
+User=root
+Group=root
+StandardOutput=journal
+StandardError=journal
+
+# Безопасность
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/root/LabDoctorM/.qwen/state /root/LabDoctorM/.qwen/logs

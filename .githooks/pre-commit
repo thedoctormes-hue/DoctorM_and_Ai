@@ -1,0 +1,111 @@
+#!/bin/bash
+# ============================================================
+# Pre-commit hook — LabDoctorM
+# 1. Гейт идентичности: автор коммита обязан быть из белого списка
+#    (.qwen/git-authors.json + ЗавЛаб). Закрывает гонку за общий
+#    .git/config — неизвестный/перетёртый автор блокируется.
+# 2. Блокирует прямые коммиты в main (кроме ЗавЛаба).
+# 3. Запрещает пустой коммит.
+#
+# Важно: автор задаётся НЕ здесь (хук — дочерний процесс, его env
+# не доходит до git commit). Корректный путь — обёртка lab-commit.sh,
+# которая ставит GIT_AUTHOR_*/GIT_COMMITTER_* перед коммитом.
+# Хук лишь ВЕРИФИЦИРУЕТ итогового автора, которого git уже разрешил
+# и положил в GIT_AUTHOR_NAME/GIT_AUTHOR_EMAIL окружения хука.
+# ============================================================
+
+set -e
+
+GIT_DIR=$(git rev-parse --git-dir 2>/dev/null)
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+AUTHORS_JSON="$REPO_ROOT/.qwen/git-authors.json"
+
+# ─── 1. Гейт идентичности ──────────────────────────────────
+# git к моменту запуска pre-commit уже разрешил автора и положил
+# его в окружение хука (проверено: env перебивает config).
+AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-$(git config user.email 2>/dev/null)}"
+AUTHOR_NAME="${GIT_AUTHOR_NAME:-$(git config user.name 2>/dev/null)}"
+
+if [ -z "$AUTHOR_EMAIL" ]; then
+  echo "❌ Гейт идентичности: автор коммита не определён (нет email)."
+  echo "   Коммить через обёртку: LAB_AGENT=<agent> scripts/lab-commit.sh -m \"...\""
+  exit 1
+fi
+
+# 1a. Сильная проверка: если известен LAB_AGENT — автор ОБЯЗАН совпадать
+# с его identity из git-authors.json. Это ловит гонку точечно:
+# "я antcat, а config перетёрт на Сову" → оба в белом списке, но email
+# не совпадёт с ожидаемым для antcat → блок.
+if [ -n "${LAB_AGENT:-}" ] && [ -f "$AUTHORS_JSON" ] && command -v jq >/dev/null 2>&1; then
+  EXPECT_EMAIL=$(jq -r --arg id "$LAB_AGENT" '.[$id].email // empty' "$AUTHORS_JSON")
+  EXPECT_NAME=$(jq -r --arg id "$LAB_AGENT" '.[$id].name // empty' "$AUTHORS_JSON")
+  if [ -n "$EXPECT_EMAIL" ] && [ "$AUTHOR_EMAIL" != "$EXPECT_EMAIL" ]; then
+    echo "❌ Гейт идентичности: ожидался $EXPECT_NAME <$EXPECT_EMAIL> (LAB_AGENT=$LAB_AGENT),"
+    echo "   но коммит идёт под '$AUTHOR_NAME <$AUTHOR_EMAIL>'."
+    echo "   Симптом гонки за общий .git/config. Коммить через обёртку:"
+    echo "     LAB_AGENT=$LAB_AGENT scripts/lab-commit.sh -m \"...\""
+    exit 1
+  fi
+fi
+
+# 1b. Белый список: email из git-authors.json + ЗавЛаб (fallback, когда LAB_AGENT не задан)
+ALLOWED=""
+if [ -f "$AUTHORS_JSON" ] && command -v jq >/dev/null 2>&1; then
+  ALLOWED=$(jq -r '.[].email' "$AUTHORS_JSON" 2>/dev/null)
+fi
+ALLOWED="$ALLOWED
+zavlab@shtab-ai.ru"
+
+if ! echo "$ALLOWED" | grep -qxF "$AUTHOR_EMAIL"; then
+  echo "❌ Гейт идентичности: автор '$AUTHOR_NAME <$AUTHOR_EMAIL>' не в белом списке."
+  echo "   Это типичный симптом гонки за общий .git/config."
+  echo "   Коммить через обёртку, которая задаёт автора race-free:"
+  echo "     LAB_AGENT=<agent> scripts/lab-commit.sh -m \"...\""
+  echo "     или  scripts/lab-commit.sh <agent> -m \"...\""
+  echo "   Известные агенты: $( [ -f "$AUTHORS_JSON" ] && jq -r 'keys | join(\", \")' "$AUTHORS_JSON" 2>/dev/null )"
+  exit 1
+fi
+
+# ─── 2. Блок прямых коммитов в main (кроме ЗавЛаба) ────────
+CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || echo "HEAD")
+if [ "$CURRENT_BRANCH" = "main" ]; then
+  if [ "$AUTHOR_EMAIL" != "zavlab@shtab-ai.ru" ] \
+     && ! echo "$GIT_DIR" | grep -q "worktrees/zavlab" \
+     && ! echo "$REPO_ROOT" | grep -q "^/root/LabDoctorM$"; then
+    echo "❌ ЗАПРЕТ: Прямые коммиты в main запрещены!"
+    echo "   Лаборанты должны коммитить только в свои ветки."
+    echo "   Текущая ветка: $CURRENT_BRANCH, автор: $AUTHOR_NAME"
+    exit 1
+  fi
+fi
+
+# ─── 3. Запрет пустого коммита ─────────────────────────────
+if git diff --cached --quiet; then
+  echo "⚠️  Нет изменений для коммита (git add не выполнен)"
+  exit 1
+fi
+
+# ─── 4. Гейт секретов (INC-013/INC-015) ────────────────────
+# Сканируем STAGED-изменения до попадания в историю. Источник правды —
+# lab-monitoring/git_secret_scanner (тот же сенсор, что в мониторинге).
+# Коды: 0 чисто, 3 секреты (блок), прочее (2/1/нет python) — деградация:
+# предупреждаем, но не блокируем, чтобы инфра-сбой не ломал все коммиты.
+SCANNER_SRC="$REPO_ROOT/projects/lab-monitoring/src"
+if [ -f "$SCANNER_SRC/lab_monitoring/git_secret_scanner.py" ] && command -v python3 >/dev/null 2>&1; then
+  # `|| SCAN_RC=$?` обязателен: при set -e ненулевой код иначе оборвёт хук
+  # до присваивания. Так мы перехватываем код и решаем сами.
+  SCAN_RC=0
+  PYTHONPATH="$SCANNER_SRC" python3 -m lab_monitoring.git_secret_scanner --staged --repo "$REPO_ROOT" || SCAN_RC=$?
+  if [ "$SCAN_RC" -eq 3 ]; then
+    echo "🔴 COMMIT BLOCKED: в staged-изменениях найдены секреты (см. выше)."
+    echo "   Класс INC-013/INC-015. Убери секрет из индекса:"
+    echo "     git restore --staged <file>   и добавь в .gitignore / используй *.example"
+    echo "   Осознанный обход (только если ложное срабатывание): git commit --no-verify"
+    exit 1
+  elif [ "$SCAN_RC" -ne 0 ]; then
+    echo "⚠️  Гейт секретов недоступен (rc=$SCAN_RC) — коммит не блокирую, но проверь вручную."
+  fi
+fi
+
+echo "✅ Pre-commit: автор = $AUTHOR_NAME <$AUTHOR_EMAIL>, ветка = $CURRENT_BRANCH"
+exit 0

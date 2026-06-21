@@ -1,0 +1,1 @@
+../scripts/lab-commit.sh

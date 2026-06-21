@@ -1,0 +1,7 @@
+extends: substitution
+message: "Consider using '%s' instead of '%s'."
+level: warning
+ignorecase: true
+swap:
+  '(?:Искусственный интеллект|ИИ|AI)\b': AI
+  'софт': софт

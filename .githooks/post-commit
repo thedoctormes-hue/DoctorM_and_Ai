@@ -1,0 +1,100 @@
+#!/bin/bash
+# post-commit hook — отправляет данные о коммите в Myrmex Control
+set -uo pipefail
+
+MYRMEX_API="http://localhost:3000"
+MYRMEX_API_KEY="$(grep '^MYRMEX_API_KEY=' /root/LabDoctorM/projects/myrmex-control/.env 2>/dev/null | cut -d= -f2-)"
+
+# Данные о коммите
+COMMIT_HASH="$(git rev-parse HEAD)"
+COMMIT_AUTHOR="$(git log -1 --format='%an')"
+COMMIT_MESSAGE="$(git log -1 --format='%s')"
+COMMIT_BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo 'detached')"
+COMMIT_FILES="$(git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null | tr '\n' ',')"
+
+# Определяем проект по пути HEAD относительно .git
+# Коммит происходит в /root/LabDoctorM — определяем какой проект затронут
+CHANGED_DIRS=""
+for f in $(git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null); do
+    # Берём первый компонент пути после projects/ или корневые директории
+    case "$f" in
+        projects/*)
+            proj_dir="$(echo "$f" | cut -d'/' -f2)"
+            if [ -n "$proj_dir" ] && ! echo "$CHANGED_DIRS" | grep -q "$proj_dir"; then
+                CHANGED_DIRS="${CHANGED_DIRS}${proj_dir},"
+            fi
+            ;;
+        adr/*|patterns/*|rules/*|specs/*|incidents/*|metrics/*)
+            # Артефакты — отправляем в labdoctor
+            CHANGED_DIRS="labdoctor,"
+            ;;
+    esac
+done
+CHANGED_DIRS="${CHANGED_DIRS%,}"
+
+# Маппинг директорий проектов → ID в myrmex.json
+resolve_project_id() {
+    local dir="$1"
+    case "$dir" in
+        snablab)            echo "proj-"; return ;;  # СнабЛаб
+        hype-pilot)         echo "proj-hype-pilot"; return ;;
+        myrmex-control)     echo "proj-myrmex-control"; return ;;
+        "remote-access")    echo "proj-remote-access-toolkit"; return ;;
+        "zprr-tracker")     echo "proj-zprr-tracker"; return ;;
+        "llm-evangelist")   echo "proj-llm-evangelist"; return ;;
+        "mail-daemon")      echo "proj-mail-daemon"; return ;;
+        "gastro-bot")       echo "proj-msk-gastro-digest-bot"; return ;;
+        "protocol-bot")     echo "proj-protocol-bot"; return ;;
+        "stenographer")     echo "proj-stenographer"; return ;;
+        "vpn-daemon")       echo "proj-vpn-daemon"; return ;;
+        "zakupki-bot")      echo "proj-zakupki-drop-bot"; return ;;
+        "OpenClawBox")      echo "proj-openclawbox"; return ;;
+        "fedlab_parser")    echo "proj-fedlab-parser"; return ;;
+        "passive-income-engine") echo "proj-passive-income-engine"; return ;;
+        *)                  echo ""; return ;;
+    esac
+}
+
+# Отправляем в Myrmex Control для каждого затронутого проекта
+SENT=false
+IFS=',' read -ra DIRS <<< "$CHANGED_DIRS"
+for dir in "${DIRS[@]}"; do
+    [ -z "$dir" ] && continue
+    PROJ_ID="$(resolve_project_id "$dir")"
+    [ -z "$PROJ_ID" ] && continue
+
+    PAYLOAD="$(jq -n \
+        --arg hash "$COMMIT_HASH" \
+        --arg author "$COMMIT_AUTHOR" \
+        --arg message "$COMMIT_MESSAGE" \
+        --arg branch "$COMMIT_BRANCH" \
+        --argjson files "$(git diff-tree --no-commit-id --name-only -r HEAD | jq -R . | jq -s .)" \
+        '{hash: $hash, author: $author, message: $message, branch: $branch, files: $files}')"
+
+    COMMIT_PAYLOAD="$(jq -n \
+        --arg project_id "$PROJ_ID" \
+        --arg hash "$COMMIT_HASH" \
+        --arg author "$COMMIT_AUTHOR" \
+        --arg message "$COMMIT_MESSAGE" \
+        --arg branch "$COMMIT_BRANCH" \
+        --argjson files "$(git diff-tree --no-commit-id --name-only -r HEAD | jq -R . | jq -s .)" \
+        '{project_id: $project_id, hash: $hash, author: $author, message: $message, branch: $branch, files: $files}')"
+
+    RESP="$(curl -s -w "\n%{http_code}" \
+        -X POST "$MYRMEX_API/api/commits" \
+        -H "Content-Type: application/json" \
+        -H "X-API-Key: ${MYRMEX_API_KEY:-}" \
+        -d "$COMMIT_PAYLOAD" 2>/dev/null)"
+    CODE="$(echo "$RESP" | tail -1)"
+
+    if [ "$CODE" = "200" ]; then
+        echo "[post-commit] ✅ $PROJ_ID ← ${COMMIT_HASH:0:8} by $COMMIT_AUTHOR"
+    else
+        echo "[post-commit] ⚠️  $PROJ_ID failed (HTTP $CODE)"
+    fi
+    SENT=true
+done
+
+if [ "$SENT" = "false" ]; then
+    echo "[post-commit] ℹ️  No matching project for: $CHANGED_DIRS"
+fi

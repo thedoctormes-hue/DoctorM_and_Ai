@@ -1,0 +1,12 @@
+[Interface]
+Address = 10.66.66.1/24
+PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ens3 -j MASQUERADE
+ListenPort = 51820
+PrivateKey = <SERVER_PRIVATE_KEY>
+
+# Пример пира. Реальный wg0.conf не коммитится (см. .gitignore / INC-013).
+[Peer]
+PublicKey = <PEER_PUBLIC_KEY>
+PresharedKey = <PEER_PRESHARED_KEY>
+AllowedIPs = 10.66.66.2/32
