@@ -2,7 +2,7 @@
 description: "ADR-036: Миграция Qwen → OpenClaw — hooks и skills"
 type: adr
 last_reviewed: 2026-06-18
-status: proposed
+status: accepted
 ---
 # ADR-036: Миграция Qwen → OpenClaw — hooks и skills
 

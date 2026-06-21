@@ -3,7 +3,8 @@ name: session-commit
 description: Протокол коммитов в конце сессии — только после проверки работоспособности.
 type: process
 status: active
-verified: 2026-06-17
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-08
 ---
 
 # ✅ Протокол Коммитов в Конце Сессии

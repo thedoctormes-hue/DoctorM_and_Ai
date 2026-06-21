@@ -1,4 +1,12 @@
-# ADR-042: Тонкая настройка конфигурации агентов OpenClaw
+---
+id: ADR-042
+title: "Тонкая настройка конфигурации агентов OpenClaw"
+status: accepted
+date: 2026-06-20
+author: kotolizator
+type: adr
+---
+
 
 **Дата:** 2026-06-20
 **Автор:** kotolizator (по запросу ЗавЛаба)

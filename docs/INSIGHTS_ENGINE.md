@@ -1,6 +1,15 @@
+---
+description: "Lab Insights Engine — система обработки инсайтов"
+type: guide
+last_reviewed: 2026-06-21
+last_code_change: 2026-05-31
+status: active
+---
 # Lab Insights Engine v2.1
 
 Документация системы автоматической обработки инсайтов лаборатории ЗавЛаб.
+
+> **Примечание:** система частично мигрирована на OpenClaw. Активные компоненты работают из `/root/LabDoctorM/.qwen/`. Данные хранятся в `/root/.qwen/projects/-root-LabDoctorM/memory/`.
 
 ## Обзор
 
@@ -38,45 +47,45 @@ Insights Engine — подсистема Jingle, которая перехват
 ## Файлы
 
 Хуки:
-- /root/LabDoctorM/.qwen/hooks/insight_catcher.sh
-- /root/LabDoctorM/.qwen/hooks/session_finalize.sh
+- `/root/LabDoctorM/.qwen/hooks/insight_catcher.sh` — перехват инсайтов
+- `/root/LabDoctorM/.qwen/hooks/session_finalize.sh` — финализация сессии
 
 Скрипты:
-- /root/LabDoctorM/.qwen/self_evolve.sh
-- /root/LabDoctorM/.qwen/scripts/insights_maintenance.sh
+- `/root/LabDoctorM/.qwen/self_evolve.sh` — эволюция (обработка инсайтов)
+- `/root/LabDoctorM/.qwen/scripts/insights_maintenance.sh` — maintenance
 
 Python-движки:
-- /root/LabDoctorM/.qwen/hooks/decision_engine.py
-- /root/LabDoctorM/.qwen/hooks/adaptive_router.py
-- /root/LabDoctorM/.qwen/hooks/resolution_strategy.py
-- /root/LabDoctorM/.qwen/hooks/decision_log.py
+- `/root/LabDoctorM/.qwen/hooks/decision_engine.py` — классификатор
+- `/root/LabDoctorM/.qwen/hooks/adaptive_router.py` — обучаемый роутер
+- `/root/LabDoctorM/.qwen/hooks/resolution_strategy.py` — разрешение конфликтов
+- `/root/LabDoctorM/.qwen/hooks/decision_log.py` — лог решений
 
 systemd:
-- /etc/systemd/system/lab-insights.timer
-- /etc/systemd/system/lab-insights.service
-- /root/LabDoctorM/.qwen/systemd/lab-insights.timer (source)
-- /root/LabDoctorM/.qwen/systemd/lab-insights.service (source)
+- `/etc/systemd/system/lab-insights.timer` — таймер (каждые 30 мин)
+- `/etc/systemd/system/lab-insights.service` — сервис
 
 Данные:
-- /root/.qwen/projects/-root-LabDoctorM/memory/insights_queue.json
-- /root/.qwen/projects/-root-LabDoctorM/memory/.insight_hashes/ (хэши дедупликации)
-- /root/.qwen/projects/-root-LabDoctorM/memory/insight_*.md (memory layer)
-- /root/.qwen/skills/*.md (skills layer)
-- /root/.qwen/evolution_backlog.json (backlog)
-- /root/.qwen/memory/decision_log.jsonl
-- /root/.qwen/memory/insights/weights.json (adaptive router)
-- /root/.qwen/memory/insights/feedback.json
+- `/root/.qwen/projects/-root-LabDoctorM/memory/insights_queue.json` — очередь инсайтов
+- `/root/.qwen/projects/-root-LabDoctorM/memory/.insight_hashes/` — хэши дедупликации
+- `/root/.qwen/projects/-root-LabDoctorM/memory/insight_*.md` — memory layer
+- `/root/.qwen/skills/*.md` — skills layer
+- `/root/.qwen/evolution_backlog.json` — бэклог
+- `/root/.qwen/memory/decision_log.jsonl` — лог решений
+- `/root/.qwen/memory/insights/weights.json` — веса роутера
+- `/root/.qwen/memory/insights/feedback.json` — обратная связь
 
 Тесты:
-- /root/LabDoctorM/.qwen/tests/test_decision_engine.py
-- /root/LabDoctorM/.qwen/tests/test_adaptive_router.py
-- /root/LabDoctorM/.qwen/tests/test_resolution_strategy.py
-- /root/LabDoctorM/.qwen/tests/test_catcher_pipeline.py
-- /root/LabDoctorM/.qwen/tests/test_self_evolve.py
+- `/root/LabDoctorM/.qwen/tests/test_decision_engine.py`
+- `/root/LabDoctorM/.qwen/tests/test_adaptive_router.py`
+- `/root/LabDoctorM/.qwen/tests/test_resolution_strategy.py`
+- `/root/LabDoctorM/.qwen/tests/test_catcher_pipeline.py`
+- `/root/LabDoctorM/.qwen/tests/test_self_evolve.py`
 
 ## Запуск тестов
 
+```bash
 cd /root/LabDoctorM && python3 -m pytest .qwen/tests/ -v
+```
 
 ## Управление таймером
 
@@ -87,21 +96,26 @@ journalctl -u lab-insights.service --no-pager -n 20 — логи
 
 ## Ручная обработка инсайтов
 
-bash self_evolve.sh <id> — обработать один инсайт
-bash self_evolve.sh --all-pending — обработать все pending
-bash self_evolve.sh create backlog "Название задачи" — создать задачу в бэклоге
-bash self_evolve.sh create adr "Решение по архитектуре" — создать ADR
-bash self_evolve.sh create pattern "Паттерн" — создать паттерн
-bash self_evolve.sh create incident "Описание" — создать инцидент
-bash self_evolve.sh create rule "Правило" — создать правило
-bash self_evolve.sh create metric "Метрика" — создать метрику
+```bash
+cd /root/LabDoctorM
+bash .qwen/self_evolve.sh <id>                    # обработать один инсайт
+bash .qwen/self_evolve.sh --all-pending            # обработать все pending
+bash .qwen/self_evolve.sh create backlog "Название"  # создать задачу в бэклоге
+bash .qwen/self_evolve.sh create adr "Решение"       # создать ADR
+bash .qwen/self_evolve.sh create pattern "Паттерн"  # создать паттерн
+bash .qwen/self_evolve.sh create incident "Описание" # создать инцидент
+bash .qwen/self_evolve.sh create rule "Правило"     # создать правило
+bash .qwen/self_evolve.sh create metric "Метрика"   # создать метрику
+```
 
 ## Мониторинг
 
-tail -f /root/.qwen/logs/insight_catcher.log — лог катchers
-tail -f /root/.qwen/logs/self_evolve.log — лог эволюции
-tail -f /root/.qwen/projects/-root-LabDoctorM/memory/maintenance.log — лог maintenance
-python3 /root/LabDoctorM/.qwen/hooks/adaptive_router.py status — статус роутера
+```bash
+tail -f /root/.qwen/logs/insight_catcher.log                        # лог катchers
+tail -f /root/.qwen/logs/self_evolve.log                            # лог эволюции
+tail -f /root/.qwen/projects/-root-LabDoctorM/memory/maintenance.log # лог maintenance
+python3 /root/LabDoctorM/.qwen/hooks/adaptive_router.py status       # статус роутера
+```
 
 ## Фильтрация (insight_catcher.sh)
 

@@ -1,4 +1,12 @@
-# ADR-044: Agent Configuration Fine-Tuning
+---
+id: ADR-044
+title: "Agent Configuration Fine-Tuning"
+status: accepted
+date: 2026-06-20
+author: streikbrecher
+type: adr
+---
+
 
 **Date:** 2026-06-20
 **Author:** Штрейкбрехер (streikbrecher)

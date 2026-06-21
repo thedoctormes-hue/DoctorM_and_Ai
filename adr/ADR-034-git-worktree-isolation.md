@@ -2,7 +2,7 @@
 description: "ADR-034: Git worktree как стандарт изоляции рабочих зон агентов"
 type: adr
 last_reviewed: 2026-06-18
-status: proposed
+status: accepted
 ---
 # ADR-034: Git worktree как стандарт изоляции рабочих зон агентов
 

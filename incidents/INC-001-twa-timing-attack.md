@@ -2,7 +2,7 @@
 id: INC-001
 type: incident
 title: 'INC-001: Timing attack в TWA-авторизации'
-status: open
+status: resolved
 author: system
 created: '2026-05-24T21:07:07+00:00'
 updated: '2026-05-24T21:07:07+00:00'

@@ -2,7 +2,7 @@
 id: ADR-028
 type: adr
 title: 'ADR-028: openclaw.json как единственный источник истины для реестра агентов'
-status: proposed
+status: accepted
 author: owl
 created: 2026-06-17
 updated: 2026-06-17

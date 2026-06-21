@@ -1,3 +1,11 @@
+---
+description: "Кросс-анализ артефактов"
+type: report
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # 📊 Cross-Analysis: Инсайты ↔ Артефакты
 
 > Доминика, 18.06.2026 — полный анализ 235 инсайтов против 131 артефакта

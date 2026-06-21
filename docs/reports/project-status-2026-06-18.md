@@ -1,3 +1,11 @@
+---
+description: "Статус проектов"
+type: report
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # Отчёт о состоянии проекта — 2026-06-18
 
 ## Общие сведения

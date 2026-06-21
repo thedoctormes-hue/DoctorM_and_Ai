@@ -1,3 +1,11 @@
+---
+description: "Приоритизация инсайтов"
+type: report
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # Дайджест системы инсайтов — 2026-06-18
 
 ## Сводка

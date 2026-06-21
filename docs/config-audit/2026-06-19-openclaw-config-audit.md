@@ -1,3 +1,11 @@
+---
+description: "2026 06 19 openclaw config audit"
+type: report
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # Рекомендации по оптимизации конфигурации OpenClaw
 
 **Дата:** 2026-06-19

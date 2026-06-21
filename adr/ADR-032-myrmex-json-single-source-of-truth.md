@@ -2,7 +2,8 @@
 description: "ADR-032: openclaw.json как единственный источник реестра агентов"
 type: adr
 last_reviewed: 2026-06-18
-status: proposed
+status: rejected
+rejected_reason: "Дублирует ADR-028 (openclaw.json как единственный источник истины). ADR-028 более полный и ранний."
 ---
 # ADR-032: openclaw.json как единственный источник реестра агентов
 

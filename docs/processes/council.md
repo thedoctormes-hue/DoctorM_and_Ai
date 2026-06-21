@@ -2,7 +2,9 @@
 name: council
 description: "Коллективное решение сложных проблем через привлечение экспертов из штата лаборатории. Use when: архитектурный тупик, стратегический выбор, сложная миграция, нужен консилиум для решения проблемы. NOT for: простые баги (используй debugging-and-error-recovery), P1 инциденты (используй incident-commander), рутинный код-ревью (используй code-review-and-quality)."
 owner: "LabDoctorM"
-last-reviewed: "2026-05-25"
+last_reviewed: 2026-06-21
+last_code_change: 2026-05-25
+status: active
 location: user
 version: 5.0.0
 category: orchestration

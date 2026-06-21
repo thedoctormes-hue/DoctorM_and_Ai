@@ -1,3 +1,11 @@
+---
+description: "GIT GUARDIAN"
+type: guide
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # 🛡️ Git Guardian v2.0 — документация системы защиты коммитов
 
 > **Создано Совой.** Утверждено ЗавЛабом.

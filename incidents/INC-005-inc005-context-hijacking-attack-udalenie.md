@@ -3,7 +3,7 @@ id: INC-005
 type: incident
 title: 'INC-005: Context Hijacking Attack — удаление .qwen компонентов и искажение
   инструкций'
-status: open
+status: closed
 author: root
 created: '2026-05-27T17:24:56+00:00'
 updated: '2026-05-27T17:24:56+00:00'

@@ -23,18 +23,8 @@ last_updated: 2026-05-27
 
 ## 1. Ядро лаборатории (корень)
 
-🥇 **QWEN.md** — навигация по слоям контекста
-🥇 **QWEN-core.md** — стек, дизайн, коммиты, деплой
-🥇 **QWEN-staff.md** — лаборанты и роли
-🥇 **QWEN-projects.md** — сводка проектов
-🥇 **INCIDENTS.md** — журнал инцидентов
-🥇 **ARTIFACTS.md** — описание типов артефактов
-🥉 **LAB_PASSPORT.md** — паспорт лаборатории (май 2026)
-🥉 **README.md** — общий README
-🥉 **README_Profile.md** — профиль для GitHub
-🗑️ **index.md** — устаревший (март 2026)
-🗑️ **projects.md** — дублирует QWEN-projects.md
-🗑️ **SECURITY.md** — пустой файл-заглушка
+🗑️ **QWEN.md, QWEN-core.md, QWEN-staff.md, QWEN-projects.md** — удалены при миграции на OpenClaw (июнь 2026). Заменены файлами в projects/DoctorM_and_Ai/docs/.
+🗑️ **INCIDENTS.md, ARTIFACTS.md, LAB_PASSPORT.md, README.md, README_Profile.md, index.md, projects.md, SECURITY.md** — более не используются.
 
 ---
 
@@ -42,8 +32,7 @@ last_updated: 2026-05-27
 
 ### docs/adr/ — Architecture Decision Records
 
-🥇 **ADR_CONTEXT_API_001.md** — решение по Context API
-🥇 **ADR_LLM_001_openrouter_models_stack.md** — стек LLM моделей
+🥇 **ADR-026-migration-safety.md** — единственный ADR в docs/adr/ (остальные перенесены в adr/)
 
 ### docs/processes/ — Процессы
 
@@ -137,72 +126,42 @@ last_updated: 2026-05-27
 
 ---
 
-## 4. Кабинет Совы (projects/owl/)
+## 4. Воркспейсы агентов (workspaces/)
 
-### Идентичность и состояние
+### Сова (workspaces/owl/)
 
-🥇 **IDENTITY.md** — идентичность Совы
-🥇 **SOUL.md** — душа Совы
-🥇 **CHECKPOINT.md** — текущий чекпоинт
-🥇 **SESSION_HANDOFF.md** — передача сессии
-🥇 **SERVICE_REGISTRY.md** — реестр сервисов (4 сервера, 20+ сервисов)
-🥇 **PROJECT_REGISTRY_20260520.md** — реестр проектов
-🥇 **GHOST_ORPHAN_DECISIONS_20260520.md** — решения-сироты
+🥇 **IDENTITY.md** — идентичность Совы, роль Auditor
+🥇 **SOUL.md** — душа, принципы, стиль
+🥇 **MEMORY.md** — долгосрочная память
+🥇 **AGENTS.md** — правила работы
+🥇 **USER.md** — информация о ЗавЛабе
+🥇 **TOOLS.md** — локальные заметки по инструментам
+🥇 **HEARTBEAT.md** — задачи для heartbeat
+📁 **memory/** — ежедневные заметки (YYYY-MM-DD.md)
 
-### Аудиты
+### Остальные агенты
 
-🥇 **AUDIT_MYRMEX_20260525.md** — аудит Myrmex Control
-🥇 **AUDIT_KOT_20260525.md** — аудит Кота (VPN)
-🥇 **AUDIT_OREX_20260524.md** — аудит Orex (раунд 1)
-🥇 **AUDIT_OREX_R2_20260524.md** — аудит Orex (раунд 2)
-🥇 **AUDIT_PROJECTS_20260520.md** — аудит проектов
-🥇 **AUDIT_QUALITY_20260520.md** — аудит качества
-🥇 **reports/lens-audit-20260526.md** — аудит линз (46 KB, подробный)
-🥇 **SPECS/SPEC-LENS-AUDIT.md** — спецификация аудита линз
-🥉 **SESSION_SUMMARY_20260524.md** — сводка сессии
+- **kotolizator** — workspaces/kotolizator/ (Orchestrator)
+- **antcat** — workspaces/antcat/ (Builder)
+- **bestia** — workspaces/bestia/ (Operator)
+- **raven** — workspaces/raven/ (Researcher)
+- **mangust** — workspaces/mangust/ (Analyst)
+- **dominika** — workspaces/dominika/ (Scout)
+- **muravey** — workspaces/muravey/ (Builder)
+- **streikbrecher** — workspaces/streikbrecher/ (Developer)
+
+Каждый воркспейс содержит: IDENTITY.md, SOUL.md, MEMORY.md, AGENTS.md, USER.md, TOOLS.md, HEARTBEAT.md, memory/.
 
 ---
 
 ## 5. Память лаборатории (.qwen/memory/)
 
-### Индекс
-
-🥇 **MEMORY.md** — индекс памяти (25+ файлов)
-
-### Инсайты сессий
-
-🥇 **insights_20260526_orex_fixes.md** — 4 бага Orex за сессию
-🥇 **insights_20260526_session_close.md** — отчёт о сессии, 7 коммитов
-🥇 **insights_session_20260527_session_startup.md** — session_startup v7.0
-🥇 **insights_session_20260527_owl_lens_audit.md** — аудит линз
-🥇 **insights_session_20260528_antcat_lenses.md** — ревью линз АнтКэт
-🥇 **insights_session_20260525_kot.md** — инсайты по Коту
-🥇 **insights_session_20260527_antcat.md** — сессия идентичности АнтКэт
-🥈 **insights_session_20260525_laptop.md** — инсайты по ноутбуку
-🥈 **insights_session_20260525_awg_uri.md** — AWG vpn:// URI формат
-🥈 **insights_session_20260526_autoexpert.md** — E2E тесты экспертиз
-🥈 **insights_20260525_deploy_infra.md** — инфраструктура деплоя
-🥈 **insights_20260526_autoexpert_security_session.md** — безопасность AutoExpert
-🥉 **insights_20260527.md** — общие инсайты
-🥉 **insights/insight_001..012** — микро-инсайты (12 файлов)
-
-### Проектные факты
-
-🥇 **project_autoexpert_deploy_20260526.md** — деплой AutoExpert
-🥇 **project_autoexpert_security_20260526.md** — безопасность AutoExpert
-🥇 **autoexpert_status_20260526.md** — статус AutoExpert
-🥇 **awg_vpn_uri_format_20260525.md** — формат AWG URI
-🥇 **myrmex_skills_path_20260525.md** — SKILLS_PATH для Myrmex
-🥈 **project_autoexpert.md** — общий статус AutoExpert
-
-### Исследования
-
-🥇 **roles_vs_staff_identity_loss_20260526.md** — роли vs идентичность лаборантов
-🥇 **lens-migration-complete-20260526.md** — миграция линз завершена
-🥈 **research_roles_vs_staff_20260526.md** — исследование ролей
-🥈 **question_20260527_identity.md** — вопрос об идентичности
-🥈 **lenses-migration-20260526.md** — процесс миграции линз
-🥉 **task_20260601_may_report.md** — задача на отчёт за май
+📄 **decision_log.jsonl** — журнал решений
+📄 **insight_playwright_expert_lost_2026_06_08.md** — инсайт о потере эксперта Playwright
+📁 **insights/** — каталог инсайтов сессий
+  - feedback.json
+  - session_20260524_session_startup_v5.md
+  - weights.json
 
 ---
 
@@ -346,31 +305,21 @@ last_updated: 2026-05-27
 
 ---
 
-## 7. Context API (services/context-api/)
+## 7. Инциденты (incidents/)
 
-🥇 **README.md** — описание сервиса
-🥇 **SECURITY_AUDIT.md** — аудит безопасности
-🥇 **INTEGRATION.md** — интеграция
-🥈 **HANDOFF_TO_BESTIA.md** — передача Бестии
-🥈 **TOKEN_AUDIT_REQUEST.md** — запрос аудита токенов
+Единый каталог инцидентов: `projects/DoctorM_and_Ai/incidents/`
 
----
-
-## 8. Cascade (cascade/)
-
-🗑️ **cascade/synthesis/** → `archive-labdoctorm/20260527/cascade-synthesis/` — промежуточные синтезы (архивировано 2026-05-27)
-🗑️ **cascade/pool/** (~48 файлов) — результаты каскада, черновики
+📄 **README.md** — реестр инцидентов со статусами
+📄 **INC-001..INC-025** — файлы инцидентов
 
 ---
 
 ## Сводка по качеству
 
-| Метка | Кол-во | Описание |
-|-------|--------|----------|
-| 🥇 Gold | ~120 | Актуальное, проверенное, используется |
-| 🥈 Silver | ~60 | Полезное, требует проверки |
-| 🥉 Bronze | ~40 | Историческая ценность |
-| 🗑️ Junk | ~165 | Мусор, дубликаты, черновики |
+- 🥇 Gold — ~100 артефактов (актуальное, проверенное)
+- 🥈 Silver — ~50 артефактов (полезное, требует проверки)
+- 🥉 Bronze — ~30 артефактов (историческая ценность)
+- 🗑️ Junk — ~20 артефактов (мусор, дубликаты, черновики)
 
 ---
 
@@ -378,10 +327,10 @@ last_updated: 2026-05-27
 
 1. Нашёл задачу → посмотри в каталоге нужный раздел
 2. Загружай только Gold-артефакты по теме
-3. Не читай всё подряд — это 385 файлов
+3. Не читай всё подряд
 4. Нашёл новый артефакт → зарегистрируй здесь
 5. Нашёл мусор → отметь как Junk, архивируй
 
 ---
 
-*Создано Совой 27.05.2026. Живой документ — обновляется при изменениях.*
+*Создано Совой 27.05.2026. Последнее обновление: 21.06.2026.*

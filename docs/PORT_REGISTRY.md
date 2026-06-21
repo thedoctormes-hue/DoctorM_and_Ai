@@ -1,3 +1,11 @@
+---
+description: "PORT REGISTRY"
+type: guide
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # PORT_REGISTRY.md — Реестр портов лаборатории
 
 > ⚠️ **Правило:** Каждый сервис слушает на `127.0.0.1:<port>`. Доступ извне только через nginx proxy.

@@ -2,7 +2,7 @@
 type: adr
 id: ADR-015
 title: 'ADR-015: Стек LLM-моделей лаборатории на OpenRouter'
-status: proposed
+status: accepted
 author: system
 created: 2026-05-24 21:07:07+00:00
 updated: 2026-05-24 21:07:07+00:00

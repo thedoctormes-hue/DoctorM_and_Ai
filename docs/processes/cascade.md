@@ -6,6 +6,9 @@ version: 6.0.0
 category: orchestration
 triggers: ["/cascade", "каскад", "cascade research", "исследуй", "изучи"]
 requiredTools: [agent, write_file, read_file, glob]
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-08
+status: active
 ---
 
 # Cascade v6.0.0 — Relevant Agent Research

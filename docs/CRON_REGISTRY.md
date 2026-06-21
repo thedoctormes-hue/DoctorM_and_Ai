@@ -1,3 +1,11 @@
+---
+description: "CRON REGISTRY"
+type: guide
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # CRON_REGISTRY.md — Реестр автоматизации лаборатории
 
 **Последнее обновление:** 2026-06-19 18:45 UTC

@@ -1,3 +1,11 @@
+---
+description: "insights system v2 architecture"
+type: guide
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # 🦊 Архитектура Insights System v2 — Лучшая в мире система ловли инсайтов
 
 > Доминика, 18.06.2026 — результат глубокого исследования паттернов, архитектур и лучших практик

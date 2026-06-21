@@ -1,3 +1,11 @@
+---
+description: "2026 06 20 fact checking incident"
+type: report
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # Инцидент: Подмена фактов на фантазии в отчёте
 
 **ID:** INC-20260620-140000

@@ -3,7 +3,8 @@ name: docs-mandatory
 description: Документация обязательна — обновляется ВМЕСТЕ с кодом, а не после.
 type: process
 status: active
-verified: 2026-06-17
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-17
 ---
 
 # 📝 Протокол «Документация Обязательна»

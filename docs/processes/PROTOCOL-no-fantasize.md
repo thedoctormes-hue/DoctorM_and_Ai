@@ -3,7 +3,8 @@ name: no-fantasize
 description: Протокол «не фантазировать» — сначала данные, потом выводы.
 type: process
 status: active
-verified: 2026-06-17
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-08
 ---
 
 # 🚫 Протокол «Не Фантазировать»

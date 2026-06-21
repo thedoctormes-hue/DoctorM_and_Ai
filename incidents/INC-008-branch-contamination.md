@@ -3,7 +3,7 @@
 type: incident
 id: INC-008
 title: "INC-008: Контаминация веток — Штрейкбрехер запущен на чужой ветке OWL"
-status: open
+status: resolved
 severity: high
 author: streikbrecher
 created: 2026-06-05T06:11:00+00:00

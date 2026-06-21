@@ -1,3 +1,11 @@
+---
+description: "Финальный дайджест"
+type: report
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # Финальный дайджест — 2026-06-18
 
 ## Статус: ~70% готовности

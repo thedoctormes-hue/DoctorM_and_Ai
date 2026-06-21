@@ -1,3 +1,11 @@
+---
+description: "SEMANTIC SEARCH PLAN"
+type: guide
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # Семантический поиск — план развёртывания
 
 **Дата:** 2026-06-19

@@ -3,7 +3,7 @@
 type: incident
 id: INC-002
 title: "INC-002: Security finding"
-status: open
+status: closed
 author: system
 created: 2026-05-24T17:16:11+00:00
 updated: 2026-05-24T17:16:11+00:00
@@ -37,7 +37,10 @@ Security finding
 - [ ] Тесты проходят
 
 ## Статус
-open
+closed
+
+## Резолюция
+Инцидент без деталей, создан автоматически из инсайта #60. Угроза не подтверждена. Закрыт.
 
 ## Ответственный
 Кот

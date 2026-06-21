@@ -1,17 +1,37 @@
 # LabDoctorM — Лаборатория
 
-Мультиагентная система на базе OpenClaw. Управляется ЗавЛабом (@DoctorMES).
+> **Владелец:** DoctorM&Ai | **Статус:** active
 
-## Структура
+## Описание
 
+Мультиагентная система на базе OpenClaw. Управляется ЗавЛабом (@DoctorMES). Включает 9 агентов, 21 проект, систему артефактов и инсайтов.
+
+## Быстрый старт
+
+```bash
+# Клонировать
+git clone https://github.com/thedoctormes-hue/LabDoctorM.git
+cd LabDoctorM
+
+# Установить зависимости (для Python-проектов)
+pip install -r requirements.txt
+
+# Запустить тесты
+pytest tests/ -v
+```
+
+## Архитектура
+
+**Стек:** Python, Go, JavaScript/TypeScript, React, FastAPI, PostgreSQL, Docker, OpenClaw Gateway
+
+**Структура:**
 - `workspaces/` — рабочие пространства агентов (по одному на агента)
-- `projects/` — проекты лаборатории (snablab, hype-pilot, artifact-pulse)
+- `projects/` — проекты лаборатории
 - `docs/` — документация (ADR, patterns, rules, specs, insights)
-- `shared/` — общие скрипты и утилиты
 - `incidents/` — журнал инцидентов
+- `adr/` — Architecture Decision Records
 
-## Агенты
-
+**Агенты:**
 - КотОлизатор — Orchestrator
 - Мангуст — Analyst
 - Сова — Auditor
@@ -21,40 +41,35 @@
 - Штрейкбрехер — Developer
 - Доминика — Scout
 
-## Стандарты качества
+## Разработка
 
-- Тесты — ≥85% покрытия для AI-кода, edge cases, exit code 0
-- Документация — README, комментарии, нетривиальные решения
-- Git — только через lab-commit.sh, атомарные коммиты, без секретов
-- Чистота — временные файлы, worktree, git status clean
+```bash
+# Тесты
+pytest tests/ -v
 
-## Git-правила
+# Линтер
+ruff check .
 
-Подробнее: `docs/GIT_FLOW.md`, `docs/GIT_GUARDIAN.md`
-
-Создать worktree:
-```
-bash shared/git-rules/create-worktree.sh <агент> projects/<кабинет>
+# Форматирование
+ruff format .
 ```
 
-Коммитить — ВСЕГДА через lab-commit.sh:
-```
-./bin/lab-commit.sh <агент> -m "сообщение"
+## Деплой
+
+```bash
+# Сборка
+docker-compose up -d
+
+# Проверка
+systemctl status openclaw
 ```
 
 ## Документация
 
-- `docs/adr/` — Architecture Decision Records
-- `docs/patterns/` — Паттерны разработки
-- `docs/rules/` — Правила лаборатории
-- `docs/specs/` — Спецификации
-- `docs/insights/` — Инсайты
-- `docs/processes/` — Процессы и протоколы
-- `incidents/` — Журнал инцидентов
-
-## Стек
-
-- Python, Go, JavaScript/TypeScript
-- React/Vue, FastAPI, PostgreSQL
-- Docker, CI/CD
-- OpenClaw Gateway
+- [Стандарты качества](docs/QUALITY_STANDARDS.md)
+- [Git Flow](docs/GIT_FLOW.md)
+- [Git Guardian](docs/GIT_GUARDIAN.md)
+- [ADR](docs/adr/)
+- [Процессы](docs/processes/)
+- [Инциденты](incidents/)
+- [Артефакты](docs/ARTIFACT_REGISTRY.md)

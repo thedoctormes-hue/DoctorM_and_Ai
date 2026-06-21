@@ -2,7 +2,9 @@
 name: project-upgrade
 description: "Комплексный апгрейд проекта: health-check → тесты → линтеры → README → security → деплой. Use when: нужен полный апгрейд проекта от аудита до деплоя, систематическое улучшение качества. NOT for: точечные улучшения (используй add-linter / add-pytest / create-readme), создание проекта с нуля (используй vibcoding-lab)."
 owner: "LabDoctorM"
-last-reviewed: "2026-05-25"
+last_reviewed: 2026-06-21
+last_code_change: 2026-05-25
+status: active
 location: user
 version: 3.0.0
 category: orchestration

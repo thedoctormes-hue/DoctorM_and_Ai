@@ -1,8 +1,14 @@
+---
+description: "Воркфлоу лаборантов — структура, коммиты, ветки"
+type: process
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-08
+status: active
+---
 # Agent Workflow — Воркфлоу лаборантов
 
-**Статус:** активен
-**Версия:** 2.0 (ADR-012)
-**Обновлено:** 2026-06-08
+**Версия:** 3.0 (ADR-012, ADR-037)
+**Обновлено:** 2026-06-21
 
 ## Обзор
 
@@ -20,78 +26,64 @@ projects/<agent>/
 └── [проекты]          # Рабочие файлы лаборанта
 ```
 
-## 6 лаборантов
+## 9 лаборантов
 
-| Агент | Папка | Роль |
-|-------|-------|------|
-| kotolizator | projects/kotolizator/ | Инфраструктура, VPN, серверы |
-| antcat | projects/antcat/ | Myrmex Control, бэкенд |
-| bestia | projects/bestia/ | Фронтенд, UI, дизайн |
-| raven | projects/raven/ | Разведка, мониторинг, контент |
-| owl | projects/owl/ | Документация, аналитика |
-| streikbrecher | projects/streikbrecher/ | Интеграции, парсеры, автоматизация |
+- **kotolizator** — Инфраструктура, VPN, серверы (workspaces/kotolizator/)
+- **antcat** — Myrmex Control, бэкенд (workspaces/antcat/)
+- **bestia** — Фронтенд, UI, дизайн (workspaces/bestia/)
+- **raven** — Разведка, мониторинг, контент (workspaces/raven/)
+- **owl** — Аудит, стандарты качества, архитектура (workspaces/owl/)
+- **streikbrecher** — Интеграции, парсеры, автоматизация (workspaces/streikbrecher/)
+- **mangust** — Аналитика (workspaces/mangust/)
+- **dominika** — Разведка (workspaces/dominika/)
+- **muravey** — Системная интеграция (workspaces/muravey/)
 
-## Запуск сессии (session_startup.sh)
+## Запуск сессии
 
-При старте сессии лаборанта выполняется `session_startup.sh`, который:
+При старте сессии лаборант загружает свой контекст из воркспейса (`workspaces/<агент>/`):
 
-1. Определяет агента по имени/алиасу через myrmex.json
-2. Загружает IDENTITY.md → кто я и моя роль
-3. Загружает SOUL-compact.md → мой характер и стиль
-4. Загружает RULES-BASE секция 3 → правила коммитов (ADR-012)
-5. Для Ворона — загружает raven-alerts.py
+1. `IDENTITY.md` → кто я и моя роль
+2. `SOUL.md` → мой характер и стиль
+3. `MEMORY.md` → долгосрочная память (только в основной сессии)
+4. `memory/YYYY-MM-DD.md` → последние заметки
 
-```bash
-bash .qwen/scripts/session_startup.sh <agent>
-```
+Контекст загружается автоматически через OpenClaw при инициализации агента.
 
-## Коммиты (agent-commit.sh)
+## Коммиты (lab-commit.sh)
 
-Каждый коммит лаборанта проходит через `agent-commit.sh`:
+Каждый коммит лаборанта проходит через `lab-commit.sh` (расположен в `projects/<проект>/bin/lab-commit.sh`):
 
 ```bash
-bash .qwen/scripts/agent-commit.sh <agent> <type> "<scope>" "<message>"
+cd /root/LabDoctorM/projects/<проект>
+./bin/lab-commit.sh <агент> -m "<тип>(<скоуп>): <описание>"
 ```
 
 ### Параметры
 
-- **agent** — kotolizator | antcat | bestia | raven | owl | streikbrecher
-- **type** — feat | fix | test | docs | refactor | chore
-- **scope** — проект или зона (например: "vpn-daemon", "myrmex-control")
-- **message** — описание на русском
+- **агент** — имя агента (kotolizator, antcat, bestia, raven, owl, streikbrecher, mangust, dominika, muravey)
+- **тип** — feat | fix | test | docs | refactor | chore
+- **скоуп** — проект или зона (например: vpn-daemon, myrmex-control)
+- **описание** — на русском
 
-### Правила (ADR-012)
+### Правила (ADR-012, ADR-037)
 
 1. **Ветка:** `<agent>/<type>-<scope>` — создаётся автоматически от main
 2. **Формат:** `type(scope): описание на русском`
 3. **Прямые коммиты в main — ЗАПРЕЩЕНЫ**
 4. **snapshot/wip/checkpoint** в сообщении — заблокированы
 5. **git add -u** — только tracked файлы, без мусора
-6. **Stash** — незакоммиченные изменения стэшатся перед checkout
+6. **Автор коммита** — указывается через параметр `<агент>`, не через git config
 
 ### Примеры
 
 ```bash
 # Котолизатор добавляет healthcheck
-bash .qwen/scripts/agent-commit.sh kotolizator feat "vpn-daemon" "добавить healthcheck endpoint"
+cd /root/LabDoctorM/projects/vpn-daemon
+./bin/lab-commit.sh kotolizator -m "feat(vpn-daemon): добавить healthcheck endpoint"
 
-# Ворон фиксит импорт
-bash .qwen/scripts/agent-commit.sh raven fix "hype-pilot" "исправить импорт telegraf"
-
-# Муравей пишет тест
-bash .qwen/scripts/agent-commit.sh antcat test "myrmex-control" "добавить тест DELETE handler"
-```
-
-### Что делает скрипт
-
-1. Валидирует agent, type, scope, message
-2. Блокирует snapshot/wip
-3. Если на main — автоматически создаёт feature-ветку
-4. Стэшит незакоммиченные изменения перед checkout
-5. Создаёт/переключается на ветку `<agent>/<type>-<scope>` от main
-6. Восстанавливает стэш на новой ветке
-7. `git add -u` — только tracked файлы
-8. `git commit -m "type(scope): message"`
+# Сова обновляет документацию
+cd /root/LabDoctorM/projects/DoctorM_and_Ai
+./bin/lab-commit.sh owl -m "docs(audit): обновить реестр артефактов"
 
 ## Жизненный цикл ветки
 
@@ -106,15 +98,15 @@ main → <agent>/<type>-<scope> → merge в main (через Кота или З
 
 ## Тестирование
 
-Тесты находятся в `.qwen/scripts/`:
+Тесты каждой функции находятся в проектах:
 
-- `test_session_startup_v14.sh` — тесты session_startup.sh v14
-- `test_agent_commit.sh` — тесты agent-commit.sh
+- `projects/<проект>/tests/` — тесты проекта
+- `projects/DoctorM_and_Ai/tests/` — системные тесты
 
 Запуск:
 ```bash
-bash .qwen/scripts/test_session_startup_v14.sh
-bash .qwen/scripts/test_agent_commit.sh
+cd /root/LabDoctorM/projects/<проект>
+pytest tests/ -v
 ```
 
 ## Известные ограничения

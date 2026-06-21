@@ -2,7 +2,7 @@
 id: INC-007
 type: incident
 title: 'INC-007: Руководство по ротации секретов'
-status: open
+status: closed
 author: system
 created: '2026-05-24T21:07:07+00:00'
 updated: '2026-05-24T21:07:07+00:00'

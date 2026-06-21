@@ -2,7 +2,7 @@
 description: "ADR-035: Структура монорепозитория лаборатории"
 type: adr
 last_reviewed: 2026-06-18
-status: proposed
+status: accepted
 ---
 # ADR-035: Структура монорепозитория лаборатории
 

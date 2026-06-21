@@ -1,3 +1,10 @@
+---
+description: "Процессы лаборатории — оркестрация, workflow, протоколы"
+type: process
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-08
+status: active
+---
 # 📋 Процессы лаборатории
 
 Документация процессов, оркестрации и workflow.

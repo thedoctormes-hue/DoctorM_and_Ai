@@ -1,3 +1,11 @@
+---
+description: "insights system v2 tasks"
+type: guide
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # 📋 Insights System v2 — Задачи агентам
 
 > Создано: 18.06.2026 08:30 UTC

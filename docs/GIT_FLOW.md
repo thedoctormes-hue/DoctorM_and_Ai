@@ -1,3 +1,11 @@
+---
+description: "GIT FLOW"
+type: guide
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # Git Flow — Лаборатория
 
 ## Структура веток

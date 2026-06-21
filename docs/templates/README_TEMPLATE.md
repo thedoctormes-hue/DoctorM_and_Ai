@@ -1,3 +1,11 @@
+---
+description: "Шаблон README"
+type: template
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-18
+status: active
+---
+
 # 🏷️ Название проекта
 
 > **Владелец:** [Имя лаборанта] | **Статус:** [production / active / planning]
