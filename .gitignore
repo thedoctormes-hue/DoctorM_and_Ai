@@ -209,3 +209,7 @@ workspaces/*/memory/*/*.json
 projects/lab-vault/lab-vault
 projects/lab-vault/lab-vault-env
 projects/lab-vault/snapshot.enc
+shared/faiss/
+
+# Node
+node_modules/
