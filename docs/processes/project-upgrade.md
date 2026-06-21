@@ -19,7 +19,7 @@ requiredTools: [read_file, write_file, run_shell_command, grep_search, list_dire
 Комплексный апгрейд проекта: health-check → тесты → линтеры → README → security → деплой.
 
 ## ⚠️ ОБЯЗАТЕЛЬНО: ПЕРЕД РАБОТОЙ
-1. Прочитай файл `~/.qwen/rules.md` и следуй этим правилам
+1. Прочитай файл `projects/DoctorM_and_Ai/docs/QUALITY_STANDARDS.md` и следуй этим правилам
 2. Сделай бэкап перед изменениями: `cp -r <project> <project>.bak`
 3. Запуски скиллов — последовательно, не параллельно
 

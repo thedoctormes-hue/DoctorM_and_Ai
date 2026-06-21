@@ -2,7 +2,7 @@
 
 ## Терминология
 
-- **Лаборатория** — `/root/LabDoctorM`, общий монорепозиторий
+- **Лаборатория** — `/root/LabDoctorM`, общая директория
 - **Кабинет** — отдельный проект-репозиторий внутри `projects/`
 - **Рабочий стол (workspace)** — персональная папка агента: `workspaces/<agent>/`
 
@@ -10,26 +10,24 @@
 
 ```
 /root/LabDoctorM/
-├── .qwen/
-│   └── git-authors.json          # Маппинг агентов → имя + email
-├── projects/                     # Кабинеты (отдельные репозитории)
+├── projects/                     # Кабинеты (отдельные git-репозитории)
 │   ├── snablab/
 │   ├── hype-pilot/
 │   ├── lab-monitoring/
-│   └── ... (18 проектов)
+│   └── ... (21 проект)
 ├── workspaces/                   # Рабочие столы агентов
 │   ├── owl/
 │   ├── antcat/
 │   └── ... (8 агентов)
 ├── bin/
-│   └── lab-commit.sh → ../scripts/lab-commit.sh (симлинк)
+│   └── lab-commit.sh             # Симлинк на scripts/lab-commit.sh
 └── scripts/
     └── lab-commit.sh             # Основной скрипт коммита
 ```
 
 ## Агенты и их идентичности
 
-Каждый агент имеет запись в `.qwen/git-authors.json`:
+Каждый агент имеет уникальное имя для коммитов:
 
 - **antcat** → Муравей <antcat@labdoctorm.ru>
 - **bestia** → Бестия <bestia@labdoctorm.ru>
@@ -58,14 +56,15 @@ cd /root/LabDoctorM/projects/<cabinet>
 ```bash
 cd /root/LabDoctorM/projects/<cabinet>
 git add <файлы>
-/root/LabDoctorM/bin/lab-commit.sh <agent> -m "feat: описание изменений"
+./bin/lab-commit.sh <agent> -m "feat(scope): описание изменений"
 ```
 
-Скрипт автоматически установит `GIT_AUTHOR_NAME` и `GIT_AUTHOR_EMAIL` из `git-authors.json`.
+Скрипт автоматически установит `GIT_AUTHOR_NAME` и `GIT_AUTHOR_EMAIL` через переменные окружения (race-free).
 
 ### 4. Пушить
 
 ```bash
+git pull --rebase origin main
 git push origin <текущая_ветка>
 ```
 
@@ -77,18 +76,18 @@ git push origin <текущая_ветка>
 
 - **gitleaks** — сканирование секретов
 - **Блокировка .env** — файлы `.env` нельзя закоммитить
-- **Проверка автора** — только агенты из `git-authors.json`
+- **Проверка формата сообщения** — `type(scope): описание`
 
 ## Добавление нового агента
 
-1. Добавить запись в `/root/LabDoctorM/.qwen/git-authors.json`
-2. Готово — `lab-commit.sh` сразу подхватит.
+1. Добавить запись в `lab-commit.sh` (массив AGENTS)
+2. Готово — скрипт сразу подхватит.
 
-## Реестр кабинетов (18)
+## Реестр кабинетов (21)
 
-- artifact-pulse, autoexpert, cheque-bot, consilium, free-api-hunter
+- api-hub, artifact-pulse, autoexpert, cheque-bot, consilium, free-api-hunter
 - hype-pilot, lab-monitoring, lab-playwright-expert, lab-vault
-- mail-daemon, msk-gastro-digest-bot, myrmex-control, remote-access
+- mail-daemon, mcp-tools, msk-gastro-digest-bot, myrmex-control, remote-access
 - snablab, SNZK, stenographer, vpn-daemon, zprr-tracker
 
 ## Важно

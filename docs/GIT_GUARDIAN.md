@@ -337,7 +337,7 @@ scripts/lab-commit.sh <agent> -m "сообщение"
 LAB_AGENT=<agent> scripts/lab-commit.sh -m "сообщение"
 ```
 
-Обёртка резолвит автора из `.qwen/git-authors.json` и ставит `GIT_AUTHOR_*` локально.
+Скрипт `lab-commit.sh` резолвит автора из параметра `<агент>` и ставит `GIT_AUTHOR_*` локально (race-free).
 `pre-commit` содержит **гейт идентичности**: если `LAB_AGENT` задан — автор обязан
 совпадать с его identity; иначе автор обязан быть в белом списке. Иначе коммит блокируется.
 

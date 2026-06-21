@@ -52,7 +52,7 @@ Scope: имя папки агента (antcat, bestia, kotolizator, owl, streikb
 ## Что НЕ коммитить
 
 - `CHECKPOINT.md` — чекпоинты (в .gitignore)
-- `.qwen/artifacts/` — артефакты runtime (в .gitignore)
+- `artifacts/` — runtime артефакты агентов (в .gitignore)
 - `SESSION_HANDOFF.md` — файлы смены (в .gitignore)
 - `ARTIFACT_CHANGELOG.md` — генерируемый (в .gitignore)
 - `projects/hype-pilot/inbox/approved_posts/` — посты (в .gitignore)

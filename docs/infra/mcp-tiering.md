@@ -87,9 +87,11 @@ alias mcp-dev='./scripts/tier-control.sh list optional && mcp enable-all optiona
 
 ## Artifacts
 
-- `tier.yml` → `/root/LabDoctorM/.qwen/tier.yml`
-- `tier-control.sh` → `/root/LabDoctorM/.qwen/hooks/tier-control.sh`
-- `apply-tiers.py` → `/root/LabDoctorM/.qwen/hooks/apply-tiers.py`
+> ⚠️ DEPRECATED — файлы были частью системы `.qwen/`. После миграции на OpenClaw не используются.
+
+- `tier.yml` → удалён
+- `tier-control.sh` → удалён
+- `apply-tiers.py` → удалён
 
 ## Why
 

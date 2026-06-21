@@ -20,7 +20,7 @@ status: active
 
 ## Отличие от скиллов
 
-- **Скиллы** (`/root/.qwen/skills/*/SKILL.md`) — исполняемые workflow с frontmatter, triggers, requiredTools
+- **Скиллы** (`~/.openclaw/skills/*/SKILL.md`) — исполняемые workflow с frontmatter, triggers, requiredTools
 - **Процессы** (`docs/processes/`) — справочная документация с пошаговыми инструкциями
 
 Перенесены из `skills/` в `docs/processes/` потому что описывают оркестрацию агентов, а не выполняют действия.

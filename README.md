@@ -1,3 +1,11 @@
+---
+description: "DoctorM_and_Ai — README"
+type: readme
+last_reviewed: 2026-06-21
+last_code_change: 2026-06-21
+status: active
+---
+
 # LabDoctorM — Лаборатория
 
 > **Владелец:** DoctorM&Ai | **Статус:** active
