@@ -1,4 +1,4 @@
-# ADR-040: TOP-5 Agent Configuration Improvements
+# ADR-043: TOP-5 Agent Configuration Improvements
 
 **Date:** 2026-06-20
 **Author:** Штрейкбрехер (streikbrecher)

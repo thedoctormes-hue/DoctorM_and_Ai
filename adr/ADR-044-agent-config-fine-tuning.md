@@ -1,4 +1,4 @@
-# ADR-041: Agent Configuration Fine-Tuning
+# ADR-044: Agent Configuration Fine-Tuning
 
 **Date:** 2026-06-20
 **Author:** Штрейкбрехер (streikbrecher)
