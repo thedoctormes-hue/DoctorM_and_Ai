@@ -2,7 +2,7 @@
 # backup-myrmex.sh — внешний бэкап myrmex.json (дополнительный слой к in-process модулю)
 set -euo pipefail
 
-MYRMEX_FILE="/root/LabDoctorM/projects/myrmex-control/server-dist/myrmex.json"
+MYRMEX_FILE="/root/LabDoctorM/projects/myrmex-control/myrmex.json"
 BACKUP_DIR="/var/backups/myrmex"
 MAX_BACKUPS=24  # 24 часа
 

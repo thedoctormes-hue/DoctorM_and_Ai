@@ -8,7 +8,7 @@ created: 2026-06-13
 updated: 2026-06-13
 last_reviewed: 2026-06-13
 last_code_change: 2026-06-13
-status: resolved
+status: closed
 severity: medium
 freshness_score: 97
 last_checked: '2026-06-20T01:00:19+00:00'

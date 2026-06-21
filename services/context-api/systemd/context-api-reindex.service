@@ -1,0 +1,10 @@
+[Unit]
+Description=LabDoctorM Context API — переиндексация семантического слоя артефактов
+After=network.target ollama.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/LabDoctorM/projects/DoctorM_and_Ai/services/context-api
+ExecStart=/usr/bin/python3 /root/LabDoctorM/projects/DoctorM_and_Ai/services/context-api/reindex_if_changed.py
+# bge-m3 на CPU: даём запас по времени
+TimeoutStartSec=3600

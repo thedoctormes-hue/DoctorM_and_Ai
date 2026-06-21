@@ -2,7 +2,7 @@
 type: incident
 id: INC-016
 title: 'INC-016: GitHub PAT в plaintext в remote URL (.git/config)'
-status: resolved
+status: closed
 author: kotolizator
 created: 2026-06-16 10:20:00+00:00
 updated: 2026-06-16 12:30:00+00:00

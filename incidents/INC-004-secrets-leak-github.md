@@ -2,7 +2,7 @@
 type: incident
 id: INC-004
 title: 'INC-004: Утечка секретов в GitHub репозитории'
-status: resolved
+status: closed
 author: system
 created: 2026-05-24 21:07:07+00:00
 updated: 2026-05-24 21:07:07+00:00

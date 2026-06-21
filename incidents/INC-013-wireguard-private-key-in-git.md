@@ -2,7 +2,7 @@
 type: incident
 id: INC-013
 title: 'INC-013: Приватный ключ WireGuard-сервера в git'
-status: resolved
+status: closed
 author: owl
 created: 2026-06-16 06:30:00+00:00
 updated: 2026-06-16 18:00:00+00:00

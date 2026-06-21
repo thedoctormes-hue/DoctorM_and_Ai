@@ -2,7 +2,7 @@
 type: incident
 id: INC-015
 title: 'INC-015: Cookies и сессии браузер-профилей в git'
-status: resolved
+status: closed
 author: owl
 created: 2026-06-16 07:10:00+00:00
 updated: 2026-06-16 18:00:00+00:00
