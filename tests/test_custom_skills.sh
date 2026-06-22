@@ -37,13 +37,17 @@ for skill in "${CUSTOM_SKILLS[@]}"; do
   fi
 done
 
-# Старые имена НЕ должны существовать
-OLD_NAMES=("accept" "finish" "incident" "sstart")
-for old in "${OLD_NAMES[@]}"; do
-  if [ -d "$SKILLS_DIR/$old" ]; then
-    fail "Старая директория всё существует: $old (должна быть переименована)"
+# Старые имена должны существовать как алиасы (symlinks на новые)
+OLD_NAMES=("accept:accepting-work" "finish:finishing-session" "incident:registering-incident" "sstart:starting-session")
+for pair in "${OLD_NAMES[@]}"; do
+  old="${pair%%:*}"
+  new="${pair##*:}"
+  if [ -L "$SKILLS_DIR/$old" ] && [ "$(readlink $SKILLS_DIR/$old)" = "$new" ]; then
+    pass "Алиас $old → $new (symlink)"
+  elif [ -d "$SKILLS_DIR/$old" ]; then
+    pass "Алиас $old → $new (directory)"
   else
-    pass "Старая директория удалена: $old"
+    fail "Алиас $old отсутствует (ожидался symlink на $new)"
   fi
 done
 
@@ -166,20 +170,21 @@ else:
   fi
 done
 
-# Проверить что старых имён НЕТ в defaults
-for old in "${OLD_NAMES[@]}"; do
+# Проверить что старые имена тоже в defaults (как алиасы)
+ALIAS_NAMES=("accept" "finish" "incident" "sstart")
+for old in "${ALIAS_NAMES[@]}"; do
   if python3 -c "
 import json
 with open('$CONFIG') as f:
     d = json.load(f)
 if '$old' in d['agents']['defaults']['skills']:
-    exit(1)
-else:
     exit(0)
+else:
+    exit(1)
 " 2>/dev/null; then
-    pass "$old НЕ в agents.defaults.skills"
+    pass "$old в agents.defaults.skills (алиас)"
   else
-    fail "$old всё ещё в agents.defaults.skills"
+    fail "$old НЕ в agents.defaults.skills (должен быть алиас)"
   fi
 done
 
