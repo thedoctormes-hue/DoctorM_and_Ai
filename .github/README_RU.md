@@ -151,7 +151,7 @@ VPN:         Xray Core (VLESS/REALITY) · nginx SNI routing
 - 📡 [@DoctorMES](https://t.me/DoctorMES) — Telegram
 - ✉️ [thedoctormes@gmail.com](mailto:thedoctormes@gmail.com) — Email
 - 🌐 [shtab-ai.ru](https://shtab-ai.ru) — Сайт
-- 📊 [myrmexcontrol.shtab-ai.ru](https://myrmexcontrol.shtab-ai.ru) — Дашборд
+
 - 📱 +79032749274 — Телефон
 - 💻 [github.com/thedoctormes-hue](https://github.com/thedoctormes-hue) — GitHub
 

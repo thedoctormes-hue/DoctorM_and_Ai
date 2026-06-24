@@ -7,7 +7,6 @@
 *Founded April 25, 2026. 23 projects, 8 agents, ~627 tests. Updated: 2026-06-24.*
 
 [![Website](https://img.shields.io/badge/Website-shtab--ai.ru-00D4AA?style=flat-square)](https://shtab-ai.ru)
-[![Dashboard](https://img.shields.io/badge/Dashboard-myrmexcontrol.shtab--ai.ru-00D4AA?style=flat-square)](https://myrmexcontrol.shtab-ai.ru)
 [![Telegram](https://img.shields.io/badge/Telegram-@DoctorMES-00D4AA?style=flat-square)](https://t.me/DoctorMES)
 
 [🇬🇧 English](#) · [🇷🇺 Русский](README_RU.md)
@@ -151,7 +150,6 @@ What we do have:
 - 📡 [@DoctorMES](https://t.me/DoctorMES) — Telegram
 - ✉️ [thedoctormes@gmail.com](mailto:thedoctormes@gmail.com) — Email
 - 🌐 [shtab-ai.ru](https://shtab-ai.ru) — Website
-- 📊 [myrmexcontrol.shtab-ai.ru](https://myrmexcontrol.shtab-ai.ru) — Dashboard
 - 📱 +79032749274 — Phone
 - 💻 [github.com/thedoctormes-hue](https://github.com/thedoctormes-hue) — GitHub
 
