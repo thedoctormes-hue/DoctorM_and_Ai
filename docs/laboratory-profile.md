@@ -175,7 +175,13 @@
 - Коммиты через `lab-commit.sh` (единый git user для всех проектов)
 - Код-ревью через агента-разработчика (Штрейкбрехер)
 
-**Контакты:** [НЕ ПРОВЕРЕНО: требует уточнения у ЗавЛаба]
+**Контакты:**
+- Telegram: @DoctorMES
+- Email: thedoctormes@gmail.com
+- Телефон: +79032749274
+- Сайт: https://shtab-ai.ru
+- Дашборд: https://myrmexcontrol.shtab-ai.ru
+- GitHub: https://github.com/thedoctormes-hue
 
 ---
 

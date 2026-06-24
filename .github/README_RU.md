@@ -148,9 +148,12 @@ VPN:         Xray Core (VLESS/REALITY) · nginx SNI routing
 
 ## Контакты
 
-- 🌐 [shtab-ai.ru](https://shtab-ai.ru)
-- 📊 [myrmexcontrol.shtab-ai.ru](https://myrmexcontrol.shtab-ai.ru)
-- 📡 [@DoctorMES](https://t.me/DoctorMES)
+- 📡 [@DoctorMES](https://t.me/DoctorMES) — Telegram
+- ✉️ [thedoctormes@gmail.com](mailto:thedoctormes@gmail.com) — Email
+- 🌐 [shtab-ai.ru](https://shtab-ai.ru) — Сайт
+- 📊 [myrmexcontrol.shtab-ai.ru](https://myrmexcontrol.shtab-ai.ru) — Дашборд
+- 📱 +79032749274 — Телефон
+- 💻 [github.com/thedoctormes-hue](https://github.com/thedoctormes-hue) — GitHub
 
 ---
 
