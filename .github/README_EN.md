@@ -4,7 +4,7 @@
 
 **An AI lab that's been shipping while you were reading this README.**
 
-*Founded April 25, 2026. In 70 days: 18 repos, ~950 tests, 0 days of downtime.*
+*Founded April 25, 2026. 23 projects, 8 agents, ~627 tests. Last updated: 2026-06-24.*
 
 [![Website](https://img.shields.io/badge/Website-shtab--ai.ru-00D4AA?style=flat-square)](https://shtab-ai.ru)
 [![Dashboard](https://img.shields.io/badge/Dashboard-myrmexcontrol.shtab--ai.ru-00D4AA?style=flat-square)](https://myrmexcontrol.shtab-ai.ru)
@@ -22,9 +22,9 @@ We don't have a pitch deck. No whitepaper. No slides with stock photos and "AI-p
 
 Here's what we do have:
 
-- **6 AI agents** writing code 24/7 — not as a demo, but on production
+- **8 AI agents** writing code 24/7 — not as a demo, but on production
 - **Autonomous incident response** — when one agent screws up, another runs the post-mortem. The human doesn't even wake up.
-- **~950+ tests** — because we don't trust "it works on my machine"
+- **627 tests** (excluding node_modules/dist) — because we don't trust "it works on my machine"
 
 If that's interesting — keep reading. If you need more proof — we'll prove it.
 
@@ -32,7 +32,7 @@ If that's interesting — keep reading. If you need more proof — we'll prove i
 
 ## The Agents
 
-Six specialists. Nobody's an "assistant". Each one owns their domain.
+Eight specialists. Nobody's an "assistant". Each one owns their domain.
 
 | Agent | Specialization | What They Actually Do |
 |-------|---------------|----------------------|
@@ -42,62 +42,73 @@ Six specialists. Nobody's an "assistant". Each one owns their domain.
 | ⚡ **Streikbrecher** | Fullstack | Cross-project development. The one who sees the whole picture |
 | 🦉 **Owl** | Audit & Quality | Standards, architecture. Won't let bad code through |
 | 🐦‍⬛ **Raven** | Recon | Monitoring, analytics, content. Flies ahead and finds threats |
+| 🦊 **Dominika** | Scout | Fast search, resource reconnaissance, data gathering |
+| 🦡 **Mongoose** | Analytics | Data analysis, integrations, ADR, external system connections |
 
-**ZavLab** — human operator. Sets tasks. Makes strategic decisions. Doesn't write code at 3am (the agents do that for him).
+**ZavLab** (@DoctorMES) — human operator. Sets tasks. Makes strategic decisions. Doesn't write code at 3am (the agents do that for him).
 
 ---
 
 ## Projects That Run Right Now
 
-### 🟢 Production — live, delivering value
+### 🟢 Production — live, delivering value (no SLA, best-effort)
 
 | Project | What It Does | Stack |
 |---------|--------------|-------|
-| [myrmex-control](https://github.com/thedoctormes-hue/myrmex-control) ⚡ | Lab control panel: kanban, sessions, artifacts, chat. 116 tests | React 19, TS, Express |
+| [myrmex-control](https://github.com/thedoctormes-hue/myrmex-control) ⚡ | Lab control panel: kanban, sessions, artifacts, chat. 44 modules, 195 tests | React 19, TS, Express |
 | [lab-vault](https://github.com/thedoctormes-hue/lab-vault) 🔐 | Secret manager for AI agents. Go. Works. Secrets stay secret. | Go |
-| [mail-daemon](https://github.com/thedoctormes-hue/mail-daemon) 📬 | IMAP monitoring + AI classification + OCR. No fantasies — it just works | Go |
-| [zprr-tracker](https://github.com/thedoctormes-hue/zprr-tracker) 👶 | Speech development tracker for children. Real kids, real results | FastAPI, React, PostgreSQL |
-| [consilium](https://github.com/thedoctormes-hue/consilium) 🧠 | AI consultant. Analyzes, recommends, says when it doesn't know | Go |
+| [mail-daemon](https://github.com/thedoctormes-hue/mail-daemon) 📬 | IMAP monitoring + AI classification + OCR | Go |
+| [zprr-tracker](https://github.com/thedoctormes-hue/zprr-tracker) 👶 | Speech development tracker for children. Real kids, real results. 99 tests | FastAPI, React, PostgreSQL |
+| [consilium](https://github.com/thedoctormes-hue/consilium) 🧠 | AI council of 6 analytical roles: Skeptic, Post-mortem, First Principles, Growth, Outsider, Executor. HTTP API + Telegram bot | Go |
+| [snablab](https://github.com/thedoctormes-hue/snablab) | Full-stack procurement for clinical labs: catalogs, RFQ parsing, inventory, orders, equipment, analytics, Telegram bot. 81 tests | Python, PostgreSQL |
+| [stenographer](https://github.com/thedoctormes-hue/stenographer) | Audio/video transcription from Telegram. 4 tests | Python, aiogram |
+| [free-api-hunter](https://github.com/thedoctormes-hue/free-api-hunter) | Monitoring free LLM APIs with web dashboard | Go, React |
 
-### 🟡 Active — in development, close to production
+### 🟡 Active — in development
 
 | Project | What It Does | Stack |
 |---------|--------------|-------|
-| [autoexpert](https://github.com/thedoctormes-hue/autoexpert) | Traffic accident damage assessment with AI. 132 tests | FastAPI, React/Vite, PostgreSQL |
-| [snablab](https://github.com/thedoctormes-hue/snablab) | Lab consumables procurement management | Python, PostgreSQL |
-| [hype-pilot](https://github.com/thedoctormes-hue/hype-pilot) | Telegram autoposting. 44 tests. Posts while you sleep | Python, Playwright |
-| [lab-monitoring](https://github.com/thedoctormes-hue/lab-monitoring) | Monitors everything. 81 tests. systemd timer. Sleeps with us | Python, systemd |
+| [autoexpert](https://github.com/thedoctormes-hue/autoexpert) | Traffic accident damage assessment with AI. 67 tests | FastAPI, React/Vite, PostgreSQL |
+| [hype-pilot](https://github.com/thedoctormes-hue/hype-pilot) | Hype and viral content monitoring. Telegram autoposting. 44 tests | Python, Playwright |
+| [lab-monitoring](https://github.com/thedoctormes-hue/lab-monitoring) | Infrastructure monitoring. 4 tests. systemd timer | Python, systemd |
 | [artifact-pulse](https://github.com/thedoctormes-hue/artifact-pulse) | Lab artifact health monitoring | Python |
-| [lab-playwright-expert](https://github.com/thedoctormes-hue/lab-playwright-expert) | Test automation framework. 326 tests for testing tests | Python, Playwright |
-| [stenographer](https://github.com/thedoctormes-hue/stenographer) | Audio/video transcription from Telegram. 12 tests | Python, aiogram |
-| [vpn-daemon](https://github.com/thedoctormes-hue/vpn-daemon) | VPN management via Telegram. 36 tests | Python, aiogram, PostgreSQL |
+| [lab-playwright-expert](https://github.com/thedoctormes-hue/lab-playwright-expert) | Test automation framework. 106 tests | Python, Playwright |
+| [vpn-daemon](https://github.com/thedoctormes-hue/vpn-daemon) | VPN management via Telegram. 18 tests | Python, aiogram, PostgreSQL |
 | [SNZK](https://github.com/thedoctormes-hue/SNZK) | Narrative web project | TypeScript, Vite, Canvas |
 | [remote-access](https://github.com/thedoctormes-hue/remote-access) | Remote equipment access | Bash, Xray, SSH |
+| [DoctorMandDesign](https://github.com/thedoctormes-hue/DoctorMandDesign) | Presentation generator. 18 templates, WCAG-AA, i18n | Python, reportlab |
+| [msk-gastro-digest-bot](https://github.com/thedoctormes-hue/msk-gastro-digest-bot) | Moscow restaurant news digest. $0 (free models) | aiogram, v6.5 |
+| [polyscope](https://github.com/thedoctormes-hue/polyscope) | Interactive landing page | React 19, Vite 7, Radix UI, GSAP |
+| [api-hub](https://github.com/thedoctormes-hue/api-hub) | Unified API gateway (in development) | FastAPI, SQLAlchemy |
+| [cheque-bot](https://github.com/thedoctormes-hue/cheque-bot) | Receipt processing. 7 tests | aiogram |
+| [mcp-tools](https://github.com/thedoctormes-hue/mcp-tools) | MCP tools (in development) | — |
 
-### 🔴 Cheque-bot — frozen
+### 🔴 Frozen
 
-There was an accounting bot. It's frozen. We won't pretend it's "in the roadmap".
+- Accounting bot — frozen, not maintained.
 
 ---
 
 ## Architecture. Bold and Precise.
 
 ```
-ZavLab
-  └── Myrmex Control
+ZavLab (@DoctorMES)
+  └── Myrmex Control (44 modules, ModuleRegistry auto-discovery)
         ├── Kotolizator ─── VPN, data, coordination
         ├── Ant ─────────── engineering, Myrmex, bots
         ├── Bestia ──────── infrastructure, SnabLab
         ├── Streikbrecher — fullstack, architecture
         ├── Owl ─────────── audit, standards, quality
-        └── Raven ──────── recon, monitoring
+        ├── Raven ──────── recon, monitoring
+        ├── Dominika ───── scout, resource search
+        └── Mongoose ───── analytics, integrations, ADR
 ```
 
 **Facts without decoration:**
-- Each agent works in an **isolated git worktree** — no conflicts
-- **25 ADR** at root + **14 ADR** in myrmex-control — every decision documented
-- **13 incidents** recorded with post-mortem — none repeated
-- **Git Guardian** won't let you push garbage to main. Not even us.
+- Each agent in an **isolated** workspace — minimum conflicts
+- **44 ADR** at root — every decision documented
+- **38 incidents** recorded with post-mortem (see `incidents/`)
+- **Git Guardian** blocks garbage pushes to main. Even ours.
 
 ---
 
@@ -107,11 +118,11 @@ We don't chase trends. We use what works.
 
 ```
 Languages:   Python · TypeScript · Go · Bash
-Backend:     FastAPI · aiogram · Express · PostgreSQL · SQLite
-Frontend:    React 19 · Vite · Tailwind CSS · Telegram Web Apps
+Backend:     FastAPI · aiogram · Express · chi · PostgreSQL · SQLite · MinIO
+Frontend:    React 18/19 · Vite 5/7/8 · Tailwind CSS · Radix UI · Zustand
+AI/LLM:      OpenRouter (multi-provider) · EmbeddingGemma-300m · FAISS · ONNX Runtime
 DevOps:      Docker · systemd · GitHub Actions · pre-commit
 VPN:         Xray Core (VLESS/REALITY) · nginx SNI routing
-AI Core:     Qwen Code · multi-agent system · self-evolution
 ```
 
 *Notice the absence of "blockchain" and "web3"? So did we.*
@@ -120,20 +131,22 @@ AI Core:     Qwen Code · multi-agent system · self-evolution
 
 ## Quality. Seriously.
 
-**~950+ tests** — conservative count:
-- myrmex-control: 116
-- autoexpert: 132
-- lab-monitoring: 81
-- lab-playwright-expert: 326
-- hype-pilot: 44
-- vpn-daemon: 36
-- stenographer: 12
-- artifact-pulse: 5
+**627 tests** — excluding node_modules/dist/.venv:
+- myrmex-control: 195
+- autoexpert: 67
+- lab-playwright-expert: 106
+- zprr-tracker: 99
+- snablab: 81
+- lab-monitoring: 4
+- vpn-daemon: 18
+- stenographer: 4
+- others: ~54
+
+[VERIFIED: find -name "test_*" -not -path "*/node_modules/*" -not -path "*/.venv/*" | wc -l]
 
 **Security:**
 - TruffleHog + detect-secrets in pre-push hooks
 - Dependabot watches dependencies automatically
-- 36 vulnerabilities detected by Dependabot — all being addressed
 
 **Cascade audits:** agents review each other's code. If one misses something — another catches it. The human doesn't need to be a 24/7 code reviewer.
 
@@ -158,7 +171,7 @@ We don't have:
 - ❌ "52 skills" copied from Qwen docs
 - ❌ AI that's "planned" or "on the roadmap"
 - ❌ "Passive income" as a project (we build actual products)
-- ❌ A team of 50 people (6 agents do more)
+- ❌ A team of 50 people (8 agents, 23 projects)
 
 What we do have:
 - ✅ Running services

@@ -12,7 +12,7 @@
 
 **Подход:** Лаборатория автономных AI-агентов на базе OpenClaw — 8 специализированных агентов, работающих 24/7 в единой экосистеме. Каждый агент — эксперт в своей зоне: от парсинга цен до архитектурного консилиума.
 
-**Статус:** Частичный продакшн. 23 проекта, 8 агентов, ~252K строк кода (без учёта node_modules и dist). 6 сервисов работают в продакшне (snablab, consilium, stenographer, free-api-hunter, vpn-daemon, myrmex-control). Остальные — в стадии MVP или R&D.
+**Статус:** Частичный продакшн. 23 проекта, 8 агентов, ~252K строк кода (без учёта node_modules и dist), ~627 тестов. 8 сервисов работают в продакшне (без SLA). Остальные — в стадии MVP или R&D.
 
 [ВЕРИФИЦИРОВАНО: git log всех репозиториев, 23 проекта в projects/]
 
@@ -96,12 +96,14 @@
 
 ### Что работает в продакшне (без SLA, best-effort)
 
-- **snablab** — полный стек автоматизации закупок для клинико-диагностической лаборатории: справочники номенклатуры, оборудования, поставщиков; парсинг PDF/DOCX коммерческих предложений; автосопоставление позиций; складской учёт с контролем сроков; управление заявками на закупку; учёт оборудования и инцидентов; аналитика новых услуг; Telegram-бот мониторинга (FastAPI + React, 93 коммита, Playwright E2E) [ВЕРИФИЦИРОВАНО: projects/snablab/README.md]
-- **consilium** — AI-консилиум из 6 аналитических ролей (Go, HTTP API + Telegram бот) [ВЕРИФИЦИРОВАНО: projects/consilium/README.md]
-- **stenographer** — транскрибация аудио в 4 документа (aiogram 3.28, STT pipeline) [ВЕРИФИЦИРОВАНО: projects/stenographer/README.md]
-- **free-api-hunter** — мониторинг бесплатных LLM API (Go, React фронтенд, веб-дашборд) [ВЕРИФИЦИРОВАНО: projects/free-api-hunter/README.md]
-- **vpn-daemon** — управление VPN-клиентами (Xray VLESS+REALITY, Docker Compose) [ВЕРИФИЦИРОВАНО: projects/vpn-daemon/]
-- **myrmex-control** — пульт управления колонией (Express + React 19, 44 модуля, ModuleRegistry auto-discovery) [ВЕРИФИЦИРОВАНО: ls modules/]
+- **snablab** — полный стек автоматизации закупок для клинико-диагностической лаборатории: справочники номенклатуры, оборудования, поставщиков; парсинг PDF/DOCX коммерческих предложений; автосопоставление позиций; складской учёт с контролем сроков; управление заявками на закупку; учёт оборудования и инцидентов; аналитика новых услуг; Telegram-бот мониторинга (FastAPI + React, 81 тест) [ВЕРИФИЦИРОВАНО: projects/snablab/README.md]
+- **consilium** — AI-консилиум из 6 аналитических ролей: Скептик, Пост-мортем, Первые принципы, Рост, Аутсайдер, Исполнитель. HTTP API + Telegram-бот (Go) [ВЕРИФИЦИРОВАНО: projects/consilium/README.md]
+- **stenographer** — транскрибация аудио/видео из Telegram в документы (aiogram, 4 теста) [ВЕРИФИЦИРОВАНО: projects/stenographer/README.md]
+- **free-api-hunter** — мониторинг бесплатных LLM API с веб-дашбордом (Go, React) [ВЕРИФИЦИРОВАНО: projects/free-api-hunter/README.md]
+- **vpn-daemon** — управление VPN-клиентами через Telegram (Xray VLESS+REALITY, 18 тестов) [ВЕРИФИЦИРОВАНО: projects/vpn-daemon/]
+- **myrmex-control** — пульт управления колонией (Express + React 19, 44 модуля, ModuleRegistry auto-discovery, 195 тестов) [ВЕРИФИЦИРОВАНО: ls modules/]
+- **mail-daemon** — IMAP-мониторинг + AI-классификация + OCR (Go) [ВЕРИФИЦИРОВАНО: projects/mail-daemon/README.md]
+- **zprr-tracker** — трекер речевого развития для детей (FastAPI + React + PostgreSQL, 99 тестов) [ВЕРИФИЦИРОВАНО: projects/zprr-tracker/README.md]
 
 ### Что в разработке (MVP/R&D)
 
@@ -123,10 +125,11 @@
 
 ### Артефакты и документация
 
-- 44 ADR (архитектурных решения) [ВЕРИФИЦИРОВАНО: projects/DoctorM_and_Ai/adr/]
-- 21 паттерн [ВЕРИФИЦИРОВАНО: projects/DoctorM_and_Ai/patterns/]
-- 38 инцидентов (зафиксированных и разобранных) [ВЕРИФИЦИРОВАНО: projects/DoctorM_and_Ai/incidents/]
-- 800+ файлов в репозитории DoctorM_and_Ai
+- 44 ADR (архитектурных решения) [ВЕРИФИЦИРОВАНО: ls adr/ | wc -l = 44]
+- 21 паттерн [ВЕРИФИЦИРОВАНО: ls patterns/ | wc -l = 21]
+- 38 инцидентов (зафиксированных и разобранных) [ВЕРИФИЦИРОВАНО: ls incidents/ | wc -l = 38]
+- ~800 файлов в репозитории DoctorM_and_Ai
+- ~627 тестов по всей лаборатории [ВЕРИФИЦИРОВАНО: find -name test_* | wc -l]
 
 ### Известные ограничения
 
