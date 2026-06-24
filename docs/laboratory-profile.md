@@ -96,7 +96,7 @@
 
 ### Что работает в продакшне (без SLA, best-effort)
 
-- **snablab** — парсинг цен на автозапчасти (FastAPI + React, 93 коммита, Playwright E2E) [ВЕРИФИЦИРОВАНО: git log]
+- **snablab** — полный стек автоматизации закупок для клинико-диагностической лаборатории: справочники номенклатуры, оборудования, поставщиков; парсинг PDF/DOCX коммерческих предложений; автосопоставление позиций; складской учёт с контролем сроков; управление заявками на закупку; учёт оборудования и инцидентов; аналитика новых услуг; Telegram-бот мониторинга (FastAPI + React, 93 коммита, Playwright E2E) [ВЕРИФИЦИРОВАНО: projects/snablab/README.md]
 - **consilium** — AI-консилиум из 6 аналитических ролей (Go, HTTP API + Telegram бот) [ВЕРИФИЦИРОВАНО: projects/consilium/README.md]
 - **stenographer** — транскрибация аудио в 4 документа (aiogram 3.28, STT pipeline) [ВЕРИФИЦИРОВАНО: projects/stenographer/README.md]
 - **free-api-hunter** — мониторинг бесплатных LLM API (Go, React фронтенд, веб-дашборд) [ВЕРИФИЦИРОВАНО: projects/free-api-hunter/README.md]
