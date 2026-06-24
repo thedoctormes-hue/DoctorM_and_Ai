@@ -10,7 +10,7 @@
 [![Dashboard](https://img.shields.io/badge/Dashboard-myrmexcontrol.shtab--ai.ru-00D4AA?style=flat-square)](https://myrmexcontrol.shtab-ai.ru)
 [![Telegram](https://img.shields.io/badge/Telegram-@DoctorMES-00D4AA?style=flat-square)](https://t.me/DoctorMES)
 
-[🇷🇺 Русский](README_RU.md) · [🇬🇧 English](README_EN.md)
+[🇷🇺 Русский](#) · [🇬🇧 English](README_EN.md)
 
 </div>
 
