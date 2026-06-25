@@ -104,7 +104,7 @@ python3 /root/LabDoctorM/shared/lab_search.py health
 
 ## Что удалено (очистка 2026-06-24)
 
-- `lab-search-proxy` (порт 8081) — убит, systemd-юнит удалён
+- `lab-search-proxy` (порт 8081) — убит, systemd-юнит удалён. Заменён на `lab_search.py` (in-process FAISS + ONNX на 8082, ADR-0052)
 - Старые скрипты индексации в `antcat/bin/` (build-faiss.py, index-*.sh, write-*.py и т.д.)
 - Старые systemd-сервисы индексации (lab-index, incremental-reindex, system-lab-* slices)
 - Дублирующиеся скиллы `lab-search`, `lab-semantic-search` в каждом агенте
