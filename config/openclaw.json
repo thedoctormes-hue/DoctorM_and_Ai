@@ -29,8 +29,10 @@
       "compaction": {
         "memoryFlush": {
           "enabled": true,
-          "softThresholdTokens": 6000,
-          "model": "openrouter/openai/gpt-oss-120b:free"
+          "softThresholdTokens": 30000,
+          "model": "openrouter/openai/gpt-oss-120b:free",
+          "prompt": "Save decisions, state changes, lessons, blockers, approved actions, and open tasks to memory/YYYY-MM-DD.md. Skip routine conversation. If nothing worth storing: NO_FLUSH",
+          "systemPrompt": "Only persist what matters for session continuity. Be concise, no filler."
         },
         "notifyUser": true,
         "postCompactionSections": [
@@ -43,7 +45,12 @@
           "enabled": true,
           "maxRetries": 1
         },
-        "identifierPolicy": "strict"
+        "identifierPolicy": "strict",
+        "reserveTokensFloor": 24000,
+        "keepRecentTokens": 10000,
+        "maxActiveTranscriptBytes": 20971520,
+        "model": "cohere/command-r-plus-08-2024",
+        "timeoutSeconds": 300
       },
       "contextLimits": {
         "toolResultMaxChars": 32000
@@ -63,54 +70,64 @@
       "timeoutSeconds": 600,
       "memorySearch": {
         "provider": "ollama",
-        "model": "bge-m3-cpu-512",
-        "remote": {
-          "baseUrl": "http://127.0.0.1:11434",
-          "apiKey": "ollama-local",
-          "nonBatchConcurrency": 2
-        },
+        "model": "bge-m3",
         "fallback": "none",
-        "sync": {
-          "embeddingBatchTimeoutSeconds": 600
-        },
         "extraPaths": [
-          "/root/LabDoctorM/workspaces/antcat",
-          "/root/LabDoctorM/workspaces/mangust",
-          "/root/LabDoctorM/workspaces/owl",
-          "/root/LabDoctorM/workspaces/raven",
-          "/root/LabDoctorM/workspaces/dominika",
-          "/root/LabDoctorM/workspaces/kotolizator",
-          "/root/LabDoctorM/workspaces/streikbrecher"
-        ]
+          "/root/LabDoctorM/adr",
+          "/root/LabDoctorM/docs",
+          "/root/LabDoctorM/specs",
+          "/root/LabDoctorM/workspaces/antcat/memory",
+          "/root/LabDoctorM/workspaces/mangust/memory",
+          "/root/LabDoctorM/workspaces/owl/memory",
+          "/root/LabDoctorM/workspaces/raven/memory",
+          "/root/LabDoctorM/workspaces/dominika/memory",
+          "/root/LabDoctorM/workspaces/kotolizator/memory",
+          "/root/LabDoctorM/workspaces/streikbrecher/memory",
+          "/root/LabDoctorM/workspaces/bestia/memory",
+          "/root/LabDoctorM/projects/DoctorM_and_Ai/docs"
+        ],
+        "sync": {
+          "watch": true
+        }
       },
       "skills": [
-        "agent-acceptance-protocol",
+        "accepting-work",
         "canvas",
-        "deep-research-lab",
         "diagram-maker",
+        "finishing-session",
         "gh-issues",
-        "git-lab",
         "github",
+        "gitlab",
         "healthcheck",
         "himalaya",
-        "lab-search",
+        "labsearch",
         "mcporter",
         "meme-maker",
         "nano-pdf",
         "node-inspect-debugger",
         "oracle",
         "python-debugpy",
-        "session-end",
+        "registering-incident",
+        "research",
+        "send",
         "session-logs",
-        "session-start",
         "skill-creator",
         "spike",
+        "starting-session",
         "summarize",
         "taskflow",
         "tavily",
         "tmux",
         "video-frames",
-        "weather"
+        "weather",
+        "fact-check",
+        "anti-loop",
+        "skill-manager",
+        "safe-restart",
+        "change-management",
+        "300-vision",
+        "colony-disk-exchange",
+        "manus-outsourcing"
       ],
       "bootstrapTotalMaxChars": 120000,
       "heartbeat": {
@@ -129,7 +146,11 @@
       },
       "contextPruning": {
         "mode": "cache-ttl",
-        "ttl": "1h"
+        "ttl": "10m",
+        "keepLastAssistants": 4,
+        "softTrimRatio": 0.65,
+        "hardClearRatio": 0.88,
+        "minPrunableToolChars": 1200
       }
     },
     "list": [
@@ -137,32 +158,41 @@
         "id": "main",
         "workspace": "/root/.openclaw/workspaces/main",
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-search",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
+          "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "manus-outsourcing"
         ]
       },
       {
@@ -213,32 +243,43 @@
           }
         },
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-search",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
+          "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "300-vision",
+          "colony-disk-exchange",
+          "manus-outsourcing"
         ]
       },
       {
@@ -289,32 +330,43 @@
           }
         },
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-search",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
+          "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "300-vision",
+          "colony-disk-exchange",
+          "manus-outsourcing"
         ]
       },
       {
@@ -365,36 +417,46 @@
           }
         },
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-audit",
-          "lab-report",
-          "lab-search",
-          "lab-sync",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
           "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "lab-audit",
+          "lab-report",
+          "lab-sync",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "300-vision",
+          "colony-disk-exchange",
+          "manus-outsourcing"
         ],
         "heartbeat": {
           "every": "30m",
@@ -450,32 +512,43 @@
           }
         },
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-search",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
+          "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "300-vision",
+          "colony-disk-exchange",
+          "manus-outsourcing"
         ],
         "contextLimits": {
           "toolResultMaxChars": 64000
@@ -529,32 +602,43 @@
           }
         },
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-search",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
+          "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "300-vision",
+          "colony-disk-exchange",
+          "manus-outsourcing"
         ]
       },
       {
@@ -605,33 +689,44 @@
           }
         },
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-search",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
           "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "skill-creator",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "300-vision",
+          "colony-disk-exchange",
+          "manus-outsourcing"
         ],
         "heartbeat": {
           "every": "30m",
@@ -687,32 +782,43 @@
           }
         },
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-search",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
+          "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "300-vision",
+          "colony-disk-exchange",
+          "manus-outsourcing"
         ]
       },
       {
@@ -763,36 +869,47 @@
           }
         },
         "skills": [
-          "agent-acceptance-protocol",
+          "accepting-work",
           "canvas",
-          "deep-research-lab",
           "diagram-maker",
+          "finishing-session",
           "gh-issues",
-          "git-hygiene",
-          "git-lab",
           "github",
+          "gitlab",
           "healthcheck",
           "himalaya",
-          "lab-search",
+          "labsearch",
           "mcporter",
           "meme-maker",
           "nano-pdf",
           "node-inspect-debugger",
           "oracle",
           "python-debugpy",
-          "session-end",
+          "registering-incident",
+          "research",
+          "send",
           "session-logs",
           "skill-creator",
           "spike",
+          "starting-session",
           "summarize",
           "taskflow",
           "tavily",
           "tmux",
           "video-frames",
-          "weather"
+          "weather",
+          "skill-creator",
+          "fact-check",
+          "anti-loop",
+          "skill-manager",
+          "safe-restart",
+          "change-management",
+          "300-vision",
+          "colony-disk-exchange",
+          "manus-outsourcing"
         ],
         "contextLimits": {
-          "toolResultMaxChars": 64000
+          "toolResultMaxChars": 32000
         }
       }
     ]
@@ -836,15 +953,7 @@
         "maxResults": 5,
         "timeoutSeconds": 30
       },
-      "fetch": {
-        "firecrawl": {
-          "apiKey": "fc-1277a4dd022a49ff8143b64e4270c497",
-          "baseUrl": "https://api.firecrawl.dev/v2",
-          "onlyMainContent": true,
-          "maxAgeMs": 172800000,
-          "timeoutSeconds": 60
-        }
-      }
+      "fetch": {}
     },
     "sessions": {
       "visibility": "all"
@@ -908,7 +1017,25 @@
         }
       },
       "enabled": true
-    }
+    },
+    "enabled": true,
+    "token": "86a228a53ecb103a6c2c87547b8f438e73f9745a04b091c91dfa638ba5a19d27dfb5a1a6f",
+    "allowRequestSessionKey": true,
+    "allowedSessionKeyPrefixes": [
+      "hook:"
+    ],
+    "mappings": [
+      {
+        "match": {
+          "path": "myrmex"
+        },
+        "action": "agent",
+        "agentId": "mangust",
+        "sessionKey": "agent:mangust:telegram:direct:173681771",
+        "messageTemplate": "{{message}}",
+        "wakeMode": "now"
+      }
+    ]
   },
   "plugins": {
     "entries": {
@@ -930,22 +1057,6 @@
       "browser": {
         "enabled": true
       },
-      "intention-hint": {
-        "enabled": true,
-        "config": {
-          "model": "openrouter/openai/gpt-oss-120b:free",
-          "modelFallback": "openrouter/openai/gpt-oss-120b:free",
-          "thinking": "low",
-          "timeoutMs": 10000,
-          "queryMode": "recent",
-          "allowedChatTypes": [
-            "direct"
-          ],
-          "agents": [
-            "streikbrecher"
-          ]
-        }
-      },
       "tavily": {
         "enabled": true,
         "config": {
@@ -962,7 +1073,8 @@
             "frequency": "0 3 * * *",
             "timezone": "UTC"
           }
-        }
+        },
+        "enabled": true
       },
       "microsoft": {
         "enabled": true
@@ -1013,14 +1125,6 @@
           }
         }
       },
-      "perplexity": {
-        "enabled": false,
-        "config": {
-          "webSearch": {
-            "apiKey": "PERPLEXITY_KEY_PLACEHOLDER"
-          }
-        }
-      },
       "minimax": {
         "enabled": false,
         "config": {
@@ -1029,24 +1133,23 @@
           }
         }
       },
-      "firecrawl": {
+      "tinyfish": {
         "enabled": true,
         "config": {
           "webSearch": {
-            "apiKey": "fc-1277a4dd022a49ff8143b64e4270c497",
-            "baseUrl": "https://api.firecrawl.dev/v2"
-          },
-          "webFetch": {
-            "baseUrl": "https://api.firecrawl.dev/v2",
-            "onlyMainContent": true,
-            "maxAgeMs": 172800000,
-            "timeoutSeconds": 60
+            "apiKey": {
+              "source": "env",
+              "provider": "default",
+              "id": "TINYFISH_API_KEY"
+            }
           }
         }
+      },
+      "ollama": {
+        "enabled": true
       }
     },
     "allow": [
-      "intention-hint",
       "tavily",
       "openrouter",
       "microsoft",
@@ -1057,7 +1160,11 @@
       "memory-core",
       "parallel",
       "telegram",
-      "memory-wiki"
+      "memory-wiki",
+      "tinyfish",
+      "duckduckgo",
+      "searxng",
+      "ollama"
     ],
     "bundledDiscovery": "compat"
   },
@@ -1218,6 +1325,83 @@
         ],
         "apiKey": "${OPENROUTER_API_KEY}",
         "timeoutSeconds": 60
+      },
+      "cohere": {
+        "baseUrl": "https://api.cohere.ai/compatibility/v1",
+        "apiKey": "eaNrIYAqRwjjL9CVc6XgJ4ZVOZs3Of8i4RgFjGx6",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "command-r7b-12-2024",
+            "name": "Command R7B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 4096
+          },
+          {
+            "id": "command-r-plus-08-2024",
+            "name": "Command R+",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 4096
+          }
+        ]
+      },
+      "onnx-local": {
+        "baseUrl": "http://127.0.0.1:8082",
+        "api": "openai-completions",
+        "apiKey": "onnx-local",
+        "models": [
+          {
+            "id": "qwen3-embedding-0.6b",
+            "name": "Qwen3-Embedding-0.6B",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0
+            },
+            "contextWindow": 8192
+          }
+        ]
+      },
+      "cerebras": {
+        "baseUrl": "https://api.cerebras.ai/v1",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "gpt-oss-120b",
+            "name": "GPT OSS 120B",
+            "contextWindow": 131072,
+            "maxTokens": 16384,
+            "cost": {
+              "input": 0,
+              "output": 0
+            }
+          }
+        ],
+        "apiKey": "${CEREBRA_API_KEY}"
       }
     }
   },
@@ -1280,13 +1464,7 @@
       "imsg": {
         "enabled": false
       },
-      "mcporter": {
-        "enabled": false
-      },
       "model-usage": {
-        "enabled": false
-      },
-      "nano-pdf": {
         "enabled": false
       },
       "obsidian": {
@@ -1299,9 +1477,6 @@
         "enabled": false
       },
       "openhue": {
-        "enabled": false
-      },
-      "oracle": {
         "enabled": false
       },
       "ordercli": {
@@ -1346,28 +1521,24 @@
       "xurl": {
         "enabled": false
       },
-      "git-hygiene": {
-        "enabled": true
-      },
       "git-lab": {
         "enabled": true
+      },
+      "manus-outsourcing": {
+        "enabled": true,
+        "env": {}
       }
     },
     "workshop": {
       "approvalPolicy": "auto"
     },
-    "load": {
-      "extraDirs": [
-        "~/.openclaw/workspace/skills"
-      ]
-    },
+    "load": {},
     "allowBundled": [
       "agent-acceptance-protocol",
       "browser-automation",
       "canvas",
       "diagram-maker",
       "gh-issues",
-      "git-hygiene",
       "git-lab",
       "github",
       "healthcheck",
@@ -1385,18 +1556,23 @@
       "tavily",
       "tmux",
       "video-frames",
-      "weather"
+      "weather",
+      "mcporter",
+      "nano-pdf",
+      "oracle",
+      "300-vision",
+      "colony-disk-exchange"
     ]
   },
   "wizard": {
-    "lastRunAt": "2026-06-19T19:56:49.243Z",
-    "lastRunVersion": "2026.6.9-beta.1",
+    "lastRunAt": "2026-06-23T10:33:50.373Z",
+    "lastRunVersion": "2026.6.9",
     "lastRunCommand": "doctor",
     "lastRunMode": "local"
   },
   "meta": {
-    "lastTouchedVersion": "2026.6.9-beta.1",
-    "lastTouchedAt": "2026-06-20T23:39:25.688Z"
+    "lastTouchedVersion": "2026.6.9",
+    "lastTouchedAt": "2026-06-23T11:08:25.407Z"
   },
   "channels": {
     "telegram": {
@@ -1488,7 +1664,14 @@
           ]
         },
         "default": {
-          "botToken": "7955682161:AAFVyyo1T_uqib9j88b1DlDKMRo6qo3F4PE"
+          "botToken": "7955682161:AAFVyyo1T_uqib9j88b1DlDKMRo6qo3F4PE",
+          "dmPolicy": "allowlist",
+          "allowFrom": [
+            "173681771"
+          ],
+          "groupAllowFrom": [
+            "173681771"
+          ]
         }
       },
       "defaultAccount": "default",
@@ -1503,14 +1686,6 @@
     ]
   },
   "bindings": [
-    {
-      "type": "route",
-      "agentId": "mangust",
-      "match": {
-        "channel": "telegram",
-        "accountId": "mangust"
-      }
-    },
     {
       "type": "route",
       "agentId": "dominika",
@@ -1565,6 +1740,14 @@
       "match": {
         "channel": "telegram",
         "accountId": "streikbrecher"
+      }
+    },
+    {
+      "type": "route",
+      "agentId": "mangust",
+      "match": {
+        "channel": "telegram",
+        "accountId": "default"
       }
     }
   ]
