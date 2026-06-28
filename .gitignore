@@ -213,3 +213,4 @@ shared/faiss/
 
 # Node
 node_modules/
+config/openclaw.json
