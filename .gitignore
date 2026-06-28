@@ -214,3 +214,56 @@ shared/faiss/
 # Node
 node_modules/
 config/openclaw.json
+build/
+.next/
+.cache/
+.tox/
+.ruff_cache/
+*.egg-info/
+.npm/
+.yarn/
+.pnp
+.pnp.js
+vendor/
+temp/
+*.swp
+
+# === Build artifacts ===
+node_modules/
+dist/
+build/
+.next/
+out/
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.tox/
+*.egg-info/
+
+# === IDE ===
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Temp ===
+.cache/
+.tmp/
+tmp/
+
+# === Backup artifacts ===
+.backupignore
