@@ -15,7 +15,7 @@
 #   yandex.sh usage                       # показать сводку лога
 set -uo pipefail
 
-LOG=/root/LabDoctorM/logs/yandex-usage.log
+LOG=/root/LabDoctorM/.ops/logs/yandex-usage.log
 MAIL_ACC="DoctorMandAi@yandex.com"
 DISK_ACC="moscowskiymichi@yandex.ru"
 WEBDAV="https://webdav.yandex.ru"
