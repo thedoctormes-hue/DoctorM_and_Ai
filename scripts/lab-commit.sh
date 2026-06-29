@@ -106,6 +106,19 @@ if [ -n "$suspicious" ]; then
   exit 1
 fi
 
-echo "✅ Git hygiene checks passed
+# 4. Scan staged content for secrets (passwords, tokens, API keys)
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+if [ -f "$SCRIPT_DIR/scan-secrets.py" ]; then
+  SCAN_RESULT=$(python3 "$SCRIPT_DIR/scan-secrets.py" 2>/dev/null)
+  if [ -n "$SCAN_RESULT" ]; then
+    echo "❌ BLOCKED: Potential secrets in staged content:"
+    echo "$SCAN_RESULT"
+    echo ""
+    echo "If this is a false positive, use: git commit --no-verify"
+    exit 1
+  fi
+fi
+
+echo "✅ Git hygiene checks passed"
 
 exec git commit "$@"
