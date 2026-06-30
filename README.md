@@ -94,7 +94,7 @@ status: active
 
 - [Laboratory Profile](docs/laboratory-profile.md) — публичный профиль для инвесторов и партнёров
 - [ADR](adr/) — архитектурные решения
-- [Patterns](docs/patterns/) — паттерны разработки
+- [Patterns](patterns/) — паттерны разработки
 - [Incidents](incidents/) — журнал инцидентов
 
 ## Контакты
