@@ -53,8 +53,8 @@ triggers:
 | `content` | Firecrawl | Полный скрап страниц (документация, статьи) |
 | `dynamic` | TinyFish | JS/SPA рендеринг, динамический контент |
 | `broad` | SearXNG | Локальный метапоиск 70+ движков (бесплатно, безлимит) |
-| `verify` | Tavily × SearXNG | Кросс-проверка, флаг `unverified_synthesis` |
-| `deep_research` | ВСЕ 4 | Параллельно + агрегация по провайдерам |
+| `verify` | Tavily × SearXNG | Кросс-проверка; статусы: `verified` / `unverified_synthesis` / `searxng_unavailable` / `tavily_unavailable` / `both_sources_unavailable` |
+| `deep_research` | ВСЕ 4 | Параллельно + агрегация по провайдерам + синтез `answer` |
 
 Пример: `bash .../search-orchestrator.sh "<q>" verify 5 2` — 4-й аргумент = порог пересечения URL (по умолч. 2).
 
@@ -116,8 +116,16 @@ bash /root/LabDoctorM/projects/free-api-hunter/scripts/search-orchestrator.sh "<
 - Для критичных фактов используй режим `verify` — он пересекает URL между
   Tavily и SearXNG; пересечение = сильный сигнал достоверности.
 - Если пересечений меньше порога → `answer` помечается префиксом
-  `[UNVERIFIED_SYNTHESIS]`.
+  `[UNVERIFIED_SYNTHESIS]`. Если один из источников недоступен (SearXNG упал /
+  Tavily во временном бане), `verify` возвращает статус `searxng_unavailable` /
+  `tavily_unavailable` / `both_sources_unavailable` — это **грейсфул-деградация**,
+  а не провал фактчекинга. Префикс `answer` = `[SEARXNG_UNAVAILABLE]` /
+  `[TAVILY_UNAVAILABLE]` / `[BOTH_SOURCES_UNAVAILABLE]`.
 - Всегда цитируй `results`, а не пересказывай `answer`.
+- **Soft-ban ≠ мёртвые ключи:** ответ провайдера `401` / `429` / `Unauthorized`
+  трактуется как **временный бан** (`provider_temp_banned`, пауза 2s + ротация
+  ключей), а не «все ключи мертвы». Не делай вывод, что скил сломан, по одному
+  сбою — делай реальный end-to-end вызов и смотри статус.
 
 ## Продвинутые возможности (v1.3)
 
