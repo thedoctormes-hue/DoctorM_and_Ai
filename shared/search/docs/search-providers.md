@@ -77,3 +77,20 @@
 | Parallel Free | ❌ | 0 | ? | 0 (нет ключа) |
 
 **Рабочих: 4/6**
+
+## SearXNG — операционный хардинг (2026-07-09)
+
+- **RestartPolicy:** контейнер обязан иметь `--restart=unless-stopped`. Без него OOM (SIGKILL/137)
+  или рестарт гейтвея оставляет контейнер мёртвым → `searxng_urls=0` → verify всегда `unverified`.
+- **Engines:** при `use_default_settings: true` блок `engines:` **заменяет** весь список движков
+  (не мержит). Держать `duckduckgo` + keyless фоллбэки `mojeek`/`wiby`/`marginalia`/`bing` +
+  `wikipedia`/`wikidata`, чтобы verify работал даже при CAPTCHA на DDG.
+- **DDG CAPTCHA:** `SearxEngineCaptchaException` возникает периодически (из-за `vqd`-детерминации);
+  снимается заходом с IP сервера на duckduckgo.com. Фоллбэк-движки нивелируют сбой.
+- **Limiter:** `server.limiter: false` для localhost — защита от ботов внутри лабы не нужна
+  (иначе можно самому отстрелить свой поиск).
+- **Healthcheck:** `bin/searxng-health.sh` (results>0 → `OK 23`). Скрипт в free-api-hunter, но
+  `bin/` gitignored; воспроизводимость образа/конфига — через `docker-compose.searxng.yml`.
+- **Verify-кворум:** overlap ≥2 между Tavily и SearXNG = `verified`. При падении SearXNG
+  `verify` возвращает `searxng_unavailable` (грейсфул-деградация), а не `unverified_synthesis`.
+- **Связанный инцидент:** `incidents/INC-20260709-131500-research-searxng-hardening.md`.
