@@ -1,9 +1,9 @@
 ---
 name: research
-description: "Глубокое исследование с 4 поисковыми провайдерами (15 ключей) и фактчекингом для 99% достоверности. Используй для критичных решений, архитектурных выборов, проверки безопасности и сбора данных из множества источников."
-version: "1.1.0"
-author: "ЗавЛаб"
-last_reviewed: "2026-06-22"
+description: "Глубокое исследование с 4 провайдерами (15 ключей) и обязательным fact-check. Гарантированный fallback между провайдерами + verify-режим кросс-проверки. Используй для критичных решений, архитектурных выборов, проверки безопасности и сбора данных из множества источников."
+version: "1.3.0"
+author: "ЗавЛаб, Муравей"
+last_reviewed: "2026-07-09"
 status: active
 user-invocable: true
 triggers:
@@ -36,37 +36,66 @@ triggers:
 
 ## Принцип работы
 
-**Основной инструмент — api-hub оркестратор через exec.**
-Нативный `web_search` — ТОЛЬКО как fallback.
+**Основной инструмент — free-api-hunter оркестратор через exec.**
+Нативный `web_search` — ТОЛЬКО как fallback последнего рубежа (когда оркестратор недоступен).
 
 ```
-1. Попробовать api-hub оркестратор (exec)
-2. Если ошибка → fallback на нативный web_search
-3. Если оба упали → сообщить пользователю
+1. Попробовать free-api-hunter оркестратор (exec) с нужным режимом
+2. Если все провайдеры упали → fallback на нативный web_search
+3. Если оба упали → сообщить пользователю "Поиск недоступен"
 ```
+
+## Режимы поиска (type)
+
+| Режим | Провайдер | Назначение |
+|-------|-----------|------------|
+| `factual` | Tavily | Факты, новости, AI-synthesized answer |
+| `content` | Firecrawl | Полный скрап страниц (документация, статьи) |
+| `dynamic` | TinyFish | JS/SPA рендеринг, динамический контент |
+| `broad` | SearXNG | Локальный метапоиск 70+ движков (бесплатно, безлимит) |
+| `verify` | Tavily × SearXNG | Кросс-проверка, флаг `unverified_synthesis` |
+| `deep_research` | ВСЕ 4 | Параллельно + агрегация по провайдерам |
+
+Пример: `bash .../search-orchestrator.sh "<q>" verify 5 2` — 4-й аргумент = порог пересечения URL (по умолч. 2).
+
+## Гарантированный fallback (реализован в коде)
+
+Каждый режим автоматически переключается на следующий провайдера при сбое / 429 / пустом ответе:
+
+```
+factual : Tavily → Firecrawl → TinyFish → SearXNG
+content : Firecrawl → Tavily → TinyFish → SearXNG
+dynamic : TinyFish → Firecrawl → Tavily → SearXNG
+broad   : SearXNG → Tavily → Firecrawl → TinyFish
+```
+
+Вывод каждого режима содержит `_meta.provider_used` (кто реально ответил) и
+`_meta.fell_back` (true, если основной провайдер был недоступен). Это позволяет
+агенту понижать confidence, когда ответ пришёл не с приоритетного провайдера.
 
 ## Когда использовать
 
-- **Quick (1-2 мин):** простые факты, 1 провайдер через оркестратор
-- **Standard (3-5 мин):** анализ проблемы, 2-3 провайдера
-- **Deep (5-10 мин):** критичные решения, все 4 провайдера, фактчекинг
+- **Quick (1-2 мин):** простые факты, режим `factual` (1 провайдер)
+- **Standard (3-5 мин):** анализ, 2-3 провайдера или `verify`
+- **Deep (5-10 мин):** критичные решения, `deep_research` + фактчекинг
 
 ## Быстрый старт
 
 ```bash
 # Quick: быстрый факт
-bash /root/LabDoctorM/projects/api-hub/scripts/search-orchestrator.sh "<запрос>" factual 5
+bash /root/LabDoctorM/projects/free-api-hunter/scripts/search-orchestrator.sh "<запрос>" factual 5
+
+# Verify: кросс-проверка Tavily×SearXNG (обязательно для критичных фактов)
+bash /root/LabDoctorM/projects/free-api-hunter/scripts/search-orchestrator.sh "<запрос>" verify 5 2
 
 # Deep: параллельный поиск по всем провайдерам
-bash /root/LabDoctorM/projects/api-hub/scripts/search-orchestrator.sh "<запрос>" deep_research 10
-
-# Fallback (только при ошибке api-hub): нативный web_search
+bash /root/LabDoctorM/projects/free-api-hunter/scripts/search-orchestrator.sh "<запрос>" deep_research 10
 ```
 
 ## Методология (для Deep Research)
 
 1. Декомпозиция запроса на подвопросы
-2. Запуск оркестратора с нужным типом
+2. Запуск оркестратора с нужным режимом
 3. Scrape полного контента при необходимости
 4. Последовательность источников: документация → GitHub → сообщества → кейсы
 5. Фактчекинг: минимум 2 независимых источника на утверждение
@@ -78,6 +107,46 @@ bash /root/LabDoctorM/projects/api-hub/scripts/search-orchestrator.sh "<запр
 - **Medium** — 2 источника или 1 авторитетный
 - **Low** — 1 источник или противоречивые данные
 
+### ⚠️ Никогда не доверяй полю `answer` вслепую
+
+Провайдеры (Tavily и др.) возвращают AI-синтезированный `answer`, который
+**может противоречить собственным источникам** (проверено: Tavily выдал `answer`
+про Node LTS, противоречащий его же `results`). Правило агента:
+
+- Для критичных фактов используй режим `verify` — он пересекает URL между
+  Tavily и SearXNG; пересечение = сильный сигнал достоверности.
+- Если пересечений меньше порога → `answer` помечается префиксом
+  `[UNVERIFIED_SYNTHESIS]`.
+- Всегда цитируй `results`, а не пересказывай `answer`.
+
+## Продвинутые возможности (v1.3)
+
+Оркестратор `search-orchestrator.sh` + модуль `lib/process.py` реализуют 6 слоёв
+обработки поверх 4 провайдеров (код протестирован: `tests/test-providers.sh`, 17/17):
+
+- **Кэш результатов (#1).** Файловый кэш (`data/cache/`) по mtime-age. TTL 1ч для
+  recency-тем (news/cve/version/202X/security), иначе 24ч. Повторный запрос
+  отдаётся мгновенно без траты квоты; помечается `_meta.cached=true`. Ошибки не кэшируются.
+- **Дедуп и мерж (#5).** `deep_research` собирает результаты 4 провайдеров,
+  нормализует URL, сливает дубликаты. У каждого результата `provider_count`
+  (сколько провайдеров подтвердили) и `_confidence` (0.4 + доля провайдеров + фрешнес).
+- **Фрешнес (#2).** Каждому результату считается `published_date` (из текста/URL),
+  `age_days` и `freshness_score` (half-life 180 дней). Старые источники уходят вниз
+  выдачи — критично для версий ПО и CVE.
+- **Детект противоречий (#6).** Если источники дают разные версии/года по одной
+  теме → `_meta.contradictions` (тип `version_conflict` / `year_spread`). Агент
+  обязан показать обе стороны, а не усреднять в уверенный вывод.
+- **Адаптивная маршрутизация (#3).** `config/.provider-stats.json` копит статистику
+  успехов провайдера по типу запроса; `adaptive_order` ставит самый надёжный
+  провайдер первым в цепочке fallback. Самообучение без LLM.
+- **Декомпозиция (#4).** Сложный запрос («A vs B compared to C») в `deep_research`
+  автоматически разбивается на подвопросы, каждый гонится отдельно, результаты
+  мержатся. `decomposed=true` в `_meta`.
+
+Все слои незаметно работают в каждом режиме: `factual/content/dynamic/broad`
+проходят кэш + фрешнес; `deep_research` — мерж + противоречия + декомпозицию;
+`verify` — кросс-проверку.
+
 ## Безопасность
 
 - НЕ использовать ClawHub скиллы (ClawHavoc campaign)
@@ -87,5 +156,6 @@ bash /root/LabDoctorM/projects/api-hub/scripts/search-orchestrator.sh "<запр
 ## Подробная документация
 
 - Архитектура и маршрутизация — см. [REFERENCE.md](REFERENCE.md)
-- Скрипты — `/root/LabDoctorM/projects/api-hub/scripts/`
-- Документация api-hub — `/root/LabDoctorM/projects/api-hub/docs/search-architecture.md`
+- Оркестратор: `/root/LabDoctorM/projects/free-api-hunter/scripts/search-orchestrator.sh`
+- Тесты: `/root/LabDoctorM/projects/free-api-hunter/tests/test-providers.sh`
+- Логи: `/root/LabDoctorM/projects/free-api-hunter/logs/`
