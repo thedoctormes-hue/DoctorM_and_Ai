@@ -163,7 +163,7 @@ cal_task() {
   local P cid url
   P=$(cal_pass); cid="${1:-}"; shift || true
   local act="${1:-ls}"; shift || true
-  [ -n "$cid" ] || { echo "usage: cal task <cal_id> add|list ..."; return 2; }
+  [ -n "$cid" ] || { echo "usage: cal task <cal_id> add|update|list ..."; return 2; }
   url=$(cal_resolve "$P" "$cid") || return 1
   case "$act" in
     add)
@@ -195,7 +195,7 @@ EOF
       ;;
     update)
       local uid="$1" summary="$2" due="$3" desc="${4:-}" due_fmt ics_body code
-      [ -n "$uid" ] || { echo "usage: cal task <cal_id> update <uid> <summary> <due YYYY-MM-DD[THH:MM:SSZ]> [desc]"; return 2 }
+      [ -n "$uid" ] || { echo "usage: cal task <cal_id> update <uid> <summary> <due YYYY-MM-DD[THH:MM:SSZ]> [desc]"; return 2; }
       uid=$(echo "$uid" | sed 's/\.ics$//; s/\.labdoctorm$//')
       summary=$(printf '%s' "$summary" | sed 's/,/\\,/g')
       desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/\\n/g; s/,/\\,/g')
@@ -219,6 +219,7 @@ EOF
       echo "update task -> $url/${uid}.labdoctorm.ics (HTTP $code)"
       log calendar "task-update $cid ($uid)" "$MAIL_ACC" "http:$code"
       ;;
+    list)
       local resp
       resp=$(curl -s -m 30 -X REPORT -u "$MAIL_ACC:$P" -H "Depth: 1" -H "Content-Type: application/xml; charset=utf-8" \
         --data '<c:calendar-query xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav"><d:prop><c:calendar-data/></d:prop></c:calendar-query>' \
@@ -230,7 +231,6 @@ EOF
     *) echo "cal task: add|update|list"; return 2;;
   esac
 }
-
 # --- main ---
 if [ "${YANDEX_SH_LIB:-}" != "1" ]; then
 svc="${1:-}"; shift || true
