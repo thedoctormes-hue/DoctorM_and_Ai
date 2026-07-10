@@ -116,7 +116,7 @@ cal_events() {
     --data '<c:calendar-query xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav"><d:prop><c:calendar-data/></d:prop></c:calendar-query>' \
     "$url")
   echo "$resp" | norm > /tmp/.ydcal_resp
-  perl -0ne 'while(/<response>(.*?)<\/response>/sg){ my $r=$1; if($r=~/<calendar-data[^>]*>(.*?)<\/calendar-data>/s){ my $v=$1; $v=~/(BEGIN:VEVENT.*?END:VEVENT)/s; my $c=($v?$1:''); my ($u)=($c=~/UID:([^\r\n]+)/); my ($s)=($c=~/SUMMARY:([^\r\n]+)/); my ($ds)=($c=~/DTSTART[^:]*:([^\r\n]+)/); my ($de)=($c=~/DTEND[^:]*:([^\r\n]+)/); printf "UID: %s | %s | %s -> %s\n", $u//"-", $s//"-", $ds//"-", $de//"-"; } }' /tmp/.ydcal_resp
+  perl -0ne 'while(/<response>(.*?)<\/response>/sg){ my $r=$1; if($r=~/<calendar-data[^>]*>(.*?)<\/calendar-data>/s){ my $v=$1; $v=~/(BEGIN:VEVENT.*?END:VEVENT)/s; my $c=($v?$1:""); my ($u)=($c=~/UID:([^\r\n]+)/); my ($s)=($c=~/SUMMARY:([^\r\n]+)/); my ($ds)=($c=~/DTSTART[^:]*:([^\r\n]+)/); my ($de)=($c=~/DTEND[^:]*:([^\r\n]+)/); printf "UID: %s | %s | %s -> %s\n", $u//"-", $s//"-", $ds//"-", $de//"-"; } }' /tmp/.ydcal_resp
   log calendar "events $cid" "$MAIL_ACC" ok
 }
 
@@ -126,6 +126,10 @@ cal_add() {
   [ -n "$summary" ] || { echo "usage: cal add <cal_id> <start> <end> <summary> [desc]"; return 2; }
   summary=$(printf '%s' "$summary" | sed 's/,/\\,/g')
   desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/ \/ /g; s/,/\\,/g')
+  msk_start=$(TZ="Europe/Moscow" date -d "$start" +%Y%m%dT%H%M%S 2>/dev/null)
+  msk_end=$(TZ="Europe/Moscow" date -d "$end" +%Y%m%dT%H%M%S 2>/dev/null)
+  [ -n "$msk_start" ] || msk_start=$(echo "$start" | tr -d ':-')
+  [ -n "$msk_end" ] || msk_end=$(echo "$end" | tr -d ':-')
   url=$(cal_resolve "$P" "$cid") || return 1
   uid="$(date +%s)-$(head -c4 /dev/urandom | xxd -p)"
   ics_body=$(cat <<EOF
@@ -135,8 +139,8 @@ PRODID:-//LabDoctorM//yandex.sh//RU
 BEGIN:VEVENT
 UID:${uid}.labdoctorm
 DTSTAMP:$(date -u +%Y%m%dT%H%M%SZ)
-DTSTART:${start}
-DTEND:${end}
+DTSTART;TZID=Europe/Moscow:${msk_start}
+DTEND;TZID=Europe/Moscow:${msk_end}
 SUMMARY:${summary}
 DESCRIPTION:${desc}
 END:VEVENT
