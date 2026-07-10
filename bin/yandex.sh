@@ -121,9 +121,11 @@ cal_events() {
 }
 
 cal_add() {
-  local P cid start end summary url uid ics code
-  P=$(cal_pass); cid="$1"; start="$2"; end="$3"; summary="$4"
-  [ -n "$summary" ] || { echo "usage: cal add <cal_id> <start> <end> <summary>"; return 2; }
+  local P cid start end summary desc url uid ics code
+  P=$(cal_pass); cid="$1"; start="$2"; end="$3"; summary="$4"; desc="${5:-}"
+  [ -n "$summary" ] || { echo "usage: cal add <cal_id> <start> <end> <summary> [desc]"; return 2; }
+  summary=$(printf '%s' "$summary" | sed 's/,/\\,/g')
+  desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/\\n/g; s/,/\\,/g')
   url=$(cal_resolve "$P" "$cid") || return 1
   uid="$(date +%s)-$(head -c4 /dev/urandom | xxd -p)"
   ics_body=$(cat <<EOF
@@ -136,6 +138,7 @@ DTSTAMP:$(date -u +%Y%m%dT%H%M%SZ)
 DTSTART:${start}
 DTEND:${end}
 SUMMARY:${summary}
+DESCRIPTION:${desc}
 END:VEVENT
 END:VCALENDAR
 EOF
