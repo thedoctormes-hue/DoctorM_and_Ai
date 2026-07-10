@@ -116,7 +116,7 @@ cal_events() {
     --data '<c:calendar-query xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav"><d:prop><c:calendar-data/></d:prop></c:calendar-query>' \
     "$url")
   echo "$resp" | norm > /tmp/.ydcal_resp
-  perl -0ne 'while(/<response>(.*?)<\/response>/sg){ my $r=$1; if($r=~/<calendar-data[^>]*>(.*?)<\/calendar-data>/s){ my $c=$1; my ($u)=($c=~/UID:([^\r\n]+)/); my ($s)=($c=~/SUMMARY:([^\r\n]+)/); my ($ds)=($c=~/DTSTART[^:]*:([^\r\n]+)/); my ($de)=($c=~/DTEND[^:]*:([^\r\n]+)/); printf "UID: %s | %s | %s -> %s\n", $u//"-", $s//"-", $ds//"-", $de//"-"; } }' /tmp/.ydcal_resp
+  perl -0ne 'while(/<response>(.*?)<\/response>/sg){ my $r=$1; if($r=~/<calendar-data[^>]*>(.*?)<\/calendar-data>/s){ my $v=$1; $v=~/(BEGIN:VEVENT.*?END:VEVENT)/s; my $c=($v?$1:''); my ($u)=($c=~/UID:([^\r\n]+)/); my ($s)=($c=~/SUMMARY:([^\r\n]+)/); my ($ds)=($c=~/DTSTART[^:]*:([^\r\n]+)/); my ($de)=($c=~/DTEND[^:]*:([^\r\n]+)/); printf "UID: %s | %s | %s -> %s\n", $u//"-", $s//"-", $ds//"-", $de//"-"; } }' /tmp/.ydcal_resp
   log calendar "events $cid" "$MAIL_ACC" ok
 }
 
@@ -125,7 +125,7 @@ cal_add() {
   P=$(cal_pass); cid="$1"; start="$2"; end="$3"; summary="$4"; desc="${5:-}"
   [ -n "$summary" ] || { echo "usage: cal add <cal_id> <start> <end> <summary> [desc]"; return 2; }
   summary=$(printf '%s' "$summary" | sed 's/,/\\,/g')
-  desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/\\n/g; s/,/\\,/g')
+  desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/ \/ /g; s/,/\\,/g')
   url=$(cal_resolve "$P" "$cid") || return 1
   uid="$(date +%s)-$(head -c4 /dev/urandom | xxd -p)"
   ics_body=$(cat <<EOF
@@ -173,7 +173,7 @@ cal_task() {
       local summary="$1" due="$2" desc="${3:-}" uid due_fmt ics_body code
       [ -n "$summary" ] || { echo "usage: cal task <cal_id> add <summary> <due YYYY-MM-DD[THH:MM:SSZ]> [desc]"; return 2; }
       summary=$(printf '%s' "$summary" | sed 's/,/\\,/g')
-      desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/\\n/g; s/,/\\,/g')
+      desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/ \/ /g; s/,/\\,/g')
       uid="$(date +%s)-$(head -c4 /dev/urandom | xxd -p)"
       due_fmt=$(echo "$due" | tr -d ':-')
       ics_body=$(cat <<EOF
@@ -201,7 +201,7 @@ EOF
       [ -n "$uid" ] || { echo "usage: cal task <cal_id> update <uid> <summary> <due YYYY-MM-DD[THH:MM:SSZ]> [desc]"; return 2; }
       uid=$(echo "$uid" | sed 's/\.ics$//; s/\.labdoctorm$//')
       summary=$(printf '%s' "$summary" | sed 's/,/\\,/g')
-      desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/\\n/g; s/,/\\,/g')
+      desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/ \/ /g; s/,/\\,/g')
       due_fmt=$(echo "$due" | tr -d ':-')
       ics_body=$(cat <<EOF
 BEGIN:VCALENDAR
