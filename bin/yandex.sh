@@ -9,7 +9,7 @@
 #   yandex.sh disk get <remote> <local>        # скачать с Диска
 #   yandex.sh disk put <local> <remote>        # залить на Диск
 #   yandex.sh disk del <remote>                # удалить с Диска
-#   yandex.sh disk mkdir <remote>              # создать папку
+#   (папки создаются автоматически через disk put — отдельный mkdir не нужен)
 #   yandex.sh cal ls                           # календари (DoctorMandAi, CalDAV)
 #   yandex.sh cal events <cal_id>              # события календаря
 #   yandex.sh cal add <cal_id> <start> <end> <summary>   # создать событие
@@ -270,11 +270,7 @@ case "$svc" in
         code=$(curl -s -m 30 -X DELETE -u "$DISK_ACC:$P" "$WEBDAV/$1" -o /dev/null -w '%{http_code}'); echo "del $1 (HTTP $code)"
         log disk "del $1" "$DISK_ACC" "http:$code"
         ;;
-      mkdir)
-        code=$(curl -s -m 30 -X MKCOL -u "$DISK_ACC:$P" "$WEBDAV/$1" -o /dev/null -w '%{http_code}'); echo "mkdir $1 (HTTP $code)"
-        log disk "mkdir $1" "$DISK_ACC" "http:$code"
-        ;;
-      *) echo "disk: ls|get|put|del|mkdir"; exit 2;;
+      *) echo "disk: ls|get|put|del"; exit 2;;
     esac
     ;;
   cal)
