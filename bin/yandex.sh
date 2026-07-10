@@ -116,7 +116,7 @@ cal_events() {
     --data '<c:calendar-query xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav"><d:prop><c:calendar-data/></d:prop></c:calendar-query>' \
     "$url")
   echo "$resp" | norm > /tmp/.ydcal_resp
-  perl -0ne 'while(/<response>(.*?)<\/response>/sg){ my $r=$1; if($r=~/<calendar-data>(.*?)<\/calendar-data>/s){ my $c=$1; my ($u)=($c=~/UID:([^\r\n]+)/); my ($s)=($c=~/SUMMARY:([^\r\n]+)/); my ($ds)=($c=~/DTSTART[^:]*:([^\r\n]+)/); my ($de)=($c=~/DTEND[^:]*:([^\r\n]+)/); printf "UID: %s | %s | %s -> %s\n", $u//"-", $s//"-", $ds//"-", $de//"-"; } }' /tmp/.ydcal_resp
+  perl -0ne 'while(/<response>(.*?)<\/response>/sg){ my $r=$1; if($r=~/<calendar-data[^>]*>(.*?)<\/calendar-data>/s){ my $c=$1; my ($u)=($c=~/UID:([^\r\n]+)/); my ($s)=($c=~/SUMMARY:([^\r\n]+)/); my ($ds)=($c=~/DTSTART[^:]*:([^\r\n]+)/); my ($de)=($c=~/DTEND[^:]*:([^\r\n]+)/); printf "UID: %s | %s | %s -> %s\n", $u//"-", $s//"-", $ds//"-", $de//"-"; } }' /tmp/.ydcal_resp
   log calendar "events $cid" "$MAIL_ACC" ok
 }
 
