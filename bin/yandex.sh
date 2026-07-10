@@ -169,7 +169,8 @@ cal_task() {
     add)
       local summary="$1" due="$2" desc="${3:-}" uid due_fmt ics_body code
       [ -n "$summary" ] || { echo "usage: cal task <cal_id> add <summary> <due YYYY-MM-DD[THH:MM:SSZ]> [desc]"; return 2; }
-      summary=$(echo "$summary" | sed 's/,/\\,/g'); desc=$(echo "$desc" | sed 's/,/\\,/g')
+      summary=$(printf '%s' "$summary" | sed 's/,/\\,/g')
+      desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/\\n/g; s/,/\\,/g')
       uid="$(date +%s)-$(head -c4 /dev/urandom | xxd -p)"
       due_fmt=$(echo "$due" | tr -d ':-')
       ics_body=$(cat <<EOF
@@ -192,7 +193,32 @@ EOF
       echo "UID: ${uid}.labdoctorm"
       log calendar "task-add $cid ($uid)" "$MAIL_ACC" "http:$code"
       ;;
-    list)
+    update)
+      local uid="$1" summary="$2" due="$3" desc="${4:-}" due_fmt ics_body code
+      [ -n "$uid" ] || { echo "usage: cal task <cal_id> update <uid> <summary> <due YYYY-MM-DD[THH:MM:SSZ]> [desc]"; return 2 }
+      uid=$(echo "$uid" | sed 's/\.ics$//; s/\.labdoctorm$//')
+      summary=$(printf '%s' "$summary" | sed 's/,/\\,/g')
+      desc=$(printf '%s' "$desc" | sed ':a;N;$!ba;s/\n/\\n/g; s/,/\\,/g')
+      due_fmt=$(echo "$due" | tr -d ':-')
+      ics_body=$(cat <<EOF
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//LabDoctorM//yandex.sh//RU
+BEGIN:VTODO
+UID:${uid}.labdoctorm
+DTSTAMP:$(date -u +%Y%m%dT%H%M%SZ)
+SUMMARY:${summary}
+DUE:${due_fmt}
+DESCRIPTION:${desc}
+END:VTODO
+END:VCALENDAR
+EOF
+)
+      code=$(curl -s -m 30 -X PUT -u "$MAIL_ACC:$P" -H "Content-Type: text/calendar; charset=utf-8" --data-binary "$ics_body" \
+        "$url/${uid}.labdoctorm.ics" -o /dev/null -w '%{http_code}')
+      echo "update task -> $url/${uid}.labdoctorm.ics (HTTP $code)"
+      log calendar "task-update $cid ($uid)" "$MAIL_ACC" "http:$code"
+      ;;
       local resp
       resp=$(curl -s -m 30 -X REPORT -u "$MAIL_ACC:$P" -H "Depth: 1" -H "Content-Type: application/xml; charset=utf-8" \
         --data '<c:calendar-query xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav"><d:prop><c:calendar-data/></d:prop></c:calendar-query>' \
@@ -201,7 +227,7 @@ EOF
       perl -0ne 'while(/<response>(.*?)<\/response>/sg){ my $r=$1; if($r=~/BEGIN:VTODO/s){ my ($u)=($r=~/UID:([^\r\n]+)/); my ($s)=($r=~/SUMMARY:([^\r\n]+)/); my ($d)=($r=~/DUE[^:]*:([^\r\n]+)/); my ($st)=($r=~/STATUS:([^\r\n]+)/); printf "UID: %s | %s | DUE %s | %s\n", $u//"-", $s//"-", $d//"-", $st//"-"; } }' /tmp/.ydtask_resp
       log calendar "task-list $cid" "$MAIL_ACC" ok
       ;;
-    *) echo "cal task: add|list"; return 2;;
+    *) echo "cal task: add|update|list"; return 2;;
   esac
 }
 
