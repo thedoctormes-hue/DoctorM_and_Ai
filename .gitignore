@@ -272,3 +272,7 @@ tmp/
 *.key
 *.pem
 *.p12
+
+# ADR-0047: machine-generated port/timer scans (regenerated weekly, not hand-edited)
+docs/PORT_SCAN.md
+docs/TIMER_SCAN.md
