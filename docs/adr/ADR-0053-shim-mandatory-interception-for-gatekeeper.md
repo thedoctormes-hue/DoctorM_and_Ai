@@ -94,3 +94,28 @@ inotify (systemd path units), без внешних скриптов.
 - AgentBound: https://arxiv.org/html/2510.21236v1
 - Observability-driven sandboxing: https://arize.com/blog/how-observability-driven-sandboxing-secures-ai-agents/
 - Systemd path units: https://www.freedesktop.org/software/systemd/man/systemd.path.html
+
+## Implementation Status (2026-07-11, raven)
+
+Реализовано Вороном локально (spawn-агент упал из-за gateway flap-loop — NRestarts=24+,
+внешний фактор; доработано без спавна).
+
+- **Слой 1 (systemctl-wrapper)**: `/usr/local/bin/systemctl` перехватывает enable/start,
+  вызывает gatekeeper через `/usr/local/bin/gk-register` (timeout 5s).
+  `REJECT` → блокирует оригинал (проверено: порт 8086 reserved → blocked).
+  `ALLOW` / `ERROR` (timeout/недоступность) → fail-open, вызывает оригинал.
+  `systemctl` не ломается (проверено: enable валидного юнита → enabled OK).
+- **Слой 2 (path-unit)**: `gatekeeper-shim.path` + `.service` enabled, ловят юниты вне gateway
+  (проверено: scan существующих таймеров зарегистрирован в `data/port-timer-log.jsonl`).
+- **Политика gatekeeper**: добавлен агент `shim` (range `[1, 65535]`), квота `max_ports: 1000`
+  (было 3 — ломало audit). Gatekeeper перезапущен, жив на `127.0.0.1:8888`.
+- **Файлы в репо**: `mcp-tools/mcp-gatekeeper/shim/` — `gk-register`, `systemctl-wrapper`,
+  `crontab-wrapper`, `gk-scan.sh`, `gatekeeper-shim.path`, `gatekeeper-shim.service`, `README.md`.
+- **Баг исправлен**: gatekeeper отвечает полем `status` (не `decision`) — `gk-register` обновлён.
+
+Ограничения:
+- Gatekeeper видит только порты, прошедшие через него. Внешние сервисы (snablab :8200,
+  не зарегистрированный через gatekeeper) НЕ блокируются — нужно добавить в PORT_REGISTRY/reserve.
+- В средах exec через gateway `systemctl enable` иногда возвращает `Bad message` (glitch systemd,
+  не shim) — wrapper корректно вызывает оригинал.
+- Слой 3 (seccomp-bpf/eBPF на `bind()`) — будущее, не реализован.
