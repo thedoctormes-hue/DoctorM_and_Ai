@@ -15,7 +15,7 @@ resolution: >
 
 ## Проблема
 
- mongoose (внешний сервис) падает с ошибками API OpenRouter:
+ mongoose (OpenClaw-агент) падает с ошибками API OpenRouter:
 - `model_not_found`: `nvidia/nemotron-3-nano-30b-a12b:free`
 - `model_not_found`: `google/gemma-4-31b-it:free`
 - `rate_limit`: `cohere/north-mini-code:free`
@@ -34,6 +34,6 @@ resolution: >
 
 ## Контекст
 
-- mongoose не является OpenClaw-агентом
-- Это отдельный сервис (Go-бот с токеном в `/root/.openclaw/secrets/telegram/mongoose/botToken`)
-- Требуется доступ к коду mongoose для обновления моделей
+- mongoose является OpenClaw-агентом
+- Это OpenClaw-агент (токен в `/root/.openclaw/secrets/telegram/mongoose/botToken`)
+- Требуется проверить конфигурацию mongoose (OpenClaw-агент) для обновления моделей
