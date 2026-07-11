@@ -80,6 +80,10 @@ tags: [infrastructure, ports, timers, registry, policy, single-source-of-truth]
   явному разрешению ЗавЛаба. Прямой bind на 0.0.0.0 (snablab 8200, consilium 8300,
   chisel 8444, exporters 9100/9187, docker-порты) — только утверждённый и защищённый
   аутентификацией.
+
+- **P5b.** `mcp-gatekeeper` (MCP-привратник портов/таймеров) слушает на
+  `127.0.0.1:8888`. Перенесён с `8200` 2026-07-11 из-за конфликта с `snablab`
+  (uvicorn, 0.0.0.0:8200) — порт 8200 за snablab, трогать нельзя.
 - **P6.** MCP-серверы = только те, что в `openclaw.json` (сейчас 8086 apikeys,
   8087 memory). Добавление/удаление → атомарно правятся `openclaw.json` +
   `PORT_REGISTRY` + `MEMORY.md`. Рассинхрон трёх = нарушение.

@@ -35,10 +35,11 @@ status: active
 | 8085 | tcp | onnx-worker-8085 | 127.0.0.1 | Бестия/инфра | embeddings worker (⚠️ service FAILED 2026-07-11, порт не слушает) | 🟢 Нет |
 | 8086 | tcp | mcp-apikeys | 127.0.0.1 | инфра (free-api-hunter) | MCP API Keys Server | 🟢 Нет |
 | 8087 | tcp | mcp-memory | 127.0.0.1 | инфра (labsearch wrapper) | MCP Memory Server (read-only) | 🟢 Нет |
-| 8200 | tcp | snablab-backend | 0.0.0.0 | Бестия | SnabLab API | 🔴 Да |
+| 8200 | tcp | snablab (uvicorn) | 0.0.0.0 | Бестия | SnabLab API (uvicorn backend) | 🔴 Да |
 | 8202 | tcp | mail-daemon (MailDaemonRobot) | 127.0.0.1 | Бестия | MailDaemon (почта) | 🟢 Нет |
 | 8300 | tcp | consilium | 0.0.0.0 | КотОлизатор | Consilium (AI Council) | 🔴 Да |
 | 8444 | tcp | chisel | 0.0.0.0 | инфра | Chisel tunnel server | 🔴 Да |
+| 8888 | tcp | mcp-gatekeeper | 127.0.0.1 | инфра (raven) | MCP Gatekeeper (привратник портов/таймеров) — перенесён с 8200 (конфликт со snablab) | 🟢 Нет |
 | 8899 | tcp | doctorm-dashboard | 127.0.0.1 | ЗавЛаб/инфра | дашборд торгового бота | 🟢 Нет |
 | 18789 | tcp | openclaw (gateway) | 127.0.0.1 | инфра (все агенты) | OpenClaw gateway HTTP API | 🟢 Нет |
 | 5432 | tcp | postgresql | 127.0.0.1 | инфра | PostgreSQL | 🟢 Нет |
@@ -81,3 +82,4 @@ status: active
 | 2026-05-18 | Создание реестра | Сова |
 | 2026-07-08 | Полное обновление по live-данным | Бестия |
 | 2026-07-11 | Fact-check (Ворон): убраны ложные 53/dnsmasq, 35625→36401 (containerd), 58762/xray; добавлены onnx-worker 8084/8085, MCP 8086/8087; утверждён как канонический (ADR-0047) | Ворон (raven) |
+| 2026-07-11 | Перенос mcp-gatekeeper 8200→8888 (конфликт с snablab на 8200). Добавлена строка 8888, уточнена 8200 = snablab (uvicorn) | Ворон (raven) |
