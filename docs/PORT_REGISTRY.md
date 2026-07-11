@@ -83,3 +83,17 @@ status: active
 | 2026-07-08 | Полное обновление по live-данным | Бестия |
 | 2026-07-11 | Fact-check (Ворон): убраны ложные 53/dnsmasq, 35625→36401 (containerd), 58762/xray; добавлены onnx-worker 8084/8085, MCP 8086/8087; утверждён как канонический (ADR-0047) | Ворон (raven) |
 | 2026-07-11 | Перенос mcp-gatekeeper 8200→8888 (конфликт с snablab на 8200). Добавлена строка 8888, уточнена 8200 = snablab (uvicorn) | Ворон (raven) |
+
+## Регистрация портов в mcp-gatekeeper (2026-07-11, raven)
+
+Все порты из этой карты зарегистрированы в `mcp-gatekeeper` (порт 8888) как
+`reserve.blocked_ports` политики `policy_v1.yaml`. Это означает:
+
+- Слой 1 shim (PATH-wrapper `/usr/local/bin/systemctl`) блокирует любую попытку
+  агента взять порт, уже занятый живым сервисом (snablab :8200, nginx :8080, и т.д.).
+- Конфликты порядка конструктивно невозможны: gatekeeper возвращает REJECT,
+  wrapper не вызывает оригинал `systemctl`.
+- Свободные порты (не в `blocked_ports`) разрешаются (ALLOW).
+- См. ADR-0053 (shim-архитектура) и `mcp-tools/mcp-gatekeeper/docs/CONTRACT.md`.
+
+| 2026-07-11 | Порты зарегистрированы в mcp-gatekeeper (reserve.blocked_ports) — Слой 1 shim блокирует конфликты | Ворон (raven) |

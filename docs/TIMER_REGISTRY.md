@@ -42,6 +42,9 @@ status: active
 | backup-projects.timer | backup-projects.service | ежедневно 02:01 UTC | Бестия | бэкап всех проектов лаборатории | ✅ enabled |
 | snablab-price-snapshot.timer | snablab-price-snapshot.service | ежедневно 03:00 | Бестия | снимок цен snablab | ✅ enabled |
 | krv-notify.timer | krv-notify.service | ежедневно 03:18 | Бестия (free-api-hunter) | KRV discovery bridge → pending_review.json | ✅ enabled (ранее не задокументирован) |
+| krv-keydrop.timer | krv-keydrop.service | (по расписанию) | Бестия (free-api-hunter) | KRV keydrop (доставка ключей) | ✅ enabled |
+| krv-validate-pending.timer | krv-validate-pending.service | (по расписанию) | Бестия (free-api-hunter) | KRV валидация pending_review.json | ✅ enabled |
+| gen-port-timer-map.timer | gen-port-timer-map.service | ежедневно (генератор карты) | Ворон (raven) | регенерация PORT/TIMER_REGISTRY (ADR-0047) | ✅ enabled |
 | cleanup-tmp.timer | cleanup-tmp.service | ежедневно 04:25 | Бестия | очистка /tmp | ✅ enabled |
 | cleanup-go-cache.timer | cleanup-go-cache.service | ежедневно 05:00 UTC | Бестия | очистка Go build cache | ✅ enabled |
 | mskgastrodigestbot.timer | mskgastrodigestbot.service | ежедневно 10:16 | Мангуст | ежедневный дайджест gastrodigest-бота | ✅ enabled |
