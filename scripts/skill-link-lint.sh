@@ -14,7 +14,7 @@ TMP="${TMPDIR:-/tmp}/sll_$$"
 ISSUES=0
 
 # слова, которые часто в кавычках рядом с контекстом скила, но скилами НЕ являются
-WHITELIST="skill_workshop defaults excluded skills depends_on old-name skill-improvement openclaw"
+WHITELIST="skill_workshop defaults excluded skills depends_on old-name skill-improvement openclaw skill-creator spike _builtin_plugin_skills skill_later skill_earlier1 skill_earlier2"
 
 known_skills=$(
   find "$CANON" -maxdepth 1 -mindepth 1 -type d -exec basename {} \; 2>/dev/null | sort -u

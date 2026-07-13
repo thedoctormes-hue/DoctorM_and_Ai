@@ -1,6 +1,6 @@
 ---
 name: gitlab
-description: Правила работы с Git в LabDoctorM — кабинеты (projects/), workspaces, единый git user. Корень НЕ репозиторий. Используй когда ЗавЛаб говорит «работай в кабинете X» или при любых git-операциях в лаборатории.
+description: Правила работы с Git в LabDoctorM — кабинеты (projects/), workspaces, атрибуция по агенту (per-agent через git-authors.json). Корень НЕ репозиторий. Используй когда ЗавЛаб говорит «работай в кабинете X» или при любых git-операциях в лаборатории.
 version: "1.0.0"
 author: "ЗавЛаб"
 last_reviewed: "2026-06-22"
@@ -42,7 +42,7 @@ triggers:
 - **Лаборатория** — `/root/LabDoctorM`, НЕ репозиторий (корневой `.git/` удалён 22.06.2026)
 - **Кабинет** — отдельный проект-репозиторий в `projects/` (например, `projects/snablab`)
 - **Рабочий стол** — `workspaces/<твой_агент>/`, НЕ репозиторий
-- **Единый git user** — `LabDoctorM / agents@labdoctorm.ru` во всех проектах
+- **Атрибуция по агенту (per-agent)** — `lab-commit.sh <agent>` ставит `GIT_AUTHOR_*`/`GIT_COMMITTER_*` на основе `<кабинет>/git-authors.json`. Единого user'а нет: каждый коммит подписан конкретным агентом (имя+email берутся из git-authors.json).
 
 ## Быстрый старт
 
@@ -75,19 +75,19 @@ git push origin <ветка>
 ├── projects/                       # Кабинеты (отдельные репозитории)
 │   └── <кабинет>/
 │       ├── .git/                   # Свой git-репозиторий
-│       ├── bin/lab-commit.sh       # Скрипт атрибуции (симлинк на scripts/lab-commit.sh)
+│       ├── bin/lab-commit.sh       # Скрипт атрибуции (обычный файл, копия оригинала)
 │       ├── scripts/lab-commit.sh   # Оригинал скрипта (в DoctorM_and_Ai/scripts/lab-commit.sh)
-│       └── .qwen/git-authors.json  # Маппинг агентов (свой для каждого проекта)
+│       └── git-authors.json        # Маппинг агентов (в корне кабинета, НЕ в .qwen/)
 ├── workspaces/                     # Рабочие столы агентов (НЕ репозитории)
 ├── data/                           # Данные
 └── vault/                          # Хранилище
 ```
 
-**Примечание:** В некоторых проектах `git-authors.json` лежит в корне (`<кабинет>/git-authors.json`), а не в `.qwen/`. Проверь оба пути.
+**Примечание:** `git-authors.json` лежит в корне кабинета (`<кабинет>/git-authors.json`), НЕ в `.qwen/` (путь `.qwen/` не используется). Это подтверждено во всех кабинетах (myrmex-control, snablab, lab-memory и др.).
 
 ## Добавление нового агента
 
-Попроси ЗавЛаб добавить запись в `.qwen/git-authors.json` внутри нужного проекта:
+Попроси ЗавЛаб добавить запись в `<кабинет>/git-authors.json` внутри нужного проекта:
 
 ```json
 {
@@ -95,7 +95,7 @@ git push origin <ветка>
 }
 ```
 
-Файл лежит в `projects/<кабинет>/.qwen/git-authors.json` — свой для каждого проекта.
+Файл лежит в `projects/<кабинет>/git-authors.json` — свой для каждого проекта.
 
 ## Известные агенты
 
@@ -113,11 +113,11 @@ git push origin <ветка>
 ### lab-commit.sh не найден
 - Проверь путь: `projects/<кабинет>/bin/lab-commit.sh`
 - Если нет — проверь `projects/<кабинет>/scripts/lab-commit.sh`
-- Если нет нигде — создай симлинк: `ln -s ../../DoctorM_and_Ai/scripts/lab-commit.sh projects/<кабinet>/bin/lab-commit.sh`
+- Если нет нигде — скопируй оригинал (НЕ симлинк, это обычные файлы): `cp ../../DoctorM_and_Ai/scripts/lab-commit.sh projects/<кабинет>/bin/lab-commit.sh`
 - Оригинал скрипта: `projects/DoctorM_and_Ai/scripts/lab-commit.sh`
 
 ### git-authors.json не найден
-- Проверь `.qwen/git-authors.json` и `<кабинет>/git-authors.json`
+- Проверь `<кабинет>/git-authors.json` (корень кабинета, НЕ `.qwen/`)
 - Если файла нет — попроси ЗавЛаб добавить агента
 - Не создавай файл сам — формат должен быть согласован
 

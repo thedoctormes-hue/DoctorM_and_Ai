@@ -143,10 +143,10 @@ title: <краткое описание>
 ### 1. Создание
 
 1. Определить category, type, severity
-2. Сгенерировать короткий hash: `SHORT_HASH=$(head -c 100 /dev/urandom | sha256sum | cut -c1-6)`. Создать файл `/root/LabDoctorM/projects/DoctorM_and_Ai/incidents/YYYY-MM-DD-HHMMSS-${SHORT_HASH}.md` по шаблону
-4. Подставить hash в поле `id`: `INC-YYYYMMDD-HHMMSS-<hash>`
-5. Заполнить обязательные поля
-6. Закоммитить через `lab-commit.sh`:
+2. Сгенерировать короткий hash: `SHORT_HASH=$(head -c 100 /dev/urandom | sha256sum | cut -c1-6)`. Создать файл `/root/LabDoctorM/projects/DoctorM_and_Ai/incidents/YYYY-MM-DD-HHMMSS-${SHORT_HASH}.md` по шаблону
+3. Подставить hash в поле `id`: `INC-YYYYMMDD-HHMMSS-<hash>`
+4. Заполнить обязательные поля
+5. Закоммитить через `lab-commit.sh`:
    ```bash
    /root/LabDoctorM/projects/DoctorM_and_Ai/scripts/lab-commit.sh <агент> -m "INC: <title>"
    ```
@@ -179,5 +179,5 @@ title: <краткое описание>
 
 ## Связанные скиллы
 
-- `accept` — протокол приёмки работы (закрытие инцидента = часть приёмки)
+- `accepting-work` — протокол приёмки работы (закрытие инцидента = часть приёмки)
 - `labsearch` — поиск по инцидентам

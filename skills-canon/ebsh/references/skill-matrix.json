@@ -1,4 +1,5 @@
 {
+  "_builtin_plugin_skills": ["skill-creator", "spike"],
   "skill-improvement": {
     "skills": ["skill-creator", "fact-check", "accepting-work", "change-management"],
     "complexity": "medium",

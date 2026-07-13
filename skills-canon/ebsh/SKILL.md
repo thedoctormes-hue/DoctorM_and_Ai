@@ -141,7 +141,7 @@ python3 /root/LabDoctorM/projects/lab-memory/scripts/lab_search.py search "<оп
 research + spike (параллельно) → change-management (ждёт оба) → accepting-work (ждёт change-management) → finishing-session (ждёт accepting-work)
 ```
 
-**Anti-loop как обёртка:** каждый спавненный агент работает под защитой anti-loop — это обёртка вокруг `sessions_spawn` (circuit breaker + retry-limit на каждого спавненного агента), перехватывающая зависания и эскалирующая при исчерпании попыток.
+**Anti-loop:** каждый спавненный агент работает под защитой anti-loop — скилл даёт правила против зацикливания (circuit breaker, retry-limit на каждого спавненного агента), перехватывающие зависания и эскалирующие при исчерпании попыток.
 
 ### Шаг 3 — Финализация
 
@@ -153,6 +153,8 @@ research + spike (параллельно) → change-management (ждёт оба
 ## Skill-Matrix
 
 Хранится в `~/.openclaw/skills/ebsh/references/skill-matrix.json`.
+
+⚠️ `skill-creator` и `spike` из матрицы — это built-in/plugin скилы OpenClaw (доступны как плагины, а не как canon-симлинки в `~/.openclaw/skills`). Они живые; pre-flight проверка `ls ~/.openclaw/skills/<skill>/SKILL.md` для них неприменима — спавнить напрямую как plugin-скилы. См. `_builtin_plugin_skills` в skill-matrix.json.
 
 **Структура записи:**
 ```json
@@ -256,7 +258,7 @@ research + spike (параллельно) → change-management (ждёт оба
 **ЕБШ:**
 1. Классификация → `audit` (авто)
 2. Сложность → `medium` (из матрицы)
-3. labsearch: «audit starting-session skill» → score 0.72 → нашёл ADR-0042, incidents
+3. labsearch: «audit starting-session skill» → score 0.72 → нашёл ADR-0056 (skill-creation-standard), incidents
 4. Скилы из матрицы: research (уже использован), fact-check, anti-loop
 5. depends_on пустой → спавнит fact-check + anti-loop параллельно
 6. Собирает результаты → формирует отчёт
