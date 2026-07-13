@@ -1,5 +1,6 @@
 ---
 id: workspaces__owl__incidents__INC-019
+timestamp: "2026-06-19T00:00:00Z"
 category: process
 type: data_loss
 severity: critical

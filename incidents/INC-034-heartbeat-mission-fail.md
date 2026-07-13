@@ -1,5 +1,6 @@
 ---
 id: INC-034-heartbeat-mission-fail
+timestamp: "2026-07-10T00:00:00Z"
 category: tech
 type: bug
 severity: medium

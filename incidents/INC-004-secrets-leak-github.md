@@ -1,5 +1,6 @@
 ---
 id: INC-004
+timestamp: "2026-05-17T00:00:00Z"
 category: tech
 type: incident
 severity: critical

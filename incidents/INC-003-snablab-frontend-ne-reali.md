@@ -1,5 +1,6 @@
 ---
 id: INC-003
+timestamp: "2026-06-21T00:32:29+00:00"
 category: process
 type: incident
 severity: critical

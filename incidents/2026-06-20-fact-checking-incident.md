@@ -4,7 +4,7 @@ timestamp: "2026-06-20T00:00:00Z"
 category: tech
 type: report
 severity: critical
-status: active
+status: open
 agent: kotolizator
 title: "Инцидент: Подмена фактов на фантазии в отчёте"
 description: 2026 06 20 fact checking incident

@@ -1,5 +1,6 @@
 ---
 id: INC-001
+timestamp: "2026-05-12T00:00:00Z"
 category: process
 type: incident
 severity: medium

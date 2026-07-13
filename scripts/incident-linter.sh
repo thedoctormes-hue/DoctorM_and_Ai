@@ -155,6 +155,8 @@ if [ -d "$CANON_DIR" ]; then
   while IFS= read -r -d '' f; do
     CANON_TOTAL=$((CANON_TOTAL+1))
     base="$(basename "$f")"
+    # README.md — индекс реестра, не инцидент
+    [ "$base" = "README.md" ] && continue
     missing=()
     for field in "${REQUIRED_FIELDS[@]}"; do
       val="$(get_field "$f" "$field")"

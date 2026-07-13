@@ -1,5 +1,6 @@
 ---
 id: INC-026-tools-allow-crash
+timestamp: "2026-06-25T00:00:00Z"
 category: tech
 type: incident
 severity: critical

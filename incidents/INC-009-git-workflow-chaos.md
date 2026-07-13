@@ -1,5 +1,6 @@
 ---
 id: INC-009
+timestamp: "2026-06-11T00:00:00Z"
 category: tech
 type: incident
 severity: high

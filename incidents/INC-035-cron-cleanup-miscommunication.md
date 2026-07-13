@@ -1,5 +1,6 @@
 ---
 id: INC-035-cron-cleanup-miscommunication
+timestamp: "2026-07-12T00:00:00Z"
 category: process
 type: data_loss
 severity: high

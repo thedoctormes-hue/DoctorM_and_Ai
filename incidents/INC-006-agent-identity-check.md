@@ -1,5 +1,6 @@
 ---
 id: INC-006
+timestamp: "2026-05-20T00:00:00Z"
 category: tech
 type: incident
 severity: medium
