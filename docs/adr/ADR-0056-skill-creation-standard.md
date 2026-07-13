@@ -29,7 +29,7 @@ DDP-аудит 19 кастомных скиллов лаборатории (2026
 ### Governance-слой (C-слой) — связность без плодения новых сервисов
 
 - **Реестр истины для лаб-скиллов** = `skills-canon/` (под VCS) + `skill_workshop` (регистрация). `myrmex-control/skill-registry.json` — отдельный реестр project-скиллов myrmex-control (НЕ лаб-скиллов); не дублируем лаб-скиллы туда. Gatekeeper = только store результатов lint (изолированный).
-- **link-lint** (внешний скрипт `DoctorM_and_Ai/scripts/skill-link-lint.sh`, гоняется в крон как `gatekeeper-audit.timer`) сканирует SKILL.md на битые ссылки и обходные копии, пишет результат в **изолированный store Gatekeeper** (`data/registry.json` через новый `put_registry` tool) — НЕ трогая PDP-ядро Gatekeeper. ADR-0054-коллизия номеров исключена индексом ADR.
+- **link-lint** (внешний скрипт `DoctorM_and_Ai/scripts/skill-link-lint.sh`) гоняется по крону (OpenClaw `cron`, job `skill-link-lint`, ежедневно 03:13 MSK). Пишет результат в **локальный store** `DoctorM_and_Ai/data/skill-link-lint-last.txt` (runtime artifact, НЕ в git). ⚠️ Плановый `put_registry` tool Gatekeeper для записи результатов линта — **НЕ реализован** (Gatekeeper `resources_list` пуст, read-only). Поэтому store локальный; при WARN агент анонсирует в Telegram (per ADR-0056 manual-review). Gatekeeper НЕ трогаем (не дублируем реестр, НЕ правим PDP-ядро).
 - **Обязательная проверка (contract)** при принятии скила: соответствие канону (frontmatter, структура) + наличие записи в реестре + отсутствие битых ссылок.
 
 ### Уже применено (ядро A+B, 2026-07-13)
@@ -42,7 +42,7 @@ DDP-аудит 19 кастомных скиллов лаборатории (2026
 
 - **Плюсы:** новый скил не создаст хаос (единый вход + реестр + авто-линт). Обходные копии ловятся автоматически.
 - **Риски/обязательства:** `skill_workshop` должен стать реальным единственным входом (канон `skill-manager` поправлен — см. ниже). link-lint + Gatekeeper-store требуют поддержки (крон), иначе устареют. Любая правка Gatekeeper — по ADR-0048 (backup→validate→doctor→24ч).
-- **Не делаем:** не создаём отдельный сервис реестра (используем Myrmex + Gatekeeper как store результатов линта).
+- **Не делаем:** не создаём отдельный сервис реестра. Store результатов линта — локальный файл (Gatekeeper-write tool отсутствует; если понадобится — отдельная задача на создание `put_registry`).
 
 ## Implementation
 
