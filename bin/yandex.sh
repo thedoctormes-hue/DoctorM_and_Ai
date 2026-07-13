@@ -253,7 +253,7 @@ case "$svc" in
     case "$act" in
       ls)
         path="${1:-/}"
-        code=$(curl -s -m 30 -X PROPFIND -u "$DISK_ACC:$P" -H "Depth: 1" "$WEBDAV$path" -o /tmp/.ydls -w '%{http_code}')
+        code=$(curl -s -m 30 -X PROPFIND -u "$DISK_ACC:$P" -H "Depth: 1" "$WEBDAV/$path" -o /tmp/.ydls -w '%{http_code}')
         grep -oiP '(?<=<d:href>)[^<]+' /tmp/.ydls 2>/dev/null | sed 's|^/disk||' || true
         rm -f /tmp/.ydls
         log disk "ls $path" "$DISK_ACC" "http:$code"
