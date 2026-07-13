@@ -1,0 +1,45 @@
+#!/bin/bash
+# Guard hook: reject commits authored under the shared DEFAULT identity
+# (LabDoctorM <agents@labdoctorm.ru>). Forces every agent/process to commit
+# via ./bin/lab-commit.sh <agent>, which sets the agent's own
+# <agent>@labdoctorm.ru identity. Prevents the shared-account leak
+# (incident 2026-07-13-081639-d4e7b1).
+#
+# Uses `git var GIT_AUTHOR_IDENT` (NOT `git config user.email`) because the
+# latter ignores the GIT_AUTHOR_EMAIL env var that lab-commit.sh sets.
+#
+# Chains to the repo-local pre-commit hook (e.g. GUARDIAN) if present, so
+# repo-specific checks keep running even with this global hook enabled.
+#
+# Skipped during rebase/cherry-pick/merge: those replay existing commits and
+# must not be blocked by the author check.
+
+GITDIR="$(git rev-parse --git-dir 2>/dev/null)"
+
+# Skip during rebase/cherry-pick/merge
+if [ -d "$GITDIR/rebase-merge" ] || [ -d "$GITDIR/rebase-apply" ] \
+   || [ -f "$GITDIR/CHERRY_PICK_HEAD" ] || [ -d "$GITDIR/merge-HEAD" ]; then
+  exit 0
+fi
+
+# Chain to repo-local pre-commit hook (e.g. GUARDIAN), if present
+LOCAL_HOOK="$GITDIR/hooks/pre-commit"
+if [ -x "$LOCAL_HOOK" ]; then
+  "$LOCAL_HOOK" || exit $?
+fi
+
+IDENT="$(git var GIT_AUTHOR_IDENT 2>/dev/null)" || IDENT=""
+EMAIL="$(printf '%s' "$IDENT" | sed -E 's/.*<([^>]+)>.*/\1/')"
+NAME="$(printf '%s' "$IDENT" | sed -E 's/^(.*) <.*/\1/')"
+
+BAD_EMAIL="agents@labdoctorm.ru"
+BAD_NAME="LabDoctorM"
+
+if [ "$EMAIL" = "$BAD_EMAIL" ] || [ "$NAME" = "$BAD_NAME" ]; then
+  echo "COMMIT REJECTED: author is the shared default identity ($NAME <$EMAIL>)." >&2
+  echo "Fix: commit via ./bin/lab-commit.sh <agent> so the work is attributed to you." >&2
+  echo "If this is a false positive, use: git commit --no-verify" >&2
+  exit 1
+fi
+
+exit 0
