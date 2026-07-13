@@ -4,9 +4,10 @@ timestamp: "2026-07-10T00:00:00Z"
 category: tech
 type: bug
 severity: medium
-status: open
+status: closed
 agent: dominika
 title: INC-034 — Провал миссии «Собор сердца» (heartbeat)
+resolution: Миссия «Собор сердца» упразднена (HEARTBEAT.md неактуально 2026-07-13). Закрыт по факту.
 ---
 
 # INC-034 — Провал миссии «Собор сердца» (heartbeat)

@@ -4,12 +4,13 @@ timestamp: "2026-07-11T08:14:00Z"
 category: tech
 type: incident
 severity: critical
-status: open
+status: closed
 agent: dominika
 title: "INC-20260711-0814: onnx-worker эмбеддер-воркеры падают"
 description: "INC-20260711: onnx-worker-8084/8085/8091 FAILED (флэппинг эмбеддер-воркеров)"
 last_reviewed: 2026-07-11
 last_code_change: 2026-07-11
+resolution: Технический: проверен живьём, работоспособность восстановлена.
 ---
 
 # INC-20260711-0814: onnx-worker эмбеддер-воркеры падают

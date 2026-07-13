@@ -4,12 +4,13 @@ timestamp: "2026-06-25T06:34:00Z"
 category: process
 type: ignored
 severity: low
-status: open
+status: closed
 agent: dominika
 title: "INC-027: Нарушение формата ответа — текст вместо цифры"
 date: "2026-06-25T06:34:00Z"
 author: Доминика
 tags: [format, user-request, red-line]
+resolution: Дубликат INC-027 (рассеянная копия в workspaces/*/incidents/). Консолидирован в канон (ADR-0056). Закрыт как дубликат.
 ---
 
 # INC-027: Нарушение формата ответа — текст вместо цифры

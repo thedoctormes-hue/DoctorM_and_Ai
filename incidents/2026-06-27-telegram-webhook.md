@@ -7,6 +7,8 @@ severity: low
 status: open
 agent: unknown
 title: Telegram deleteWebhook Network Errors
+owner: Бестия
+resolution_plan: Разобрать Telegram deleteWebhook network errors; при необходимости переустановить webhook.
 ---
 
 # Telegram deleteWebhook Network Errors

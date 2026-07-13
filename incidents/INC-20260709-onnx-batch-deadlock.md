@@ -4,9 +4,10 @@ timestamp: "2026-07-09T00:00:00Z"
 category: tech
 type: fantasy
 severity: medium
-status: open
+status: closed
 agent: streikbrecher
 title: INC-20260709-onnx-batch-deadlock
+resolution: Урок вытянут в skill fact-check: обязательная проверка фактов, запрет фантазий. Рецидив перехватывается дисциплиной.
 ---
 
 # INC-20260709-onnx-batch-deadlock

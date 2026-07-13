@@ -4,12 +4,13 @@ timestamp: "2026-06-20T00:00:00Z"
 category: tech
 type: report
 severity: critical
-status: open
+status: closed
 agent: kotolizator
 title: "Инцидент: Подмена фактов на фантазии в отчёте"
 description: 2026 06 20 fact checking incident
 last_reviewed: 2026-06-21
 last_code_change: 2026-06-18
+resolution: Поведенческий инцидент; урок вытянут в fact-check/incident-patterns.
 ---
 
 # Инцидент: Подмена фактов на фантазии в отчёте

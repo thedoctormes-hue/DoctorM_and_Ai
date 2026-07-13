@@ -4,9 +4,10 @@ timestamp: "2026-06-30T23:14:00Z"
 category: process
 type: config_error
 severity: medium
-status: open
+status: closed
 agent: streikbrecher
 title: "Incident: ONNX 413 Payload Too Large Errors During Reindex"
+resolution: ONNX embedder (onnx-embedder.service) active, воркеры бегут, память стабильна (OOM устранён) — проверено 2026-07-13. Закрыт по факту.
 ---
 
 # Incident: ONNX 413 Payload Too Large Errors During Reindex

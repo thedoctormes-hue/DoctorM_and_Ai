@@ -7,6 +7,8 @@ severity: medium
 status: open
 agent: unknown
 title: 20260629-converter-decoupling
+owner: КотОлизатор
+resolution_plan: Принять решение по decoupling конвертера (ADR или отказ), зафиксировать.
 ---
 
 INC-040: Остановить → Исправить → Перезапустить

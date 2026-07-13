@@ -4,9 +4,10 @@ timestamp: "2026-06-21T00:00:00Z"
 category: tech
 type: other
 severity: medium
-status: open
+status: closed
 agent: antcat
 title: "Аудит systemd-сервисов — 2026-06-21 23:22 UTC"
+resolution: Аудит systemd-сервисов проведён (2026-06-21); находки учтены в RUL-007/ops-дисциплине. Закрыт по факту.
 ---
 
 # Аудит systemd-сервисов — 2026-06-21 23:22 UTC

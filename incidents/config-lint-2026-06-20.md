@@ -7,6 +7,8 @@ severity: medium
 status: open
 agent: unknown
 title: Config Lint Report — 2026-06-20
+owner: КотОлизатор
+resolution_plan: Актуализировать config-lint, прогнать по текущим конфигам, закрыть расхождения.
 ---
 
 # Config Lint Report — 2026-06-20

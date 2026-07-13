@@ -4,9 +4,10 @@ timestamp: "2026-06-25T06:34:00Z"
 category: process
 type: other
 severity: low
-status: open
+status: closed
 agent: raven
 title: "INC-20260625-063400: Нарушение формата ответа"
+resolution: Дубликат INC-027 (рассеянная копия в workspaces/*/incidents/). Консолидирован в канон (ADR-0056). Закрыт как дубликат.
 ---
 
 # INC-20260625-063400: Нарушение формата ответа

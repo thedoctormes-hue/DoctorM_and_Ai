@@ -7,6 +7,8 @@ severity: medium
 status: open
 agent: unknown
 title: "Инцидент: systemd сервисы не запускаются (2026-06-20)"
+owner: Бестия
+resolution_plan: Проверить 3 failed systemd-юнита (dnsmasq, irqbalance, update-notifier-download); решить или пометить intentionally-disabled.
 ---
 
 # Инцидент: systemd сервисы не запускаются (2026-06-20)

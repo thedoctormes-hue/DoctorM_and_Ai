@@ -4,9 +4,10 @@ timestamp: "2026-06-28T00:00:00Z"
 category: process
 type: other
 severity: medium
-status: open
+status: closed
 agent: bestia
 title: INC-20260628-BESTIA-STALE
+resolution: Heartbeat переработан (HEARTBEAT.md неактуально 2026-07-13); stale moot. Закрыт по факту.
 ---
 
 # INC-20260628-BESTIA-STALE
