@@ -1,9 +1,15 @@
 ---
-description: "📋 Реестр инцидентов лаборатории"
+id: README
+category: tech
 type: registry
-last_reviewed: 2026-06-21
+severity: critical
 status: active
+agent: owl
+title: 📋 Реестр инцидентов лаборатории
+description: 📋 Реестр инцидентов лаборатории
+last_reviewed: 2026-06-21
 ---
+
 # 📋 Реестр инцидентов лаборатории
 
 Единый каталог всех инцидентов: `projects/DoctorM_and_Ai/incidents/`

@@ -1,29 +1,19 @@
 ---
-type: incident
 id: INC-013
-title: 'INC-013: Приватный ключ WireGuard-сервера в git'
-status: closed
-author: owl
-created: 2026-06-16 06:30:00+00:00
-updated: 2026-06-16 18:00:00+00:00
-tags:
-- incident
-- secrets
-- vpn
-- recurrence
-code_refs:
-- infrastructure/vpn/wireguard/wg0.conf
-- projects/bestia/*.conf
-- projects/amnezia-wg/config/**
-- projects/remote-access/awg0.conf
-- .archive/**
+category: tech
+type: incident
 severity: low
+status: closed
+agent: owl
+title: "INC-013: Приватный ключ WireGuard-сервера в git"
+author: owl
+created: "2026-06-16 06:30:00+00:00"
+updated: "2026-06-16 18:00:00+00:00"
+tags:
+code_refs:
 related:
-- INC-004
-- INC-007
-- INC-015
 freshness_score: 98
-last_checked: '2026-06-20T01:00:20+00:00'
+last_checked: "2026-06-20T01:00:20+00:00"
 ---
 
 # INC-013: Приватный ключ WireGuard-сервера в git

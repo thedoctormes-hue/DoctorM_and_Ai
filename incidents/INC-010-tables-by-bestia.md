@@ -1,17 +1,19 @@
 ---
-description: 'INC-010: Бестия снова использует таблицы в ответах'
-type: incident
 id: INC-010
-title: 'INC-010: Бестия снова использует таблицы в ответах'
+category: process
+type: incident
+severity: medium
+status: closed
+agent: bestia
+title: "INC-010: Бестия снова использует таблицы в ответах"
+description: "INC-010: Бестия снова использует таблицы в ответах"
 author: ЗавЛаб
 created: 2026-06-13
 updated: 2026-06-13
 last_reviewed: 2026-06-13
 last_code_change: 2026-06-13
-status: closed
-severity: medium
 freshness_score: 97
-last_checked: '2026-06-20T01:00:19+00:00'
+last_checked: "2026-06-20T01:00:19+00:00"
 ---
 
 # INC-010: Бестия снова использует таблицы в ответах

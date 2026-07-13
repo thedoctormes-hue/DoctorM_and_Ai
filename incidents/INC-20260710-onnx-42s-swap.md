@@ -1,3 +1,14 @@
+---
+id: INC-20260710-onnx-42s-swap
+timestamp: "2026-07-10T00:00:00Z"
+category: tech
+type: other
+severity: high
+status: closed
+agent: streikbrecher
+title: INC-20260710-onnx-42s-swap
+---
+
 # INC-20260710-onnx-42s-swap
 
 **Дата:** 2026-07-10

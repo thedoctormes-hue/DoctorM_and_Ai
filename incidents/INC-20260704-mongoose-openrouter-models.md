@@ -1,16 +1,16 @@
 ---
-title: "mongoose падает из-за obsolete OpenRouter моделей"
-date: 2026-07-04
-status: resolved
+id: INC-20260704-mongoose-openrouter-models
+timestamp: "2026-07-04T00:00:00Z"
+category: tech
+type: bug
 severity: medium
-resolved: 2026-07-08 by mangust (authorization: ЗавЛаб «чини")
+status: resolved
+agent: unknown
+title: mongoose падает из-за obsolete OpenRouter моделей
+date: 2026-07-04
+resolved: "2026-07-08 by mangust (authorization: ЗавЛаб «чини\")"
 resolution: >
-  Первопричина та же, что у INC-20260705: невалидный ключ OpenRouter в цепочке orion-scan/mongoose
-  (vault отсутствовал, `.env` содержал 2-символьный мусор → 401).
-  Ошибки model_not_found/rate_limit на конкретных моделях (nemotron-3-nano, gemma-4-31b и т.п.)
-  были вторичны — скан падал на auth ещё до проверки моделей.
-  После записи валидного ключа в vault + `.env` полный скан отработал (9/21 моделей живы).
-  Список моделей в mongoose при этом не требовал обновления — он берётся динамически из /api/v1/models.
+Первопричина та же, что у INC-20260705: невалидный ключ OpenRouter в цепочке orion-scan/mongoose
 ---
 
 ## Проблема

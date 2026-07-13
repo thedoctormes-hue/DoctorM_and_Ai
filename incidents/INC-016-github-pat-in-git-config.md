@@ -1,25 +1,19 @@
 ---
-type: incident
 id: INC-016
-title: 'INC-016: GitHub PAT в plaintext в remote URL (.git/config)'
-status: closed
-author: kotolizator
-created: 2026-06-16 10:20:00+00:00
-updated: 2026-06-16 12:30:00+00:00
-tags:
-- incident
-- secrets
-- github
-- token
-code_refs:
-- projects/msk-gastro-digest-bot/.git/config
+category: tech
+type: incident
 severity: high
+status: closed
+agent: unknown
+title: "INC-016: GitHub PAT в plaintext в remote URL (.git/config)"
+author: kotolizator
+created: "2026-06-16 10:20:00+00:00"
+updated: "2026-06-16 12:30:00+00:00"
+tags:
+code_refs:
 related:
-- INC-004
-- INC-013
-- INC-007
 freshness_score: 98
-last_checked: '2026-06-20T01:00:20+00:00'
+last_checked: "2026-06-20T01:00:20+00:00"
 ---
 
 # INC-016: GitHub PAT в plaintext в remote URL

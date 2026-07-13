@@ -1,20 +1,20 @@
 ---
-description: 'INC-012: Дубль snablab-bot — Бестия перенесла без коммита, Штрейкбрехер
-  воссоздал заново'
-type: incident
 id: INC-012
-title: 'INC-012: Дубль snablab-bot — два каталога, один бот'
+category: tech
+type: incident
+severity: high
+status: closed
+agent: unknown
+title: "INC-012: Дубль snablab-bot — два каталога, один бот"
+description: "INC-012: Дубль snablab-bot — Бестия перенесла без коммита, Штрейкбрехер"
 author: Бестия
 created: 2026-06-13
 updated: 2026-06-13
 last_reviewed: 2026-06-13
 last_code_change: 2026-06-13
-status: closed
-severity: high
 related:
-- INC-004
 freshness_score: 97
-last_checked: '2026-06-20T01:00:20+00:00'
+last_checked: "2026-06-20T01:00:20+00:00"
 ---
 
 # INC-012: Дубль snablab-bot — два каталога, один бот

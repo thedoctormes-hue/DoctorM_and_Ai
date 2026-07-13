@@ -1,10 +1,16 @@
 ---
-description: "INC-000: Шаблон инцидента"
+id: INC-000-template
+category: tech
 type: incident
+severity: critical
+status: open
+agent: unknown
+title: "INC-000: Шаблон инцидента"
+description: "INC-000: Шаблон инцидента"
 last_reviewed: 2026-05-13
 last_code_change: 2026-05-13
-status: open
 ---
+
 # INC-000: Шаблон инцидента
 
 > Это образец. При создании нового инцидента — копировать и заполнять.

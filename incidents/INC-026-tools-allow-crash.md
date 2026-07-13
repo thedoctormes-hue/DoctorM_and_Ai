@@ -1,10 +1,14 @@
 ---
-description: "INC-026: Поломка gateway через tools.allow в agents.list"
+id: INC-026-tools-allow-crash
+category: tech
 type: incident
+severity: critical
+status: resolved
+agent: bestia
+title: "INC-026: Поломка gateway через tools.allow в agents.list"
+description: "INC-026: Поломка gateway через tools.allow в agents.list"
 last_reviewed: 2026-06-25
 last_code_change: 2026-06-25
-status: resolved
-severity: critical
 ---
 
 # INC-026: Поломка gateway через tools.allow в agents.list

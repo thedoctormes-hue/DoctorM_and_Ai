@@ -1,22 +1,23 @@
 ---
-
-type: incident
 id: INC-008
-title: "INC-008: Контаминация веток — Штрейкбрехер запущен на чужой ветке OWL"
-status: closed
+category: tech
+type: incident
 severity: high
+status: closed
+agent: owl
+title: "INC-008: Контаминация веток — Штрейкбрехер запущен на чужой ветке OWL"
 author: streikbrecher
-created: 2026-06-05T06:11:00+00:00
-updated: 2026-06-05T06:11:00+00:00
+created: "2026-06-05T06:11:00+00:00"
+updated: "2026-06-05T06:11:00+00:00"
 tags: [incident, git, branch-contamination, owl, streikbrecher]
 code_refs:
-  - .qwen/scripts/session_startup.sh
-description: "При старте сессии session_startup.sh не переключил на ветку Штрейкбрехера из-за мёртвого worktree. Агент оказался на owl/artifact-system-v4 с чужими незакоммиченными изменениями."
+description: При старте сессии session_startup.sh не переключил на ветку Штрейкбрехера из-за мёртвого worktree. Агент оказался на owl/artifact-system-v4 с чужими незакоммиченными изменениями.
 related: [INC-009]
--
 source: agent
 last_verified: 2026-06-17
----## Описание
+---
+
+## Описание
 При старте сессии агента «Штрейкбрехер» скрипт `session_startup.sh` не переключил рабочую директорию на ветку Штрейкбрехера. Worktree `/root/LabDoctorM/worktrees/streikbrecher/` существует как директория, но **не зарегистрирован в `git worktree list`**. Скрипт проверяет только `[ -d "$WT_DIR" ]` — этого недостаточно. В результате агент оказался на ветке `owl/artifact-system-v4` с незакоммиченными изменениями OWL.
 
 ## Severity

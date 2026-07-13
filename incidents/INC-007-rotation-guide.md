@@ -1,19 +1,21 @@
 ---
 id: INC-007
+category: process
 type: incident
-title: 'INC-007: Руководство по ротации секретов'
+severity: critical
 status: closed
+agent: unknown
+title: "INC-007: Руководство по ротации секретов"
 author: system
-created: '2026-05-24T21:07:07+00:00'
-updated: '2026-05-24T21:07:07+00:00'
+created: "2026-05-24T21:07:07+00:00"
+updated: "2026-05-24T21:07:07+00:00"
 confidence: outdated
 source: manual
 last_verified: 2026-06-17
-code_refs: '[]'
-tags: '[incident, migrated]'
-severity: critical
+code_refs: []
+tags: [incident, migrated]
 freshness_score: 98
-last_checked: '2026-06-20T01:00:19+00:00'
+last_checked: "2026-06-20T01:00:19+00:00"
 ---
 
 *Создан: 2026-05-17*

@@ -1,0 +1,1170 @@
+[
+ {
+  "target": "INC-2026-07-10-141900-research-monitor-falsealert.md",
+  "source_rel": "incidents/INC-2026-07-10-141900-research-monitor-falsealert.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-07-10"
+ },
+ {
+  "target": "INC-2026-07-13-003126-c7e01a.md",
+  "source_rel": "incidents/INC-2026-07-13-003126-c7e01a.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "antcat",
+  "date": "2026-07-13"
+ },
+ {
+  "target": "INC-20260702-131000.md",
+  "source_rel": "incidents/INC-20260702-131000.md",
+  "status": "investigating",
+  "severity": "critical",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260709-081300-lost-search-keys.md",
+  "source_rel": "incidents/INC-20260709-081300-lost-search-keys.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260709-131500-research-searxng-hardening.md",
+  "source_rel": "incidents/INC-20260709-131500-research-searxng-hardening.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260710-001200-searxng-pool-outage.md",
+  "source_rel": "incidents/INC-20260710-001200-searxng-pool-outage.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "2026-06-20-fact-checking-incident.md",
+  "source_rel": "projects/DoctorM_and_Ai/docs/incidents/2026-06-20-fact-checking-incident.md",
+  "status": "active",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-20"
+ },
+ {
+  "target": "2026-06-21-170000.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-21-170000.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "main",
+  "date": "2026-06-21"
+ },
+ {
+  "target": "2026-06-22-165900.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-22-165900.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "antcat",
+  "date": "2026-06-22"
+ },
+ {
+  "target": "2026-06-23-042800.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-23-042800.md",
+  "status": "resolved",
+  "severity": "high",
+  "owner": "antcat (Муравей)",
+  "date": "2026-06-23"
+ },
+ {
+  "target": "2026-06-23-173755.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-23-173755.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "mangust",
+  "date": "2026-06-23"
+ },
+ {
+  "target": "2026-06-24-061300.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-061300.md",
+  "status": "closed",
+  "severity": "medium",
+  "owner": "antcat",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-071800.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-071800.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "raven",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-145900.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-145900.md",
+  "status": "open",
+  "severity": "critical",
+  "owner": "kotolizator",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-150900.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-150900.md",
+  "status": "open",
+  "severity": "critical",
+  "owner": "kotolizator",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-152700.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-152700.md",
+  "status": "closed (superseded by INC-20260624-160400)",
+  "severity": "medium",
+  "owner": "streikbrecher",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-153300.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-153300.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "kotolizator",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-153734.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-153734.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "mangust",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-160400.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-160400.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "streikbrecher",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-172600.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-172600.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "mangust",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-210300.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-24-210300.md",
+  "status": "open",
+  "severity": "critical",
+  "owner": "kotolizator",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-25-063400.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-063400.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "kotolizator",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-063925.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-063925.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "bestia",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-063943.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-063943.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "raven",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-063946.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-063946.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-064100.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-064100.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "owl",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-064122.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-064122.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "mangust",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-064900.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-064900.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "kotolizator",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-065857.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-065857.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "antcat",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-070100.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-070100.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "raven",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-071600.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-071600.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "antcat",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-071700.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-071700.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "bestia",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-173000.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-25-173000.md",
+  "status": "resolved",
+  "severity": "low",
+  "owner": "streikbrecher",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-28-080200.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-28-080200.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "mangust",
+  "date": "2026-06-28"
+ },
+ {
+  "target": "2026-06-28-142000-csrf-deploy-failure.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-28-142000-csrf-deploy-failure.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-28"
+ },
+ {
+  "target": "2026-06-29-000633-e8084e.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-29-000633-e8084e.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "dominika",
+  "date": "2026-06-29"
+ },
+ {
+  "target": "2026-06-29-024400-bd2db4.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-29-024400-bd2db4.md",
+  "status": "resolved",
+  "severity": "high",
+  "owner": "owl",
+  "date": "2026-06-29"
+ },
+ {
+  "target": "2026-06-29-152500-ad5664.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-29-152500-ad5664.md",
+  "status": "closed",
+  "severity": "medium",
+  "owner": "raven",
+  "date": "2026-06-29"
+ },
+ {
+  "target": "2026-06-29-182700-9d16a3.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-29-182700-9d16a3.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "dominika",
+  "date": "2026-06-29"
+ },
+ {
+  "target": "2026-06-29-185137-ba7e42.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-29-185137-ba7e42.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "streikbrecher",
+  "date": "2026-06-29"
+ },
+ {
+  "target": "2026-06-30-065341-5d825c.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-30-065341-5d825c.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "kotolizator",
+  "date": "2026-06-30"
+ },
+ {
+  "target": "2026-06-30-121200-5ce045.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-30-121200-5ce045.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "raven",
+  "date": "2026-06-30"
+ },
+ {
+  "target": "2026-06-30-141500-57178d.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-30-141500-57178d.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "antcat",
+  "date": "2026-06-30"
+ },
+ {
+  "target": "2026-06-30-145026-08f153.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-06-30-145026-08f153.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "mangust",
+  "date": "2026-06-30"
+ },
+ {
+  "target": "2026-07-01-003900.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-01-003900.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "raven",
+  "date": "2026-07-01"
+ },
+ {
+  "target": "2026-07-04-140845-45017b.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-04-140845-45017b.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "kotolizator",
+  "date": "2026-07-04"
+ },
+ {
+  "target": "2026-07-08-070944-d8e098.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-08-070944-d8e098.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "owl",
+  "date": "2026-07-08"
+ },
+ {
+  "target": "2026-07-10-114301-1a86f3.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-10-114301-1a86f3.md",
+  "status": "resolved",
+  "severity": "high",
+  "owner": "bestia",
+  "date": "2026-07-10"
+ },
+ {
+  "target": "2026-07-11-080347-d107b6.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-11-080347-d107b6.md",
+  "status": "closed",
+  "severity": "medium",
+  "owner": "mangust",
+  "date": "2026-07-11"
+ },
+ {
+  "target": "2026-07-12-093956-ad6ebd.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-12-093956-ad6ebd.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "mangust",
+  "date": "2026-07-12"
+ },
+ {
+  "target": "2026-07-12-232810-dd071a.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-12-232810-dd071a.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "dominika",
+  "date": "2026-07-12"
+ },
+ {
+  "target": "2026-07-13-002844-7e655c.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-13-002844-7e655c.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "dominika",
+  "date": "2026-07-13"
+ },
+ {
+  "target": "2026-07-13-071955-79296d.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-13-071955-79296d.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "kotolizator",
+  "date": "2026-07-13"
+ },
+ {
+  "target": "2026-07-13-081639-d4e7b1.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/2026-07-13-081639-d4e7b1.md",
+  "status": "closed (lab-memory/main оставлен по решению ЗавЛаба 14:20)",
+  "severity": "medium",
+  "owner": "mangust",
+  "date": "2026-07-13"
+ },
+ {
+  "target": "INC-000-template.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-000-template.md",
+  "status": "open",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-001-twa-timing-attack.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-001-twa-timing-attack.md",
+  "status": "closed",
+  "severity": "medium",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-002-security-finding.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-002-security-finding.md",
+  "status": "closed",
+  "severity": "critical",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-003-snablab-frontend-ne-reali.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-003-snablab-frontend-ne-reali.md",
+  "status": "closed",
+  "severity": "critical",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-004-secrets-leak-github.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-004-secrets-leak-github.md",
+  "status": "closed",
+  "severity": "critical",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-005-inc005-context-hijacking-attack-udalenie.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-005-inc005-context-hijacking-attack-udalenie.md",
+  "status": "closed",
+  "severity": "medium",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-006-agent-identity-check.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-006-agent-identity-check.md",
+  "status": "closed",
+  "severity": "medium",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-007-rotation-guide.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-007-rotation-guide.md",
+  "status": "closed",
+  "severity": "critical",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-008-branch-contamination.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-008-branch-contamination.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-009-git-workflow-chaos.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-009-git-workflow-chaos.md",
+  "status": "closed",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-010-tables-by-bestia.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-010-tables-by-bestia.md",
+  "status": "closed",
+  "severity": "medium",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-011.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-011.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-012-snablab-bot-duplicate.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-012-snablab-bot-duplicate.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-013-wireguard-private-key-in-git.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-013-wireguard-private-key-in-git.md",
+  "status": "closed",
+  "severity": "low",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-015-browser-profiles-cookies-in-git.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-015-browser-profiles-cookies-in-git.md",
+  "status": "closed",
+  "severity": "low",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-016-github-pat-in-git-config.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-016-github-pat-in-git-config.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-017.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-017.md",
+  "status": "closed",
+  "severity": "medium",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-018.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-018.md",
+  "status": "closed",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-019.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-019.md",
+  "status": "closed",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-022.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-022.md",
+  "status": "closed",
+  "severity": "🟠 HIGH",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-023.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-023.md",
+  "status": "closed",
+  "severity": "🟠 HIGH",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-024.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-024.md",
+  "status": "closed",
+  "severity": "critical",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-025.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-025.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-026-tools-allow-crash.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-026-tools-allow-crash.md",
+  "status": "resolved",
+  "severity": "critical",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-029-rotation-bug-20260625.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-029-rotation-bug-20260625.md",
+  "status": "resolved",
+  "severity": "medium",
+  "owner": "streikbrecher",
+  "date": ""
+ },
+ {
+  "target": "INC-033-ignore-command.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-033-ignore-command.md",
+  "status": "resolved",
+  "severity": "critical",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260619171500.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260619171500.md",
+  "status": "closed",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260628-2300-gateway-schema-fix.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260628-2300-gateway-schema-fix.md",
+  "status": "closed",
+  "severity": "critical",
+  "owner": "mangust",
+  "date": ""
+ },
+ {
+  "target": "INC-20260629-141900-3eff47.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260629-141900-3eff47.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "kotolizator",
+  "date": ""
+ },
+ {
+  "target": "INC-20260630-144900-65faea.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260630-144900-65faea.md",
+  "status": "open",
+  "severity": "high",
+  "owner": "kotolizator",
+  "date": ""
+ },
+ {
+  "target": "INC-20260701-001100-model-id-fix.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260701-001100-model-id-fix.md",
+  "status": "resolved",
+  "severity": "high",
+  "owner": "streikbrecher",
+  "date": ""
+ },
+ {
+  "target": "INC-20260701-models-rate-limit.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260701-models-rate-limit.md",
+  "status": "resolved",
+  "severity": "high",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260701-onnx-embedder-crash.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260701-onnx-embedder-crash.md",
+  "status": "resolved",
+  "severity": "medium",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260704-mongoose-openrouter-models.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260704-mongoose-openrouter-models.md",
+  "status": "resolved",
+  "severity": "medium",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260705-mongoose-orion-scan.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260705-mongoose-orion-scan.md",
+  "status": "resolved",
+  "severity": "medium",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260708-065200-apihub-down.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260708-065200-apihub-down.md",
+  "status": "closed",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260708-065500-myrmex-sessionbridge-loop.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260708-065500-myrmex-sessionbridge-loop.md",
+  "status": "resolved",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260709-1610-disk-leak-mcp-loop.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260709-1610-disk-leak-mcp-loop.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260709-onnx-batch-deadlock.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260709-onnx-batch-deadlock.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260709-onnx-oom.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260709-onnx-oom.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260710-onnx-42s-swap.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260710-onnx-42s-swap.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260711-0814-onnx-worker-flap.md",
+  "source_rel": "projects/DoctorM_and_Ai/incidents/INC-20260711-0814-onnx-worker-flap.md",
+  "status": "open",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-2026-07-13-E1-gate-bypass.md",
+  "source_rel": "projects/doctorm-unify-protocol/incidents/INC-2026-07-13-E1-gate-bypass.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-07-13"
+ },
+ {
+  "target": "INC-2026-07-13-E2-sl-survival.md",
+  "source_rel": "projects/doctorm-unify-protocol/incidents/INC-2026-07-13-E2-sl-survival.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-07-13"
+ },
+ {
+  "target": "2026-06-25-063350.md",
+  "source_rel": "workspaces/antcat/incidents/2026-06-25-063350.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "antcat",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-20-systemd-failures.md",
+  "source_rel": "workspaces/bestia/incidents/2026-06-20-systemd-failures.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-20"
+ },
+ {
+  "target": "2026-06-21-systemd-audit.md",
+  "source_rel": "workspaces/bestia/incidents/2026-06-21-systemd-audit.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-21"
+ },
+ {
+  "target": "2026-06-22-systemd-zombie-cleanup.md",
+  "source_rel": "workspaces/bestia/incidents/2026-06-22-systemd-zombie-cleanup.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-22"
+ },
+ {
+  "target": "2026-06-21-0249-fact-check-failure.md",
+  "source_rel": "workspaces/dominika/incidents/2026-06-21-0249-fact-check-failure.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-21"
+ },
+ {
+  "target": "workspaces__dominika__incidents__2026-06-25-063400.md",
+  "source_rel": "workspaces/dominika/incidents/2026-06-25-063400.md",
+  "status": "open",
+  "severity": "low",
+  "owner": "",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-064000.md",
+  "source_rel": "workspaces/dominika/incidents/2026-06-25-064000.md",
+  "status": "open",
+  "severity": "low",
+  "owner": "dominika",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-065800.md",
+  "source_rel": "workspaces/dominika/incidents/2026-06-25-065800.md",
+  "status": "open",
+  "severity": "medium",
+  "owner": "",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-26-reindex-full-data-loss.md",
+  "source_rel": "workspaces/dominika/incidents/2026-06-26-reindex-full-data-loss.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "",
+  "date": "2026-06-26"
+ },
+ {
+  "target": "2026-06-28-0815-faiss-sqlite-desync.md",
+  "source_rel": "workspaces/dominika/incidents/2026-06-28-0815-faiss-sqlite-desync.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-28"
+ },
+ {
+  "target": "INC-034-heartbeat-mission-fail.md",
+  "source_rel": "workspaces/dominika/incidents/INC-034-heartbeat-mission-fail.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-035-cron-cleanup-miscommunication.md",
+  "source_rel": "workspaces/dominika/incidents/INC-035-cron-cleanup-miscommunication.md",
+  "status": "closed",
+  "severity": "high",
+  "owner": "dominika",
+  "date": ""
+ },
+ {
+  "target": "2026-06-21-203300.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-21-203300.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-21"
+ },
+ {
+  "target": "2026-06-22-002900.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-22-002900.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-22"
+ },
+ {
+  "target": "2026-06-23-1757.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-23-1757.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-23"
+ },
+ {
+  "target": "2026-06-24-183600.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-24-183600.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-24-184900.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-24-184900.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-24"
+ },
+ {
+  "target": "2026-06-25-compaction-raven.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-25-compaction-raven.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-25-compaction-streikbrecher.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-25-compaction-streikbrecher.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-27-154600.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-27-154600.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-27"
+ },
+ {
+  "target": "2026-06-27-telegram-webhook.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-27-telegram-webhook.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-27"
+ },
+ {
+  "target": "2026-06-28-bestia-stale.md",
+  "source_rel": "workspaces/kotolizator/incidents/2026-06-28-bestia-stale.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-28"
+ },
+ {
+  "target": "2026-07-10-102500.md",
+  "source_rel": "workspaces/mangust/incidents/2026-07-10-102500.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-07-10"
+ },
+ {
+  "target": "INC-20260627-1006.md",
+  "source_rel": "workspaces/mangust/incidents/INC-20260627-1006.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-016.md",
+  "source_rel": "workspaces/owl/incidents/INC-016.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "workspaces__owl__incidents__INC-019.md",
+  "source_rel": "workspaces/owl/incidents/INC-019.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-020.md",
+  "source_rel": "workspaces/owl/incidents/INC-020.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "workspaces__owl__incidents__INC-025.md",
+  "source_rel": "workspaces/owl/incidents/INC-025.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-027.md",
+  "source_rel": "workspaces/owl/incidents/INC-027.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-2026-07-12-020600-owlb06.md",
+  "source_rel": "workspaces/owl/incidents/INC-2026-07-12-020600-owlb06.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-07-12"
+ },
+ {
+  "target": "2026-06-25-000200-tools-allow-config-crash.md",
+  "source_rel": "workspaces/raven/incidents/2026-06-25-000200-tools-allow-config-crash.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "workspaces__raven__incidents__2026-06-25-063400.md",
+  "source_rel": "workspaces/raven/incidents/2026-06-25-063400.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "INC-20260709-073400.md",
+  "source_rel": "workspaces/raven/incidents/INC-20260709-073400.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260712-gatekeeper-broke-reindex.md",
+  "source_rel": "workspaces/raven/incidents/INC-20260712-gatekeeper-broke-reindex.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260712-gatekeeper-no-dead-contract.md",
+  "source_rel": "workspaces/raven/incidents/INC-20260712-gatekeeper-no-dead-contract.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "2026-06-21-lab-vault-outage.md",
+  "source_rel": "workspaces/streikbrecher/incidents/2026-06-21-lab-vault-outage.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-21"
+ },
+ {
+  "target": "2026-06-21-secrets-migration.md",
+  "source_rel": "workspaces/streikbrecher/incidents/2026-06-21-secrets-migration.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-21"
+ },
+ {
+  "target": "2026-06-25-070000.md",
+  "source_rel": "workspaces/streikbrecher/incidents/2026-06-25-070000.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-25"
+ },
+ {
+  "target": "2026-06-30-2314-onnx-413-payload-too-large.md",
+  "source_rel": "workspaces/streikbrecher/incidents/2026-06-30-2314-onnx-413-payload-too-large.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-30"
+ },
+ {
+  "target": "2026-07-08-precommit-legacy-hook.md",
+  "source_rel": "workspaces/streikbrecher/incidents/2026-07-08-precommit-legacy-hook.md",
+  "status": "resolved",
+  "severity": "low",
+  "owner": "",
+  "date": "2026-07-08"
+ },
+ {
+  "target": "2026-07-09-093500.md",
+  "source_rel": "workspaces/streikbrecher/incidents/2026-07-09-093500.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-07-09"
+ },
+ {
+  "target": "2026-07-09-201500.md",
+  "source_rel": "workspaces/streikbrecher/incidents/2026-07-09-201500.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-07-09"
+ },
+ {
+  "target": "20260627-070000-disk-space-recovery.md",
+  "source_rel": "workspaces/streikbrecher/incidents/20260627-070000-disk-space-recovery.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "20260629-converter-decoupling.md",
+  "source_rel": "workspaces/streikbrecher/incidents/20260629-converter-decoupling.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-051.md",
+  "source_rel": "workspaces/streikbrecher/incidents/INC-051.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-052.md",
+  "source_rel": "workspaces/streikbrecher/incidents/INC-052.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "INC-20260629-090800.md",
+  "source_rel": "workspaces/streikbrecher/incidents/INC-20260629-090800.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": ""
+ },
+ {
+  "target": "config-lint-2026-06-20.md",
+  "source_rel": "workspaces/streikbrecher/incidents/config-lint-2026-06-20.md",
+  "status": "NO-STATUS",
+  "severity": "",
+  "owner": "",
+  "date": "2026-06-20"
+ }
+]

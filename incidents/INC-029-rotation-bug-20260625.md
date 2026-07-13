@@ -1,10 +1,13 @@
 ---
-title: "INC-029: Баг ротации в openclaw-backup.sh"
+id: INC-029-rotation-bug-20260625
+timestamp: "2026-06-25T00:00:00Z"
+category: tech
 type: incident
 severity: medium
 status: resolved
-date: 2026-06-25
 agent: streikbrecher
+title: "INC-029: Баг ротации в openclaw-backup.sh"
+date: 2026-06-25
 tags: [backup, manus, yandex-disk, script]
 ---
 

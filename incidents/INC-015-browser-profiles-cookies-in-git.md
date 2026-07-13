@@ -1,25 +1,19 @@
 ---
-type: incident
 id: INC-015
-title: 'INC-015: Cookies и сессии браузер-профилей в git'
-status: closed
-author: owl
-created: 2026-06-16 07:10:00+00:00
-updated: 2026-06-16 18:00:00+00:00
-tags:
-- incident
-- secrets
-- cookies
-- browser
-- recurrence
-code_refs:
-- infrastructure/browser-use/profiles/
+category: tech
+type: incident
 severity: low
+status: closed
+agent: owl
+title: "INC-015: Cookies и сессии браузер-профилей в git"
+author: owl
+created: "2026-06-16 07:10:00+00:00"
+updated: "2026-06-16 18:00:00+00:00"
+tags:
+code_refs:
 related:
-- INC-004
-- INC-013
 freshness_score: 98
-last_checked: '2026-06-20T01:00:20+00:00'
+last_checked: "2026-06-20T01:00:20+00:00"
 ---
 
 # INC-015: Cookies и сессии браузер-профилей в git

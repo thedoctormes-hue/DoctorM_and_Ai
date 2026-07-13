@@ -1,17 +1,21 @@
 ---
-description: 'INC-009: Хаос в Git — лабораторы коммитят в main напрямую, ветки устарели'
-type: incident
 id: INC-009
-title: 'INC-009: Хаос в Git — нарушение всех правил ветвления'
+category: tech
+type: incident
+severity: high
+status: closed
+agent: antcat
+title: "INC-009: Хаос в Git — нарушение всех правил ветвления"
+description: "INC-009: Хаос в Git — лабораторы коммитят в main напрямую, ветки устарели"
 author: Сова
 created: 2026-06-06
 updated: 2026-06-11
 last_reviewed: 2026-06-11
 last_code_change: 2026-06-11
-status: closed
 freshness_score: 94
-last_checked: '2026-06-20T01:00:19+00:00'
+last_checked: "2026-06-20T01:00:19+00:00"
 ---
+
 # INC-009: Хаос в Git — нарушение всех правил ветвления
 
 ## Описание

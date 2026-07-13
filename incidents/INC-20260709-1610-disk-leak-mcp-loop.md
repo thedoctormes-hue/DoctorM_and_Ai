@@ -1,3 +1,14 @@
+---
+id: INC-20260709-1610-disk-leak-mcp-loop
+timestamp: "2026-07-09T16:10:00Z"
+category: tech
+type: bug
+severity: medium
+status: closed
+agent: raven
+title: "INC-20260709-1610 — Диск 99%: утечка логами от mcp-apikeys crash-loop"
+---
+
 # INC-20260709-1610 — Диск 99%: утечка логами от mcp-apikeys crash-loop
 
 Дата: 2026-07-09 13:00–13:15 UTC | Сервер: 197784.com

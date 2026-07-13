@@ -1,20 +1,18 @@
 ---
-type: incident
 id: INC-003
-title: 'INC-003: ╨б╨╜╨░╨▒╨Ы╨░╨▒: frontend ╨╜╨╡ ╤А╨╡╨░╨╗╨╕╨╖╨╛╨▓╨░╨╜ тАФ ╤В╨╛╨╗╤М╨║╨╛
-  ╨┐╤'
-status: closed
-author: system
-created: 2026-05-24 17:16:11+00:00
-updated: 2026-05-24 17:16:11+00:00
-tags:
-- incident
-- migrated
+category: process
+type: incident
 severity: critical
+status: closed
+agent: unknown
+title: "INC-003: ╨б╨╜╨░╨▒╨Ы╨░╨▒: frontend ╨╜╨╡ ╤А╨╡╨░╨╗╨╕╨╖╨╛╨▓╨░╨╜ тАФ ╤В╨╛╨╗╤М╨║╨╛"
+author: system
+created: "2026-05-24 17:16:11+00:00"
+updated: "2026-05-24 17:16:11+00:00"
+tags:
 related:
-- INC-004
 freshness_score: 90
-last_checked: '2026-06-20T01:00:18+00:00'
+last_checked: "2026-06-20T01:00:18+00:00"
 ---
 
 # INC-003: ╨б╨╜╨░╨▒╨Ы╨░╨▒: frontend ╨╜╨╡ ╤А╨╡╨░╨╗╨╕╨╖╨╛╨▓╨░╨╜ тАФ ╤В╨╛╨╗╤М╨║╨╛ ╨┐╤Г╤Б╤В╨░╤П ╨┐╨░╨┐╨║╨░ src. ╨С

@@ -1,18 +1,18 @@
 ---
-type: incident
 id: INC-004
-title: 'INC-004: Утечка секретов в GitHub репозитории'
-status: closed
-author: system
-created: 2026-05-24 21:07:07+00:00
-updated: 2026-05-24 21:07:07+00:00
-tags:
-- incident
-- migrated
-code_refs: []
+category: tech
+type: incident
 severity: critical
+status: closed
+agent: antcat
+title: "INC-004: Утечка секретов в GitHub репозитории"
+author: system
+created: "2026-05-24 21:07:07+00:00"
+updated: "2026-05-24 21:07:07+00:00"
+tags:
+code_refs: []
 freshness_score: 90
-last_checked: '2026-06-20T01:00:18+00:00'
+last_checked: "2026-06-20T01:00:18+00:00"
 ---
 
 # INC-004: Утечка секретов в GitHub репозитории

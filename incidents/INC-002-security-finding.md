@@ -1,19 +1,21 @@
 ---
-
-type: incident
 id: INC-002
-title: "INC-002: Security finding"
+category: process
+type: incident
+severity: critical
 status: closed
+agent: unknown
+title: "INC-002: Security finding"
 author: system
-created: 2026-05-24T17:16:11+00:00
-updated: 2026-05-24T17:16:11+00:00
+created: "2026-05-24T17:16:11+00:00"
+updated: "2026-05-24T17:16:11+00:00"
 tags: [incident, migrated]
 code_refs: []
-severity: critical
--
 source: manual
 last_verified: 2026-06-17
----# INC-002: Security finding
+---
+
+# INC-002: Security finding
 
 ## Описание
 Security finding

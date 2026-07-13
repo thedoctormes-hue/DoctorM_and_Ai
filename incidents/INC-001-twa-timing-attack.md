@@ -1,19 +1,21 @@
 ---
 id: INC-001
+category: process
 type: incident
-title: 'INC-001: Timing attack в TWA-авторизации'
+severity: medium
 status: closed
+agent: unknown
+title: "INC-001: Timing attack в TWA-авторизации"
 author: system
-created: '2026-05-24T21:07:07+00:00'
-updated: '2026-05-24T21:07:07+00:00'
+created: "2026-05-24T21:07:07+00:00"
+updated: "2026-05-24T21:07:07+00:00"
 confidence: outdated
 source: manual
 last_verified: 2026-06-17
-code_refs: '[]'
-tags: '[incident, migrated]'
-severity: medium
+code_refs: []
+tags: [incident, migrated]
 freshness_score: 98
-last_checked: '2026-06-20T01:00:18+00:00'
+last_checked: "2026-06-20T01:00:18+00:00"
 ---
 
 # INC-001: Timing attack в TWA-авторизации

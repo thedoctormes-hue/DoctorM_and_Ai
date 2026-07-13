@@ -1,25 +1,20 @@
 ---
-type: incident
 id: INC-006
-title: 'INC-006: Agent Identity File Integrity Check — API Key Corruption & Context
-  Hijacking'
-status: closed
+category: tech
+type: incident
 severity: medium
+status: closed
+agent: antcat
+title: "INC-006: Agent Identity File Integrity Check — API Key Corruption & Context"
 author: kotolizator
-created: 2026-05-27 18:00:00+00:00
-updated: 2026-05-27 18:30:00+00:00
+created: "2026-05-27 18:00:00+00:00"
+updated: "2026-05-27 18:30:00+00:00"
 tags:
-- incident
-- identity
-- security
-- qwen-code
 code_refs: []
 description: Аудит IDENTITY.md и SOUL.md всех агентов — выявлены повреждения API-ключа
-  и атака перехвата контекста
 related:
-- INC-004
 freshness_score: 91
-last_checked: '2026-06-20T01:00:19+00:00'
+last_checked: "2026-06-20T01:00:19+00:00"
 ---
 
 ## Описание
