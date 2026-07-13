@@ -23,12 +23,12 @@ DDP-аудит 19 кастомных скиллов лаборатории (2026
 При создании/редактировании скила агент ОБЯЗАН:
 1. **Пользоваться каноничной инструкцией** — единственный источник: `DoctorM_and_Ai/docs/skills-creation-methodology.md`.
 2. **Создавать через единый вход `skill_workshop`** (тул). Ручное редактирование `openclaw.json` (allowlist `defaults.skills` / `agents.list[].skills`) **запрещено**.
-3. **Зарегистрировать скил** в реестре `myrmex-control/skill-registry.json` (через `skill_workshop` — необратимый шаг; нет записи в реестре = скил не принят).
+3. **Зарегистрировать скил** чрез `skill_workshop` (тул ведёт собственный реестр/историю принятых скиллов; нет записи = скил не принят). ⚠️ `myrmex-control/skill-registry.json` — это реестр **PROJECT-SPECIFIC** скиллов самого проекта myrmex-control (add-pytest, security-audit, evolve-activator, …), а НЕ лаб-скиллов (AgentSkills из `skills-canon/`). Не смешивать сущности: лаб-скиллы живут в `skills-canon/` + symlink в `~/.openclaw/skills/`, регистрируются чрез `skill_workshop`, НЕ дублируются в myrmex registry.
 4. **Обходные пути запрещены** — никаких копий скиллов в `workspaces/*/skills`, `projects/*/skills`; никакого ручного правления конфигом.
 
 ### Governance-слой (C-слой) — связность без плодения новых сервисов
 
-- **Реестр истины** = `myrmex-control/skill-registry.json` (уже существует, spec BL-028). НЕ дублируем в Gatekeeper.
+- **Реестр истины для лаб-скиллов** = `skills-canon/` (под VCS) + `skill_workshop` (регистрация). `myrmex-control/skill-registry.json` — отдельный реестр project-скиллов myrmex-control (НЕ лаб-скиллов); не дублируем лаб-скиллы туда. Gatekeeper = только store результатов lint (изолированный).
 - **link-lint** (внешний скрипт `DoctorM_and_Ai/scripts/skill-link-lint.sh`, гоняется в крон как `gatekeeper-audit.timer`) сканирует SKILL.md на битые ссылки и обходные копии, пишет результат в **изолированный store Gatekeeper** (`data/registry.json` через новый `put_registry` tool) — НЕ трогая PDP-ядро Gatekeeper. ADR-0054-коллизия номеров исключена индексом ADR.
 - **Обязательная проверка (contract)** при принятии скила: соответствие канону (frontmatter, структура) + наличие записи в реестре + отсутствие битых ссылок.
 
@@ -49,6 +49,6 @@ DDP-аудит 19 кастомных скиллов лаборатории (2026
 1. ✅ Канон под VCS + symlink (сделано).
 2. ✅ Удаление workspace-копий (сделано).
 3. ✅ Правка канона `skill-manager` (добавлен единый вход `skill_workshop`, запрет ручного allowlist, обязательная регистрация) — см. `skills-canon/skill-manager/SKILL.md`.
-4. ✅ `scripts/skill-link-lint.sh` (создан, базовая проверка битых ссылок + обходных копий + реестра Myrmex).
+4. ✅ `scripts/skill-link-lint.sh` (создан: (a) обходные копии, (b) битые ссылки, (c) валидность реестра Myrmex). НЕ требует лаб-скиллы в myrmex registry (разные сущности).
 5. ⏳ Интеграция link-lint в крон + запись результатов в Gatekeeper isolated store — отдельная задача (правка живого Gatekeeper по ADR-0048).
 6. ⏳ Переиндексация семантической памяти (Штрейкбрехер), чтобы не выдавала удалённый/исправленный контент.

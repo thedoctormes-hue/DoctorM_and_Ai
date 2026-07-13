@@ -30,20 +30,19 @@ done < <(find "$WS_ROOT" -type f -path '*/skills/*/SKILL.md' 2>/dev/null)
 [ "$found_ws" -eq 0 ] && echo "  OK: обходных копий нет"
 
 echo
-echo "=== (c) Канон-скилы в реестре Myrmex ==="
-if [ -f "$MYRMEX_REG" ]; then
-  reg_count=$(grep -oE '"id"\s*:\s*"[^"]+"' "$MYRMEX_REG" 2>/dev/null | wc -l)
-  missing=0
-  while IFS= read -r s; do
-    [ -n "$s" ] || continue
-    if ! grep -q "\"$s\"" "$MYRMEX_REG" 2>/dev/null; then
-      echo "  WARN: скил '$s' есть в каноне, но НЕТ в реестре Myrmex ($MYRMEX_REG)"
-      ISSUES=$((ISSUES+1)); missing=1
-    fi
-  done <<< "$known_skills"
-  [ "$missing" -eq 0 ] && echo "  OK: все канон-скилы учтены в реестре ($reg_count записей)"
+# (c): Примечание — myrmex skill-registry.json содержит PROJECT-SPECIFIC скиллы
+# проекта myrmex-control (add-pytest, security-audit, ...). Лаб-скиллы (AgentSkills
+# из skills-canon/) туда НЕ вносятся по дизайну — они регистрируются через
+# skill_workshop (см. ADR-0056). Поэтому (c) НЕ требует лаб-скиллы в этом реестре.
+# (c) проверяет: файл реестра существует, валиден (JSON), и его скиллы не дублируются
+# расходящимися клонами вне skills-canon/ (registry -> canon consistency).
+echo "=== (c) Реестр Myrmex (skill-registry.json) ==="
+if [ -f "$MYRMEX_REG" ] && jq empty "$MYRMEX_REG" 2>/dev/null; then
+  reg_count=$(jq '.skills | length' "$MYRMEX_REG" 2>/dev/null || echo "?")
+  echo "  OK: реестр Myrmex найден и валиден ($reg_count записей project-specific скиллов)"
+  echo "  INFO: лаб-скиллы (skills-canon/) регистрируются через skill_workshop, НЕ дублируются сюда (ADR-0056)"
 else
-  echo "  WARN: реестр Myrmex не найден: $MYRMEX_REG"
+  echo "  WARN: реестр Myrmex не найден или невалиден JSON: $MYRMEX_REG"
   ISSUES=$((ISSUES+1))
 fi
 
