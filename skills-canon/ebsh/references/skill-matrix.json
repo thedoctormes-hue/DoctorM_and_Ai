@@ -1,0 +1,77 @@
+{
+  "skill-improvement": {
+    "skills": ["skill-creator", "fact-check", "accepting-work", "change-management"],
+    "complexity": "medium",
+    "depends_on": {
+      "accepting-work": ["skill-creator", "fact-check"]
+    }
+  },
+  "code-fix": {
+    "skills": ["spike", "change-management", "accepting-work", "anti-loop"],
+    "complexity": "small-medium",
+    "depends_on": {
+      "accepting-work": ["spike", "change-management"]
+    }
+  },
+  "research": {
+    "skills": ["research", "spike", "anti-loop", "fact-check"],
+    "complexity": "medium",
+    "depends_on": {}
+  },
+  "deploy": {
+    "skills": ["safe-restart", "change-management", "accepting-work"],
+    "complexity": "medium",
+    "depends_on": {
+      "accepting-work": ["safe-restart", "change-management"]
+    }
+  },
+  "new-feature": {
+    "skills": ["research", "spike", "change-management", "anti-loop", "accepting-work", "finishing-session"],
+    "complexity": "large",
+    "depends_on": {
+      "change-management": ["research", "spike"],
+      "accepting-work": ["change-management"],
+      "finishing-session": ["accepting-work"]
+    }
+  },
+  "docs-update": {
+    "skills": ["skill-creator", "fact-check", "change-management"],
+    "complexity": "small",
+    "depends_on": {}
+  },
+  "incident": {
+    "skills": ["registering-incident", "safe-restart", "anti-loop"],
+    "complexity": "small-medium",
+    "depends_on": {}
+  },
+  "audit": {
+    "skills": ["research", "fact-check", "anti-loop"],
+    "complexity": "medium",
+    "depends_on": {}
+  },
+  "config-change": {
+    "skills": ["change-management", "safe-restart", "accepting-work"],
+    "complexity": "medium",
+    "depends_on": {
+      "accepting-work": ["change-management", "safe-restart"]
+    }
+  },
+  "session-start": {
+    "skills": ["starting-session"],
+    "complexity": "small",
+    "depends_on": {},
+    "stage": 0
+  },
+  "investigate": {
+    "skills": ["deep-dive", "research", "fact-check"],
+    "complexity": "medium",
+    "depends_on": {},
+    "stage": 1
+  },
+  "incident-deep": {
+    "skills": ["root-cause-archaeologist", "registering-incident", "anti-loop"],
+    "complexity": "medium",
+    "depends_on": {},
+    "stage": 1
+  }
+}

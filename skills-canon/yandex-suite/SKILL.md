@@ -1,0 +1,220 @@
+---
+name: "yandex-suite"
+description: "Яндекс-сервисы лаборатории через yandex.sh: Диск/Почта/Календарь/Контакты."
+author: "Мангуст (mangust)"
+last_reviewed: "2026-07-10"
+user-invocable: true
+metadata:
+  openclaw:
+    requires:
+      bins: ["bash"]
+    primaryEnv: "n/a (wrapper reads ~/.config/yandex/* and ~/.config/himalaya/*)"
+---
+
+# Yandex Suite — сервисы Яндекса для агентов
+
+Единая точка входа для всех Яндекс-сервисов лаборатории: **только через обёртку** `yandex.sh`.
+Обёртка логирует всё в `/root/LabDoctorM/.ops/logs/yandex-usage.log` (время | сервис | действие | аккаунт | результат) и берёт пароли сама из `~/.config/yandex/` и `~/.config/himalaya/`.
+
+## 🔴 Обязательное правило
+
+- НЕ использовать прямой `curl` к `webdav.yandex.ru` / `caldav.yandex.ru` / `carddav.yandex.ru`.
+- НЕ запускать `himalaya` напрямую — только через `yandex.sh mail ...` (иначе нет лога, ревью ломается).
+- Пароли в командной строке не светить.
+- Отправка писем наружу — внешняя коммуникация, требует явного подтверждения ЗавЛаба на каждый вызов.
+
+## Аккаунты
+
+- Диск / Календарь / Контакты: `moscowskiymichi@yandex.ru` (Я360)
+- Почта: через `himalaya` (аккаунт задаётся конфигом himalaya, см. `~/.config/himalaya/`)
+
+Обёртка: `/root/LabDoctorM/projects/DoctorM_and_Ai/bin/yandex.sh`
+Лог: `/root/LabDoctorM/.ops/logs/yandex-usage.log`
+
+## Единая точка входа
+
+```bash
+/root/LabDoctorM/projects/DoctorM_and_Ai/bin/yandex.sh {mail|disk|cal|contacts|usage} ...
+```
+
+> Во всех примерах ниже `yandex.sh` = этот полный путь. Если он не в `$PATH` агента, подставь полный путь либо сделай alias: `alias yandex.sh=/root/LabDoctorM/projects/DoctorM_and_Ai/bin/yandex.sh`
+
+## Когда использовать (триггеры)
+
+Используй этот скилл, когда ЗавЛаб или другой агент просит:
+- Передать/забрать файл между агентами или положить общий артефакт → **Диск** (`disk put/get/ls/del/mkdir`)
+- Записать факт обмена/встречи/напоминание → **Календарь** (`cal add` для событий, `cal task add` для дел)
+- Найти email/имя человека (адресат, контакт) → **Контакты** (`contacts`)
+- Прочитать/отправить почту → **Почта** (`mail ...`) — сейчас ЗАБЛОКИРОВАНО провайдером (см. раздел Почта); отправка только с подтверждением ЗавЛаба
+- Любой запрос про «Яндекс» (диск/календарь/контакты/почта/задачи) → этот скилл
+
+НЕ используй прямой `curl`/`himalaya` — только через обёртку (иначе нет лога, ревью ломается).
+
+## Быстрый старт (для нового агента)
+
+```bash
+Y=/root/LabDoctorM/projects/DoctorM_and_Ai/bin/yandex.sh
+
+# 1. Какие календари есть (имя + href) — минимум два:
+#    "Мои события" (события) и "Не забыть" (задачи/дела)
+$Y cal ls
+
+# 2. Положить файл коллеге в inbox (Диск)
+$Y disk put ./report.pdf "colony/inbox/<agent>/2026-07-10_report.pdf"
+
+# 3. Записать в календарь факт передачи (событие сегодня 12:00 МСК)
+$Y cal add "Мои события" 2026-07-10T09:00:00Z 2026-07-10T09:05:00Z "Обмен: report.pdf → <agent>"
+
+# 4. Найти email адресата
+$Y contacts
+```
+
+## Диск (WebDAV) — файлообмен между агентами
+
+Структура на Диске:
+
+```
+/colony/
+├── inbox/<agent>/    ← входящие для агента
+├── outbox/<agent>/   ← исходящие от агента
+├── shared/           ← общие файлы
+└── backups/          ← бэкапы
+```
+
+8 агентов: mangust, dominika, kotolizator, antcat, bestia, owl, raven, streikbrecher.
+
+```bash
+# Положить файл в inbox агента
+yandex.sh disk put /локальный/файл "colony/inbox/<агент>/имя_файла"
+# Забрать свой исходящий или файл из shared
+yandex.sh disk get "colony/outbox/<агент>/имя_файла" /локальный/путь
+yandex.sh disk get "colony/shared/имя_файла" /локальный/путь
+# Список / удалить
+yandex.sh disk ls "colony/inbox/<агент>/"
+yandex.sh disk del "colony/inbox/<агент>/имя_файла"
+# ⚠️ Папки создавать отдельно НЕ надо и команды `disk mkdir` больше нет: Яндекс
+#   WebDAV возвращает 405 на MKCOL. `disk put` САМ создаёт промежуточные
+#   коллекции — просто клади файл в нужный путь, папка появится сама.
+```
+
+Правила именования: `colony/.../YYYY-MM-DD_<описание>.<ext>`.
+
+## Почта (himalaya passthrough)
+
+`yandex.sh mail` делегирует в `himalaya` с логированием. Аргументы — родные команды himalaya. Почта ходит по стандартным протоколам (не REST):
+
+- Входящие IMAP: `imap.yandex.ru`, SSL, порт **993** (вне РФ — `imap.ya.ru`)
+- Исходящие SMTP: `smtp.yandex.ru`, SSL, порт **465** (без шифрования — 587)
+- Логин: полный адрес ящика; пароль: app-пароль (из `~/.config/himalaya/.yandex-pass`)
+- В Яндекс Почте должен быть включён доступ для почтовых программ + app-пароль
+- Официальная справка: `yandex.ru/support/yandex-360/business/mail/ru/mail-clients/others`
+
+```bash
+yandex.sh mail folder list
+yandex.sh mail envelope list --folder INBOX
+yandex.sh mail envelope list --folder INBOX --unread
+yandex.sh mail message read <id>
+yandex.sh mail attachment download <id> <n> /путь
+```
+
+Шаблон отправки (пишет черновик, НЕ отправляет):
+```bash
+yandex.sh mail template save --subject "..." --body "..."
+```
+
+⚠️ Реальная отправка — только с подтверждением ЗавЛаба:
+```bash
+yandex.sh mail message send --from <account> --to <addr> --subject "..." --body "..."
+```
+
+⚠️ **Статус (2026-07-10):** himalaya сконфигурирован корректно (аккаунт `yandex`, IMAP/SMTP на официальных эндпоинтах `imap.yandex.ru:993` / `smtp.yandex.ru:465`), но живой коннект с этого хоста не устанавливается: **провайдер AdminVPS блокирует исходящие почтовые порты** (25/110/143/465/587/993/995) — проверено TCP-пробой (443 OPEN, все почтовые BLOCKED). Причина: порты заблокированы по умолчанию в EU-локациях, в т.ч. Польша (вероятная локация VPS, судя по `xray-poland`) — защита от спама (AdminVPS KB 561). **Решение — только тикет в поддержку AdminVPS** с назначением + A-записью домена на IP VPS: `my.adminvps.ru/submitticket.php?step=2&deptid=1&enhanced=true&ticket_category=othersales`. Локального SOCKS-прокси для обхода нет: на этом хосте `xray` слушает `127.0.0.1:443` (inbound-туннель), а не SOCKS-egress на `:1080`. Любой исходящий туннель будет егрессить с IP этого сервера (78.17.43.205) — а именно этот IP и фильтруется провайдером, поэтому почта недостижима независимо от транспорта. Пока провайдер не откроет порты — почта с этого VPS недостижима. Не баг обёртки/пароля/настроек Яндекса.
+
+## Календарь (CalDAV) — полный CRUD
+
+`yandex.sh cal` реализует цепочку discovery (principal → calendar-home-set) и полный CRUD событий.
+
+```bash
+yandex.sh cal ls                                       # доступные календари (имя + href)
+yandex.sh cal events "<имя или href>"                  # события календаря
+yandex.sh cal add "<имя или href>" <start> <end> <summary>   # создать событие
+yandex.sh cal del "<имя или href>" <event_uid>        # удалить событие
+yandex.sh cal task "<имя или href>" add <summary> <due-ISO> [desc]   # создать задачу (VTODO) — для «Не забыть»
+yandex.sh cal task "<имя или href>" update <uid> <summary> <due-ISO> [desc]  # перезаписать задачу по UID (без дубликатов)
+yandex.sh cal task "<имя или href>" list                            # список задач
+```
+
+- `uid` для `update` — из вывода `cal task ... list` (вид `xxxxx.labdoctorm`); суффиксы `.labdoctorm`/`.ics` обрезаются.
+- `desc` (описание) — одна строка; переносы конвертируются в разделитель ` / ` (Яндекс ломает тело VEVENT, если в DESCRIPTION есть экранированный `\n`). Запятые экранируются как `\,`. Пиши туда конкретные шаги и контекст — заголовка мало.
+- Даты `cal add` — ISO8601 UTC с `Z`, напр. `2026-07-10T15:00:00Z`. Обёртка сама конвертирует в `DTSTART;TZID=Europe/Moscow:...` (МСК, +3): **Яндекс искажает сырой UTC `Z` в VEVENT** (переписывает дату в 20251207), поэтому прямо `Z` в DTSTART/DTEND передавать нельзя. Для `cal task` (VTODO, поле DUE) формат `Z` работает корректно — можно передавать как есть.
+- `cal_id` — либо полный href, либо имя календаря из `cal ls` (резолвится через CalDAV discovery).
+- `event_uid` — из вывода `cal events` (вид `xxxxx.labdoctorm`).
+
+Статус (2026-07-09): полный CRUD **проверен живьём** на аккаунте `moscowskiymichi@yandex.ru` — `cal ls` (листинг), `cal events` (REPORT), `cal add` (PUT→**201**), `cal del` (DELETE→**204**), осадка нет. Корень старой 401: календарь/контакты живут на `moscowskiymichi@yandex.ru`, а обёртка брала `DoctorMandAi@yandex.com` — исправлено. Корень старого `HTTP 000` на записи: `cal_resolve` для относительного href (`/*`) не дополнял схему `https://` — curl получал путь без схемы и не мог сделать HTTP-запрос; исправлено дополнением `${CALDAV%/}`.
+
+## Контакты (CardDAV)
+
+`yandex.sh contacts` — листает адресные книги.
+
+```bash
+yandex.sh contacts
+```
+
+## Воркфлои на 3 сервисах (без почты)
+
+Базовый паттерн — **Storage = SSOT**: Диск = единый источник файлов, Календарь = журнал обмена, Контакты = адресная книга. Почта в бэклоге (ждёт открытия портов провайдером).
+
+Паттерн «Agent file exchange» (приём/передача файлов между агентами):
+
+- Положить файл в outbox своего агента:
+  `yandex.sh disk put ./report.pdf "colony/outbox/<agent>/2026-07-10_report.pdf"`
+- Зафиксировать факт обмена в Календаре (кто/что/когда):
+  `yandex.sh cal add "<cal-id>" 2026-07-10T12:00:00Z 2026-07-10T12:05:00Z "Обмен: report.pdf → <адресат>"`
+- Найти адресата в Контактах (email/имя):
+  `yandex.sh contacts`
+- Забрать входящий файл:
+  `yandex.sh disk get "colony/inbox/<agent>/имя_файла" /локальный/путь`
+
+Живая проверка (2026-07-10): Disk round-trip (put→del) и Contacts list — ✅; Calendar CRUD (add/events/del, task add/del) — ✅. Все 3 сервиса работают поверх `yandex.sh`, без прямого curl/himalaya.
+
+Архитектура (2026-07-10): MCP-сервер для Яндекса — в бэклоге (решение по итогам /research). Текущий вид — скилл + `yandex.sh`; MCP оправдан только при выходе за OpenClaw-агентов или росте поверхности API.
+
+## Использование и аудит
+
+```bash
+yandex.sh usage   # сводка по логу yandex-usage.log
+```
+
+## Частые запросы — БАН!
+
+Яндекс банит при частых запросах:
+
+- Максимум 1 запрос в 30 секунд
+- Если 401 — ждать 15–30 мин, не повторять
+- Не тестировать все пароли подряд
+- Не использовать один пароль для разных сервисов (каждый сервис — свой app-пароль)
+
+## Генерация паролей приложений
+
+Официальная справка (управление): `yandex.ru/support/id/ru/authorization/app-passwords`. Живая консоль: `id.yandex.ru/security/app-passwords`.
+
+Каждый сервис требует отдельный пароль приложений:
+1. Яндекс ID → Безопасность → Доступ к вашим данным → Пароли приложений
+2. Выбрать тип (Почта / CalDAV Календарь / CardDAV Контакты / WebDAV Диск)
+3. Скопировать (виден 1 раз!)
+4. Активируется через 2–3 часа
+
+Правила (официально): пароль одного сервиса НЕ даёт доступа к другому (почта ≠ диск); каждое приложение — свой пароль; пароль приложения не даёт доступа к аккаунту; официальные приложения Яндекса используют обычный пароль/OAuth, не app-пароли.
+
+## Красные линии
+
+- НЕ использовать таблицы в Telegram
+- НЕ логировать пароли
+- НЕ удалять файлы без подтверждения
+- НЕ хранить секреты на Диске
+- НЕ менять пароли без согласования
+- Отправка писем — только с подтверждением ЗавЛаба
+
+## Обратная совместимость
+
+Пароли читает сама обёртка: `~/.config/himalaya/.yandex-pass` (почта), `~/.config/yandex/.disk-pass` (диск), `~/.config/yandex/.calendar-pass` (календарь), `~/.config/yandex/.contacts-pass` (контакты).
+Если `yandex.sh` недоступен по основному пути, искать: `find /root/LabDoctorM -name "yandex.sh" -type f`.
