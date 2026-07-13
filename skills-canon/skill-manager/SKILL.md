@@ -42,12 +42,23 @@ triggers:
 - `last_reviewed: "YYYY-MM-DD"`
 - `status: active | proposal | deprecated`
 
+## Единый вход: skill_workshop (ОБЯЗАТЕЛЬНО)
+
+Все операции со скилами — ТОЛЬКО через тул `skill_workshop` (create/update/revise/apply/reject/quarantine).
+Ручное редактирование `openclaw.json` (allowlist `defaults.skills` / `agents.list[].skills`) **запрещено** (обходной путь, см. ADR-0056).
+Каноничная инструкция: `DoctorM_and_Ai/docs/skills-creation-methodology.md`.
+
+## Обязательная регистрация
+
+Скил считается принятым только после записи в реестр `myrmex-control/skill-registry.json`
+(через `skill_workshop` — необратимый шаг). Нет записи в реестре = скил не существует для лабы.
+
 ## Создание скила
-1. Создать `~/.openclaw/skills/<name>/SKILL.md` с полным frontmatter
-2. Добавить имя в `agents.defaults.skills`
-3. Добавить имя в `agents.list[].skills` каждого агента (ВСЕХ 9!)
+1. Вызвать `skill_workshop` action=create с описанием и proposal_content (строго по канону methodology)
+2. Заполнить frontmatter (name, description ≤160, version, author, requires) — валидация автоматическая
+3. `skill_workshop` сам регистрирует скил в `myrmex-control/skill-registry.json` и рассылает allowlist (НЕ руками!)
 4. Проверить: `openclaw skills list | grep <name>` → ready
-5. Валидация JSON frontmatter
+5. Контракт-проверка: соответствие канону + запись в реестре + нет битых ссылок (`scripts/skill-link-lint.sh`)
 
 > 🔴 КРИТИЧНО (allowlist replace≠merge): шаги 2 и 3 ОБЯЗАТЕЛЬНЫ оба.
 > Непустой `agents.list[].skills` **ПОЛНОСТЬЮ ЗАМЕНЯЕТ** `agents.defaults.skills` — он НЕ мержится
