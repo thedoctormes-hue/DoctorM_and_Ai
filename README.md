@@ -1,7 +1,7 @@
 ---
 description: "DoctorM_and_Ai — README"
 type: readme
-last_reviewed: 2026-06-24
+last_reviewed: 2026-07-14
 last_code_change: 2026-06-24
 status: active
 ---
@@ -15,7 +15,7 @@ status: active
 Мультиагентная система на базе OpenClaw. Управляется ЗавЛабом (@DoctorMES).
 
 - 8 AI-агентов, 23 проекта, ~627 тестов (без учёта node_modules/dist/.venv)
-- 44 ADR, 21 паттерн, 38 инцидентов с post-mortem
+- 61 ADR (реестр: adr/ADR-INDEX.md), 21 паттерн, 155 инцидентов с post-mortem
 - Основана 25 апреля 2026
 
 ## Агенты

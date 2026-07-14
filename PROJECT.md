@@ -2,10 +2,10 @@
 name: DoctorM_and_Ai
 type: infrastructure
 status: active
-owner: null
+owner: ЗавЛаб (@DoctorMES)
 priority: critical
 stack: OpenClaw, MD
-version: null
+version: "1.0.0"
 created: 2026-06-21T00:32:29+00:00
 ---
 

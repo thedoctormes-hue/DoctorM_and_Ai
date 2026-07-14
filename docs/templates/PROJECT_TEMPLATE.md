@@ -25,5 +25,5 @@ cd projects/project-id
 ## Документация
 
 - [Архитектура](docs/ARCHITECTURE.md)
-- [ADR](docs/ADR/)
+- [ADR](adr/)
 - [API](docs/api/)
