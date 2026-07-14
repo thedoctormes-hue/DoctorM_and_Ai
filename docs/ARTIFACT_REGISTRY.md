@@ -30,9 +30,9 @@ last_updated: 2026-05-27
 
 ## 2. Документация лаборатории (docs/)
 
-### docs/adr/ — Architecture Decision Records
+### adr/ — Architecture Decision Records
 
-🥇 **ADR-026-migration-safety.md** — единственный ADR в docs/adr/ (остальные перенесены в adr/)
+🥇 **ADR-026-migration-safety.md** — пример ADR (все ADR лаборатории консолидированы в `adr/`, 14.07.2026)
 
 ### docs/processes/ — Процессы
 
