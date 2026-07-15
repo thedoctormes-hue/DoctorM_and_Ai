@@ -4,7 +4,7 @@ timestamp: "2026-06-29T00:00:00Z"
 category: tech
 type: chaos
 severity: medium
-status: open
+status: resolved
 agent: unknown
 title: 20260629-converter-decoupling
 owner: КотОлизатор

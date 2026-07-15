@@ -4,7 +4,7 @@ timestamp: "2026-07-14T11:18:00Z"
 category: process
 type: fantasy
 severity: high
-status: open
+status: closed
 agent: antcat
 title: "INC-2026-07-14-111800 — Fallback model наплёл выдумки в ответе ЗавЛабу"
 ---

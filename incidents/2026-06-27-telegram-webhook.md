@@ -4,7 +4,7 @@ timestamp: "2026-06-27T00:00:00Z"
 category: tech
 type: other
 severity: low
-status: open
+status: closed
 agent: unknown
 title: Telegram deleteWebhook Network Errors
 owner: Бестия

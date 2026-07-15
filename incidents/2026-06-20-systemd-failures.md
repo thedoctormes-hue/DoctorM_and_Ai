@@ -4,7 +4,7 @@ timestamp: "2026-06-20T00:00:00Z"
 category: tech
 type: bug
 severity: medium
-status: open
+status: closed
 agent: unknown
 title: "Инцидент: systemd сервисы не запускаются (2026-06-20)"
 owner: Бестия

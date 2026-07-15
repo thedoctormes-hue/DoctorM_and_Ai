@@ -4,7 +4,7 @@ timestamp: "2026-07-13T23:55:00Z"
 category: process
 type: fantasy
 severity: high
-status: open
+status: closed
 agent: antcat
 title: "INC-2026-07-13-235500 — Муравей: самоинфликтованные ошибки PAT-05 (фоллбэк модели + паника)"
 ---

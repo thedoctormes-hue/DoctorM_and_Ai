@@ -4,7 +4,7 @@ timestamp: "2026-07-14T13:30:00Z"
 category: tech
 type: config_error
 severity: high
-status: open
+status: closed
 agent: antcat
 title: "INC-2026-07-14-133000 — Муравей убил RUN #1 через Conflicts= в full.unit"
 ---

@@ -4,7 +4,7 @@ timestamp: "2026-06-20T00:00:00Z"
 category: tech
 type: config_error
 severity: medium
-status: open
+status: closed
 agent: unknown
 title: Config Lint Report — 2026-06-20
 owner: КотОлизатор
