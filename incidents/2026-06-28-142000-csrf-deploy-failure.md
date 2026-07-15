@@ -4,9 +4,12 @@ timestamp: "2026-06-28T14:20:00Z"
 category: tech
 type: deploy_failure
 severity: high
-status: closed
+status: retired
 agent: unknown
 title: "INC-2026-06-28-142000: CSRF Login Fix — Deploy Failure"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-2026-06-28-142000: CSRF Login Fix — Deploy Failure
@@ -38,3 +41,7 @@ title: "INC-2026-06-28-142000: CSRF Login Fix — Deploy Failure"
 ## Урок
 При деплое myrmex-control НЕ забывать копировать статику в `/var/www/myrmexcontrol/`.
 Деплой = build + copy + restart.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

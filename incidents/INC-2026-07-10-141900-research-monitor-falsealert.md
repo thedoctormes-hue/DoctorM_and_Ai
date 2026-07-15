@@ -4,9 +4,12 @@ timestamp: "2026-07-10T14:19:00Z"
 category: tech
 type: other
 severity: critical
-status: closed
+status: retired
 agent: antcat
 title: INC-2026-07-10-141900 — Авто-Telegram без согласия + false-alert (red-line)
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-2026-07-10-141900 — Авто-Telegram без согласия + false-alert (red-line)
@@ -48,3 +51,7 @@ title: INC-2026-07-10-141900 — Авто-Telegram без согласия + fal
 - НЕТ авто-месседжинга владельцу без явного OK (hard red line).
 - Мониторинг = наблюдение + запись, НЕ авто-уведомления.
 - Транзиентные сбои (exa=0, самоисцеление) ≠ критичный инцидент.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

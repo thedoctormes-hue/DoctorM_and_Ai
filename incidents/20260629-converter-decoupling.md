@@ -4,11 +4,14 @@ timestamp: "2026-06-29T00:00:00Z"
 category: tech
 type: chaos
 severity: medium
-status: resolved
+status: retired
 agent: unknown
 title: 20260629-converter-decoupling
 owner: КотОлизатор
 resolution_plan: Принять решение по decoupling конвертера (ADR или отказ), зафиксировать.
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 INC-040: Остановить → Исправить → Перезапустить
@@ -47,3 +50,7 @@ INC-046: Документ системных таймеров обязателе
 Правило: каждый systemd timer должен быть задокументирован — unit, интервал, что делает, когда последний раз менялся.
 
 Штрейкбрехер, 29.06.2026
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «resolved», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

@@ -4,11 +4,14 @@ timestamp: "2026-07-12T00:00:00Z"
 category: process
 type: data_loss
 severity: high
-status: closed
+status: retired
 agent: dominika
 title: "INC-035: Крон-менеджмент и ложное обвинение во лжи"
 date: 2026-07-12
 related: heartbeat-cron-cleanup
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 ## Что случилось

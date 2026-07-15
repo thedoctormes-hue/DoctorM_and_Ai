@@ -4,12 +4,15 @@ timestamp: "2026-07-01T00:00:00Z"
 category: tech
 type: bug
 severity: medium
-status: resolved
+status: retired
 agent: unknown
 title: ONNX Embedder Service Crash
 date: "2026-07-01T06:50:00+00:00"
 author: Доминика
 tags: [onnx, labsearch, embedder, crash]
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # Инцидент: ONNX Embedder Service Crash

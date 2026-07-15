@@ -4,7 +4,7 @@ timestamp: "2026-07-05T00:00:00Z"
 category: tech
 type: bug
 severity: medium
-status: resolved
+status: retired
 agent: unknown
 title: mongoose cron task Orion Scan failed
 date: 2026-07-05
@@ -12,6 +12,9 @@ resolved: "2026-07-08 by mangust (authorization: ЗавЛаб «чини\")"
 resolution: >
 Исправлено: валидный лабораторный OpenRouter-ключ (тот же аккаунт, что и в openclaw.json)
 Полный `orion-scan.sh` подтверждённо отработал: 21 найдено, 9 работают, 401 устранён.
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 ## Проблема

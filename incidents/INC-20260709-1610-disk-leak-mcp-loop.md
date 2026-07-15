@@ -4,9 +4,12 @@ timestamp: "2026-07-09T16:10:00Z"
 category: tech
 type: bug
 severity: medium
-status: closed
+status: retired
 agent: raven
 title: "INC-20260709-1610 — Диск 99%: утечка логами от mcp-apikeys crash-loop"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260709-1610 — Диск 99%: утечка логами от mcp-apikeys crash-loop
@@ -48,3 +51,7 @@ title: "INC-20260709-1610 — Диск 99%: утечка логами от mcp-a
 - Диагностика: research-скилл (deep_research+verify) + root-cause-archaeologist (5 Whys)
 - Исправление: raven, режим ЕБШ, по согласованию ЗавЛаба
 - Субагент drop_caches_hunter: read-only поиск триггера drop_caches (нейтрализовать нечего)
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

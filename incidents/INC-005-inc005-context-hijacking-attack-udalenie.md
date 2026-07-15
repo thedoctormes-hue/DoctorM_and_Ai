@@ -4,7 +4,7 @@ timestamp: "2026-05-20T00:00:00Z"
 category: tech
 type: incident
 severity: medium
-status: closed
+status: retired
 agent: unknown
 title: "INC-005: Context Hijacking Attack — удаление .qwen компонентов и искажение"
 author: root
@@ -18,6 +18,9 @@ tags: [incident, security, qwen-code]
 description: Система .qwen была удалена — 27.05.2026
 freshness_score: 98
 last_checked: "2026-06-20T01:00:19+00:00"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 ## Описание

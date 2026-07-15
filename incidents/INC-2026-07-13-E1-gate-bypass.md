@@ -4,9 +4,12 @@ timestamp: "2026-07-13T00:00:00Z"
 category: tech
 type: other
 severity: critical
-status: closed
+status: retired
 agent: unknown
 title: INC-2026-07-13-E1 — Gate bypass in cmd_accept (GATE-функция не вызывается перед открытием)
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-2026-07-13-E1 — Gate bypass in cmd_accept (GATE-функция не вызывается перед открытием)
@@ -63,3 +66,7 @@ allowed = not cb_triggered and len(violations) == 0
 ## Связанные
 - E1 в `ANALYSIS_2026-07-13_deepdive_v2.md`
 - E2 (SL-SURVIVAL) `INC-2026-07-13-E2-sl-survival.md`
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

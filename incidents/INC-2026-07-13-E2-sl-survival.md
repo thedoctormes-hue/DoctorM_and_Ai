@@ -4,9 +4,12 @@ timestamp: "2026-07-13T00:00:00Z"
 category: tech
 type: bug
 severity: high
-status: closed
+status: retired
 agent: unknown
 title: INC-2026-07-13-E2 — SL-SURVIVAL не переустанавливает SL при sl_after is None
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-2026-07-13-E2 — SL-SURVIVAL не переустанавливает SL при sl_after is None
@@ -86,3 +89,7 @@ except Exception as reset_err:
 ## Связанные
 - E2 в `ANALYSIS_2026-07-13_deepdive_v2.md`
 - E1 (Gate bypass) `INC-2026-07-13-E1-gate-bypass.md`
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

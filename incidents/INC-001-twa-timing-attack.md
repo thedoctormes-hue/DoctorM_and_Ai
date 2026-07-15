@@ -4,7 +4,7 @@ timestamp: "2026-05-12T00:00:00Z"
 category: process
 type: incident
 severity: medium
-status: closed
+status: retired
 agent: unknown
 title: "INC-001: Timing attack в TWA-авторизации"
 author: system
@@ -17,6 +17,9 @@ code_refs: []
 tags: [incident, migrated]
 freshness_score: 98
 last_checked: "2026-06-20T01:00:18+00:00"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-001: Timing attack в TWA-авторизации

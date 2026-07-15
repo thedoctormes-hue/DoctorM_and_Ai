@@ -4,7 +4,7 @@ timestamp: "2026-06-04T00:00:00Z"
 category: tech
 type: incident
 severity: high
-status: closed
+status: retired
 agent: owl
 title: "INC-008: Контаминация веток — Штрейкбрехер запущен на чужой ветке OWL"
 author: streikbrecher
@@ -16,6 +16,9 @@ description: При старте сессии session_startup.sh не перек
 related: [INC-009]
 source: agent
 last_verified: 2026-06-17
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 ## Описание
@@ -95,3 +98,7 @@ open
 ## Связанные артефакты
 - ADR-012 — Git Flow (правила ветвления)
 - `.qwen/scripts/session_startup.sh`
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

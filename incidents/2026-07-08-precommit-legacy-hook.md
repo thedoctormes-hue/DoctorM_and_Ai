@@ -4,12 +4,15 @@ timestamp: "2026-07-08T00:00:00Z"
 category: tech
 type: config_error
 severity: low
-status: resolved
+status: retired
 agent: unknown
 title: free-api-hunter pre-commit legacy hook blocked all commits
 date: "2026-07-08T08:30:00+00:00"
 author: streikbrecher
 tags: [free-api-hunter, git, pre-commit, hooks, infra]
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # Инцидент: pre-commit legacy hook блокировал коммиты в free-api-hunter

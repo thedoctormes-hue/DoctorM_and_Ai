@@ -4,9 +4,12 @@ timestamp: "2026-07-10T00:12:00Z"
 category: tech
 type: bug
 severity: critical
-status: closed
+status: retired
 agent: unknown
 title: INC-2026-07-10-001200 — SearXNG платный пул молча погас (неперсистентный деплой)
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-2026-07-10-001200 — SearXNG платный пул молча погас (неперсистентный деплой)

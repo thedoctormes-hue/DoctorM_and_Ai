@@ -4,13 +4,16 @@ timestamp: "2026-07-11T08:14:00Z"
 category: tech
 type: incident
 severity: critical
-status: closed
+status: retired
 agent: dominika
 title: "INC-20260711-0814: onnx-worker эмбеддер-воркеры падают"
 description: "INC-20260711: onnx-worker-8084/8085/8091 FAILED (флэппинг эмбеддер-воркеров)"
 last_reviewed: 2026-07-11
 last_code_change: 2026-07-11
 resolution: Технический: проверен живьём, работоспособность восстановлена.
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260711-0814: onnx-worker эмбеддер-воркеры падают
@@ -52,3 +55,7 @@ open
 - `onnx-embedder.service` (8082) — единственный критичный для labsearch; он жив.
 - 8084/8085 в стартовом листе (21:19 МСК) были running, к 21:36 уже failed → флэппинг за ~17 мин.
 - Не перезапускать воркеры без понимания причины (риск повторения OOM/дедлока из INC-20260709).
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

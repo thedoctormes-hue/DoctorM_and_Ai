@@ -4,12 +4,15 @@ timestamp: "2026-06-25T00:00:00Z"
 category: tech
 type: incident
 severity: critical
-status: resolved
+status: retired
 agent: bestia
 title: "INC-026: Поломка gateway через tools.allow в agents.list"
 description: "INC-026: Поломка gateway через tools.allow в agents.list"
 last_reviewed: 2026-06-25
 last_code_change: 2026-06-25
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-026: Поломка gateway через tools.allow в agents.list
@@ -78,3 +81,7 @@ last_code_change: 2026-06-25
 ---
 
 _Зарегистрировано: 2026-06-25 05:00 UTC, Доминика (dominika)_
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «resolved», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

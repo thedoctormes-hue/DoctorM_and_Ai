@@ -4,9 +4,12 @@ timestamp: "2026-06-25T00:00:00Z"
 category: tech
 type: config_error
 severity: medium
-status: closed
+status: retired
 agent: raven
 title: "Incident: Raven Compaction Failures (Cohere Timeout)"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # Incident: Raven Compaction Failures (Cohere Timeout)
@@ -56,3 +59,7 @@ Raven's context-engine compaction is failing repeatedly on `cohere/command-r-plu
 1. Check if cohere API is experiencing latency issues
 2. Consider switching raven's compaction provider to a faster model
 3. Check if `command-r-plus-08-2024` has a different endpoint/region that's slow
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

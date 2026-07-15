@@ -4,9 +4,12 @@ timestamp: "2026-07-09T08:13:00Z"
 category: tech
 type: config_error
 severity: high
-status: closed
+status: retired
 agent: unknown
 title: INC-20260709-081300 — Потерян файл ключей поисковых провайдеров
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260709-081300 — Потерян файл ключей поисковых провайдеров

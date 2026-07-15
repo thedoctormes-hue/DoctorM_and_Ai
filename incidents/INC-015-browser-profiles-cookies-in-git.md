@@ -4,7 +4,7 @@ timestamp: "2026-05-17T00:00:00Z"
 category: tech
 type: incident
 severity: low
-status: closed
+status: retired
 agent: owl
 title: "INC-015: Cookies и сессии браузер-профилей в git"
 author: owl
@@ -15,6 +15,9 @@ code_refs:
 related:
 freshness_score: 98
 last_checked: "2026-06-20T01:00:20+00:00"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-015: Cookies и сессии браузер-профилей в git
@@ -68,3 +71,7 @@ last_checked: "2026-06-20T01:00:20+00:00"
 
 ## Системный вывод
 Повтор корневой причины INC-004/INC-013: «чистая история» содержала секреты на момент initial commit. Дополнительно: правило `.gitignore` было добавлено, но потеряно при последующей правке файла — значит `.gitignore` без CI-гейта на секреты не является надёжной защитой. Нужен secret-scan как pre-commit hook / CI (см. ветки `fix/secret-scan-v2`, `fix/secret-scan-archive`).
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

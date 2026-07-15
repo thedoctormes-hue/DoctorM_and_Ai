@@ -4,7 +4,7 @@ timestamp: "2026-05-17T00:00:00Z"
 category: tech
 type: incident
 severity: critical
-status: closed
+status: retired
 agent: antcat
 title: "INC-004: Утечка секретов в GitHub репозитории"
 author: system
@@ -14,6 +14,9 @@ tags:
 code_refs: []
 freshness_score: 90
 last_checked: "2026-06-20T01:00:18+00:00"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-004: Утечка секретов в GitHub репозитории
@@ -201,3 +204,7 @@ OWL (координация) + GitHugMaster (ротация токенов) + З
 *Создан: 2026-05-17*
 *Обновлён: 2026-05-17 13:30*
 *Закрыт: 2026-05-17*
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.
