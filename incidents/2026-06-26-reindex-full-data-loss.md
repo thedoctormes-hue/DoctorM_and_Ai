@@ -4,12 +4,15 @@ timestamp: "2026-06-26T00:00:00Z"
 category: tech
 type: incident
 severity: high
-status: closed
+status: retired
 agent: unknown
 title: "INC-030: Потеря FAISS-индекса при reindex --full"
 date: 2026-06-26
 author: dominika
 resolution: Восстановлено из бэкапа + инкрементальный reindex
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-030: Потеря FAISS-индекса при reindex --full
