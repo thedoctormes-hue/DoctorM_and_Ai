@@ -4,11 +4,14 @@ timestamp: "2026-06-25T00:00:00Z"
 category: tech
 type: incident
 severity: medium
-status: resolved
+status: retired
 agent: streikbrecher
 title: "INC-029: Баг ротации в openclaw-backup.sh"
 date: 2026-06-25
 tags: [backup, manus, yandex-disk, script]
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-029: Баг ротации в openclaw-backup.sh
@@ -30,3 +33,7 @@ tags: [backup, manus, yandex-disk, script]
 **Файл:** `/root/LabDoctorM/workspaces/mangust/scripts/openclaw-backup.sh`
 
 **Статус:** ✅ исправлено, таймер отключён (решение о включении — за ЗавЛабом)
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «resolved», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

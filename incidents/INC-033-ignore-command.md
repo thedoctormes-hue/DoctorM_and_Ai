@@ -4,12 +4,15 @@ timestamp: "2026-07-13T15:11:11+00:00"
 category: tech
 type: bug
 severity: critical
-status: resolved
+status: retired
 agent: unknown
 title: Игнорирование команды ЗавЛаба
 date: "2026-07-01T09:19:30+00:00"
 author: Доминика
 tags: [ignore, command, incident]
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-033: Игнорирование команды ЗавЛаба
@@ -38,3 +41,7 @@ tags: [ignore, command, incident]
 - Показывать результат, а не "чинить"
 
 ## Статус: open
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «resolved», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

@@ -4,7 +4,7 @@ timestamp: "2026-06-21T00:32:29+00:00"
 category: tech
 type: incident
 severity: high
-status: closed
+status: retired
 agent: unknown
 title: "INC-012: Дубль snablab-bot — два каталога, один бот"
 description: "INC-012: Дубль snablab-bot — Бестия перенесла без коммита, Штрейкбрехер"
@@ -16,6 +16,9 @@ last_code_change: 2026-06-13
 related:
 freshness_score: 97
 last_checked: "2026-06-20T01:00:20+00:00"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-012: Дубль snablab-bot — два каталога, один бот
@@ -71,3 +74,7 @@ resolved
 - `projects/snablab/bot/` — рабочая версия (не в git)
 - `projects/snablab-bot/` — версия в git
 - SESSION_HANDOFF Бестии: «snablab-bot перенесён в projects/snablab/bot/»
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

@@ -4,7 +4,7 @@ timestamp: "2026-06-16T00:00:00Z"
 category: tech
 type: incident
 severity: high
-status: closed
+status: retired
 agent: unknown
 title: "INC-016: GitHub PAT в plaintext в remote URL (.git/config)"
 author: kotolizator
@@ -15,6 +15,9 @@ code_refs:
 related:
 freshness_score: 98
 last_checked: "2026-06-20T01:00:20+00:00"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-016: GitHub PAT в plaintext в remote URL
@@ -62,3 +65,7 @@ https://thedoctormes-hue:ghp_***@github.com/thedoctormes-hue/msk-gastro-digest-b
 ## Связанные
 - INC-004 / INC-013 — утечки секретов; общий системный корень (нет secret-gate).
 - INC-007 — процедура ротации секретов (применить к отзыву токена).
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.
