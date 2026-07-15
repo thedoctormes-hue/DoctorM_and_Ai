@@ -36,7 +36,7 @@ STRICT_CLOSURE=0
 BASE="origin/main"
 
 # Валидные значения enum (по registering-incident SKILL.md / ADR-0056)
-VALID_STATUS=(open investigating resolved closed)
+VALID_STATUS=(open investigating resolved closed retired)
 REQUIRED_FIELDS=(id timestamp category type severity status agent title)
 
 # Директории-исключения при поиске "размазанных" инцидентов по лабе
