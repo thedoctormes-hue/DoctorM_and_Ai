@@ -4,10 +4,13 @@ timestamp: "2026-06-30T23:14:00Z"
 category: process
 type: config_error
 severity: medium
-status: closed
+status: retired
 agent: streikbrecher
 title: "Incident: ONNX 413 Payload Too Large Errors During Reindex"
 resolution: ONNX embedder (onnx-embedder.service) active, воркеры бегут, память стабильна (OOM устранён) — проверено 2026-07-13. Закрыт по факту.
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # Incident: ONNX 413 Payload Too Large Errors During Reindex
@@ -49,3 +52,7 @@ ONNX embedding service (embeddinggemma-300m-int8) has a maximum input size limit
 
 ## Status
 Open — needs fix in reindex pipeline or ONNX service configuration
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

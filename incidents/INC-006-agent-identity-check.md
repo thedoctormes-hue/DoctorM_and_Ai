@@ -4,7 +4,7 @@ timestamp: "2026-05-20T00:00:00Z"
 category: tech
 type: incident
 severity: medium
-status: closed
+status: retired
 agent: antcat
 title: "INC-006: Agent Identity File Integrity Check — API Key Corruption & Context"
 author: kotolizator
@@ -16,6 +16,9 @@ description: Аудит IDENTITY.md и SOUL.md всех агентов — вы�
 related:
 freshness_score: 91
 last_checked: "2026-06-20T01:00:19+00:00"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 ## Описание
