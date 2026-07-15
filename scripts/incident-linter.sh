@@ -15,6 +15,10 @@
 #   incident-linter.sh [--canon DIR] [--lab ROOT] [--strict] [--quiet] [--help]
 #     --strict : выходить с кодом 1 при наличии ERROR-нарушений (для гейтов/CI)
 #     --quiet  : только итоговые числа (без расширенных списков)
+#     --strict-closure : ADR-0057 — блокировать НОВЫЕ маскировки закрытия
+#                         (HARD FAIL для незакоммиченных файлов -> exit 1).
+#                         Legacy (уже закоммиченные) пустые закрытия -> WARN
+#                         (видимость бэклога 84, НЕ ломает CI).
 #
 # Подробности: ADR-0056 (Единый реестр инцидентов и обязательный frontmatter).
 #
@@ -24,6 +28,7 @@ CANON_DIR="/root/LabDoctorM/projects/DoctorM_and_Ai/incidents"
 LAB_ROOT="/root/LabDoctorM"
 STRICT=0
 QUIET=0
+STRICT_CLOSURE=0
 
 # Валидные значения enum (по registering-incident SKILL.md / ADR-0056)
 VALID_STATUS=(open investigating resolved closed)
@@ -51,6 +56,7 @@ while [ $# -gt 0 ]; do
     --canon) CANON_DIR="$2"; shift 2 ;;
     --lab)   LAB_ROOT="$2"; shift 2 ;;
     --strict) STRICT=1; shift ;;
+    --strict-closure) STRICT_CLOSURE=1; shift ;;
     --quiet)  QUIET=1; shift ;;
     --help|-h) usage ;;
     *) echo "Unknown arg: $1" >&2; usage ;;
@@ -130,6 +136,91 @@ is_valid_status() {
   return 1
 }
 
+# --- ADR-0057 helpers (closure integrity) ----------------------------------
+
+# Извлечь содержимое секции '## <title>' (до следующего заголовка ##),
+# пропуская frontmatter. Пусто, если секции нет или она пуста.
+get_section() {
+  local file="$1" title="$2"
+  awk -v t="$title" '
+    /^---[[:space:]]*$/ {
+      if (infm) { infm=0; next } else { infm=1; next }
+    }
+    infm { next }
+    /^##[[:space:]]/ {
+      cur=$0; sub(/^##[[:space:]]*/,"",cur); sub(/[[:space:]]+$/,"",cur);
+      if (cur==t) { cap=1; next } else if (cap) { exit }
+    }
+    cap { print }
+  ' "$file"
+}
+
+# Корень git-репозитория, содержащего канон (для определения legacy vs new).
+GITROOT=""
+
+# Файл НЕ закоммичен сейчас (новый/изменённый) -> HARD FAIL при нарушении.
+# Если вне git или уже закоммичен -> legacy (WARN).
+is_uncommitted() {
+  local file="$1" rel st
+  [ -z "$GITROOT" ] && return 1
+  case "$file" in
+    "$GITROOT"/*) rel="${file#${GITROOT}/}" ;;
+    *) return 1 ;;
+  esac
+  st="$(git -C "$GITROOT" status --porcelain -- "$rel" 2>/dev/null)"
+  [ -n "$st" ]
+}
+
+# Возраст timestamp в днях от текущего момента (UTC). Пусто при ошибке.
+age_days() {
+  local ts="$1" norm ts_epoch
+  [ -z "$ts" ] && return 1
+  norm="$(printf '%s' "$ts" | sed -E 's/T/ /; s/Z$//')"
+  ts_epoch="$(date -u -d "${norm} UTC" +%s 2>/dev/null)" || return 1
+  echo $(( (NOW_EPOCH - ts_epoch) / 86400 ))
+}
+
+# Closure-Proof Gate (ADR-0057): status in (resolved, closed) обязан иметь
+#   - непустую секцию '## Решение';
+#   - verified: true (булево);
+#   - verified_by задан и verified_by != agent (запрет самоподтверждения).
+# Нарушение -> CLOSURE-PROOF FAIL (HARD для new) или WARN (legacy).
+check_closure_proof() {
+  local file="$1"
+  local status_val agent verified verified_by sol vlow reason=""
+  status_val="$(get_field "$file" status)"
+  case "$status_val" in
+    resolved|closed) ;;
+    *) return 0 ;;
+  esac
+  agent="$(get_field "$file" agent)"
+  verified="$(get_field "$file" verified)"
+  verified_by="$(get_field "$file" verified_by)"
+  reason=""
+  sol="$(get_section "$file" "Решение")"
+  if [ -z "$(printf '%s' "$sol" | tr -d '[:space:]')" ]; then
+    reason="${reason}empty-Решение;"
+  fi
+  vlow="$(printf '%s' "$verified" | tr '[:upper:]' '[:lower:]')"
+  if [ "$vlow" != "true" ]; then
+    reason="${reason}verified!=true;"
+  fi
+  if [ -z "$verified_by" ]; then
+    reason="${reason}verified_by:MISSING;"
+  elif [ "$verified_by" = "$agent" ]; then
+    reason="${reason}verified_by==agent;"
+  fi
+  if [ -n "$reason" ]; then
+    if is_uncommitted "$file"; then
+      CLOSURE_FAIL+=("$file [$reason]")
+      CLOSURE_FAIL_COUNT=$((CLOSURE_FAIL_COUNT+1))
+    else
+      CLOSURE_WARN+=("$file [$reason]")
+      CLOSURE_WARN_COUNT=$((CLOSURE_WARN_COUNT+1))
+    fi
+  fi
+}
+
 # --- state -----------------------------------------------------------------
 declare -a MOVE_LIST=()
 declare -a INVALID_LIST=()
@@ -138,7 +229,18 @@ declare -A H1_MAP=()
 CANON_TOTAL=0
 CANON_VALID=0
 
+# ADR-0057 state
+declare -a CLOSURE_FAIL=()
+declare -a CLOSURE_WARN=()
+declare -a STALE_LIST=()
+declare -a WIP_LIST=()
+declare -A WIP_AGENT=()
+CLOSURE_FAIL_COUNT=0
+CLOSURE_WARN_COUNT=0
+NOW_EPOCH="$(date -u +%s)"
+
 # --- scan 1: misplaced incidents (whole lab, outside canonical) ------------
+GITROOT="$(git -C "$CANON_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
 while IFS= read -r -d '' f; do
   # пропускаем сам канон (и всё, что внутри него)
   case "$f" in
@@ -183,6 +285,19 @@ if [ -d "$CANON_DIR" ]; then
     if [ -n "$h1_val" ]; then
       H1_MAP["$h1_val"]+="$base"$'\n'
     fi
+    # --- ADR-0057 closure integrity (collect; report in section [5]) ---
+    check_closure_proof "$f"
+    case "$status_val" in
+      open|investigating|resolved)
+        _ts="$(get_field "$f" timestamp)"
+        _age="$(age_days "$_ts")"
+        if [ -n "$_age" ] && [ "$_age" -ge 3 ]; then
+          STALE_LIST+=("$f")
+        fi
+        _ag="$(get_field "$f" agent)"
+        [ -n "$_ag" ] && WIP_AGENT["$_ag"]=$(( ${WIP_AGENT["$_ag"]:-0} + 1 ))
+        ;;
+    esac
   done < <(find "$CANON_DIR" -maxdepth 1 -type f -name '*.md' -print0 2>/dev/null)
 fi
 
@@ -190,6 +305,14 @@ fi
 INVALID_COUNT=${#INVALID_LIST[@]}
 CANON_INVALID=$INVALID_COUNT
 CANON_VALID=$((CANON_TOTAL - CANON_INVALID))
+
+# --- ADR-0057 WIP aggregation (open+investigating+resolved per agent, limit 3) ---
+for _ag in "${!WIP_AGENT[@]}"; do
+  _c="${WIP_AGENT[$_ag]}"
+  if [ "$_c" -gt 3 ]; then
+    WIP_LIST+=("$_ag ($_c)")
+  fi
+done
 
 # --- duplicate groups ------------------------------------------------------
 DUP_ID_GROUPS=()
@@ -242,6 +365,16 @@ if [ "$QUIET" -eq 0 ]; then
     echo "    - '$key': $(printf '%s' "$files" | tr '\n' ' ')"
   done
   echo
+  echo "[5] Closure Integrity (ADR-0057)"
+  echo "    CLOSURE-PROOF FAIL (new/uncommitted, blocks): $CLOSURE_FAIL_COUNT"
+  for x in "${CLOSURE_FAIL[@]}"; do echo "    - CLOSURE-PROOF FAIL: $x"; done
+  echo "    CLOSURE-PROOF WARN (legacy committed, backlogged): $CLOSURE_WARN_COUNT"
+  for x in "${CLOSURE_WARN[@]}"; do echo "    - CLOSURE-PROOF WARN: $x"; done
+  echo "    STALE (>3d, needs re-check, NOT auto-closed): ${#STALE_LIST[@]}"
+  for x in "${STALE_LIST[@]}"; do echo "    - STALE (>3d): $x"; done
+  echo "    WIP EXCEEDED (open+investigating+resolved > 3 per agent): ${#WIP_LIST[@]}"
+  for x in "${WIP_LIST[@]}"; do echo "    - WIP EXCEEDED: $x"; done
+  echo
 fi
 
 echo "$SEP"
@@ -252,9 +385,19 @@ echo "   canonical_invalid           : $CANON_INVALID"
 echo "   duplicate_id_groups         : ${#DUP_ID_GROUPS[@]}"
 echo "   duplicate_h1_groups         : ${#DUP_H1_GROUPS[@]}"
 ERR_COUNT=$(( ${#MOVE_LIST[@]} + CANON_INVALID + ${#DUP_ID_GROUPS[@]} + ${#DUP_H1_GROUPS[@]} ))
+if [ "$STRICT_CLOSURE" -eq 1 ]; then
+  ERR_COUNT=$(( ERR_COUNT + CLOSURE_FAIL_COUNT ))
+fi
 echo "   total_violations            : $ERR_COUNT"
+echo "   closure_proof_fail (hard)   : $CLOSURE_FAIL_COUNT"
+echo "   closure_proof_warn (legacy) : $CLOSURE_WARN_COUNT"
+echo "   stale (>3d)                 : ${#STALE_LIST[@]}"
+echo "   wip_exceeded                : ${#WIP_LIST[@]}"
 echo "$SEP"
 
+if [ "$STRICT_CLOSURE" -eq 1 ] && [ "$CLOSURE_FAIL_COUNT" -gt 0 ]; then
+  exit 1
+fi
 if [ "$STRICT" -eq 1 ] && [ "$ERR_COUNT" -gt 0 ]; then
   exit 1
 fi

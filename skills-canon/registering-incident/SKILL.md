@@ -1,9 +1,9 @@
 ---
 name: registering-incident
 description: "Регистрация инцидентов: баги, хаос, фантазии, игнор. Создаёт файл в каноническом реестре `/root/LabDoctorM/projects/DoctorM_and_Ai/incidents/`. Используй при обнаружении проблем безопасности, сбоев, нарушений процессов или несогласованных действий."
-version: "1.1.0"
+version: "1.2.0"
 author: "ЗавЛаб"
-last_reviewed: "2026-06-22"
+last_reviewed: "2026-07-15"
 status: active
 metadata: { "openclaw": { "emoji": "🚨" } }
 user-invocable: true
@@ -88,6 +88,8 @@ triggers:
 
 ### Статус (status)
 `open` → `investigating` → `resolved` → `closed`
+> Переход `resolved → closed` — **только через verifier/ЗавЛаб** (ADR-0057). `closed` нельзя
+> ставить самому автору инцидента.
 
 ## Хранилище
 
@@ -119,6 +121,10 @@ category: tech | process
 type: bug | config_error | deploy_failure | data_loss | security | chaos | fantasy | uncoordinated | ignored
 severity: critical | high | medium | low
 status: open
+# Поля верификации заполняет ТОЛЬКО verifier/ЗавЛаб при closure (ADR-0057):
+# verified: true
+# verified_by: <verifier-agent, обязан отличаться от agent>
+# verified_at: YYYY-MM-DD
 agent: <кто обнаружил>
 title: <краткое описание>
 ---
@@ -159,21 +165,38 @@ title: <краткое описание>
 - **medium** → решить в рабочем порядке
 - **low** → записать в бэлог
 
-### 3. Закрытие
+### 3. Closure requires verifier (ADR-0057)
 
-1. Заполнить поле `Решение` в файле
-2. Заполнить поле `Уроки` (если есть)
-3. Изменить `status: closed`
-4. Закоммитить через `lab-commit.sh`:
-   ```bash
-   /root/LabDoctorM/projects/DoctorM_and_Ai/scripts/lab-commit.sh <агент> -m "INC resolved: <title>"
-   ```
+**Capture** (создание + ведение до `resolved`) — любой агент:
+1. Заполнить `## Решение` и `## Уроки`.
+2. Перевести `status: resolved` (решение найдено, но ещё НЕ подтверждено).
+3. Закоммитить: `/root/LabDoctorM/projects/DoctorM_and_Ai/scripts/lab-commit.sh <агент> -m "INC resolved: <title>"`
+
+**Closure** (переход `resolved → closed`) требует **второй инстанции** по severity
+(автор инцидента НЕ может сам перевести в `closed` — самоподтверждение запрещено):
+- `critical` / `high` → закрывает **ЗавЛаб** лично, через разбор.
+- `medium` → подтверждает выделенный **verifier-агент** (вторая инстанция).
+- `low` → кандидат на **auto-retire** по TTL (3 дня); при списании `status: retired`, НЕ `closed`
+  (честный архив вместо фальшивого closed, ADR-0057 §D).
+
+Closure-шаг (любой верификатор) обязан дописать в frontmatter:
+- `verified: true` (булево);
+- `verified_by: <verifier-agent>` — **обязан отличаться от `agent`** (self-verify запрещён);
+- `verified_at: <date>`.
+
+Итоговый коммит закрытия (от имени verifier'а, не автора):
+```bash
+/root/LabDoctorM/projects/DoctorM_and_Ai/scripts/lab-commit.sh <verifier-агент> -m "INC closed: <title>"
+```
+Гейт доказательства закрытия — ADR-0057. `incident-linter.sh --strict-closure` блокирует
+коммит, если `## Решение` пуста, `verified != true` или `verified_by == agent`.
 
 ## Правила
 
 - Коммитить ТОЛЬКО через `lab-commit.sh`
 - Не коммитить `.env` и секреты
-- Закрывать инцидент только после верификации решения
+- **Закрывать `status: closed` может только вторая инстанция (verifier-агент или ЗавЛаб) — самоподтверждение автором ЗАПРЕЩЕНО (ADR-0057).**
+- `low`-инциденты без решения списываются в `retired` по TTL, а не маскируются `closed`.
 - Один инцидент = один файл
 - Не создавать пустые инциденты
 
