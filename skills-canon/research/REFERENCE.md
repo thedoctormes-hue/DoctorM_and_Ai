@@ -31,9 +31,10 @@
 
 ```
 Уровень 1 (основной): free-api-hunter оркестратор → 15 ключей, 4 провайдера,
-                       ротация + ГАРАНТИРОВАННЫЙ fallback между провайдерами
-    ↓ при ошибке всех провайдеров
-Уровень 2 (fallback): нативный web_search → 1 ключ Tavily
+                       ротация + ГАРАНТИРОВАННЫЙ fallback между провайдерами;
+                       при падении внешних провайдеров авто-фолбэк на локальный SearXNG
+    ↓ при падении САМОГО оркестратора (процесс недоступен)
+Уровень 2 (fallback): прямой запрос к локальному SearXNG (localhost:8889)
     ↓ при ошибке
 Уровень 3 (аварийный): сообщить пользователю "Поиск недоступен"
 ```
@@ -60,8 +61,9 @@
     "overlapping_urls": ["https://...", "..."],
     "overlap_count": 3,
     "threshold": 2,
-    "verified": true,
-    "answer_status": "verified" | "unverified_synthesis"
+    "url_overlap_verified": true,
+    "answer_grounding": 0.92,
+    "answer_status": "verified" | "answer_ungrounded" | "unverified_synthesis" | "single_source_unverified" | "both_sources_unavailable"
   }
 }
 ```
