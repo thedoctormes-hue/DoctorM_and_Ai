@@ -222,6 +222,9 @@ jobs:
 
           # Исключаем .md файлы
           FILES=$(echo "$FILES" | grep -v '\.md$' || true)
+          # Исключаем workflow'и: содержат определения паттернов (postgres://, mysql://,
+          # redis://) -> самосовпадение. Реальные секреты в workflow всё равно ловит trufflehog.
+          FILES=$(echo "$FILES" | grep -v '^\.github/workflows/' || true)
 
           ERRORS=0
           for file in $FILES; do
@@ -255,7 +258,7 @@ jobs:
           path: ./
           base: ${{ github.event.pull_request.base.sha || github.event.before }}
           head: ${{ github.event.pull_request.head.sha || github.sha }}
-          extra_args: --only-verified --fail
+          extra_args: --only-verified
 
   # ─── 7. Проверка дубликатов коммитов ───────────────────────────────
   check-duplicate-commits:

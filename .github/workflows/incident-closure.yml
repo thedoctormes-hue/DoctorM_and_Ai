@@ -1,0 +1,15 @@
+name: incident-closure-gate
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  closure-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Ensure base ref available for changeset diff
+        run: git fetch origin main --depth=1000000
+      - name: Run incident closure-proof gate
+        run: bash scripts/incident-linter.sh --strict-closure --base origin/main
