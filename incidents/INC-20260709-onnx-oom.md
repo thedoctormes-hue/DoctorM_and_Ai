@@ -4,9 +4,12 @@ timestamp: "2026-07-09T00:00:00Z"
 category: tech
 type: other
 severity: critical
-status: closed
+status: retired
 agent: streikbrecher
 title: INC-20260709-onnx-oom — OOM killer убил сервер из-за индексатора
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260709-onnx-oom — OOM killer убил сервер из-за индексатора
@@ -35,3 +38,7 @@ title: INC-20260709-onnx-oom — OOM killer убил сервер из-за ин
 - ONNX и reindex остановлены (ЗавЛаб сказал «стоп»).
 - Trading bot (doctorm-unify-protocol) / postgres / docker — active (не тронуты, критичные процессы целы).
 - Ожидаю «го» от ЗавЛаба для запуска с новыми лимитами.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

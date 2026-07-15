@@ -4,12 +4,15 @@ timestamp: "2026-07-08T06:55:00Z"
 category: tech
 type: incident
 severity: high
-status: resolved
+status: retired
 agent: antcat
 title: "INC-20260708-065500: myrmex-control SessionBridge runaway error loop (диск заполняется)"
 description: "INC-20260708-065500: myrmex-control SessionBridge в петле ошибок — лог 2.6GB, растёт, contextApi down"
 last_reviewed: 2026-07-08
 last_code_change: 2026-07-08
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260708-065500: myrmex-control SessionBridge runaway error loop (диск заполняется)
@@ -77,3 +80,7 @@ resolved
 - Ветка `antcat/fix-session-bridge-enoent` сохранена на remote.
 - Долговечность: при чистом `git checkout main && npm run build` баг 8100/ENOENT не вернётся (default в коде = 8082, re-discovery в session-bridge).
 - Примечание (accepting-work): `ad1f089` необоснованно поднял typescript до 6.0.3 (корень был в `NODE_ENV=production`, отсекавшем devDeps, а не в версии TS) → сломал client typecheck. Откачен в `19a4ac0` (возврат `^5.6.0` + оригинальный tsconfig; devDeps ставятся `npm install --legacy-peer-deps --include=dev`). Client typecheck теперь зелёный, кроме дорегрессионного error в `src/client/pages/Login.tsx` (клиентский файл, вне зоны инцидента).
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «resolved», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

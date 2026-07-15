@@ -2,11 +2,18 @@
 description: "INC-20260714 — Каскад падений инфраструктуры: OOM gateway ← reindex-full hang"
 type: incident
 created: 2026-07-14
-status: closed
+status: retired
 severity: critical
-verified: false
+verified: true
 verified_at: "2026-07-15"
 recommended_close: true
+verified_by: kotolizator
+retired_date: 2026-07-16
+id: INC-20260714-infra-cascade
+category: tech
+agent: owl
+title: INC-20260714-infra-cascade
+timestamp: 2026-07-14T00:00:00Z
 ---
 
 # INC-20260714-infra-cascade
@@ -38,3 +45,7 @@ recommended_close: true
 - dnsmasq / irqbalance: inactive (не failed).
 - Единственный упавший юнит сейчас: update-notifier-download (относится к инц. 2026-06-20-systemd-failures, не к каскаду).
 ВЫВОД: событие 2026-07-14 полностью рассосалось. Каскад НЕ актуален. recommended_close=true.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

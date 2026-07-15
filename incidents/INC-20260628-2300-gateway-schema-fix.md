@@ -4,10 +4,13 @@ timestamp: "2026-06-28T23:00:00Z"
 category: tech
 type: other
 severity: critical
-status: closed
+status: retired
 agent: mangust
 title: Gateway schema errors cacheRead/cacheWrite — 643 рестарта/день
 date: 2026-06-28
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 ## Описание

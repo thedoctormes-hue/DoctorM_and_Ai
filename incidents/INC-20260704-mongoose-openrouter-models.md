@@ -4,13 +4,16 @@ timestamp: "2026-07-04T00:00:00Z"
 category: tech
 type: bug
 severity: medium
-status: resolved
+status: retired
 agent: unknown
 title: mongoose падает из-за obsolete OpenRouter моделей
 date: 2026-07-04
 resolved: "2026-07-08 by mangust (authorization: ЗавЛаб «чини\")"
 resolution: >
 Первопричина та же, что у INC-20260705: невалидный ключ OpenRouter в цепочке orion-scan/mongoose
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 ## Проблема

@@ -4,12 +4,15 @@ timestamp: "2026-07-01T00:00:00Z"
 category: tech
 type: config_error
 severity: high
-status: resolved
+status: retired
 agent: dominika
 title: LLM Models Rate Limited
 date: "2026-07-01T07:18:00+00:00"
 author: Доминика
 tags: [models, openrouter, rate-limit, cron]
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # Инцидент: LLM Models Rate Limited

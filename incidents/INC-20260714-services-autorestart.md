@@ -1,14 +1,21 @@
 ---
 title: "INC-20260714-services-autorestart"
 date: 2026-07-14
-status: closed
+status: retired
 severity: warning
 observer: dominika (lab-monitor)
 root_cause: не расследован (ждёт DDP-спавн по «го»)
 fix: pending «го» (ЗавЛаб)
-verified: false
+verified: true
 verified_at: "2026-07-15"
 recommended_close: true
+verified_by: kotolizator
+retired_date: 2026-07-16
+id: INC-20260714-services-autorestart
+category: tech
+type: incident
+agent: owl
+timestamp: 2026-07-14T00:00:00Z
 ---
 
 # INC-20260714 — Сервисы в auto-restart / failed (наблюдение монитора)
@@ -44,3 +51,7 @@ recommended_close: true
 - zprr-backend: active/running, NRestarts=0 (заявлено +416 — ЛОЖЬ).
 - dnsmasq/irqbalance/update-notifier-download: failed→ сейчас inactive/inactive/failed; только update-notifier-download реально failed.
 ВЫВОД: снимок монитора 16:01 2026-07-14 не соответствует текущему состоянию. Наблюдение устарело. recommended_close=true.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

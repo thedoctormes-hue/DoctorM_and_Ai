@@ -4,9 +4,12 @@ timestamp: "2026-07-10T00:00:00Z"
 category: tech
 type: other
 severity: high
-status: closed
+status: retired
 agent: streikbrecher
 title: INC-20260710-onnx-42s-swap
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260710-onnx-42s-swap
@@ -83,3 +86,7 @@ systemctl restart onnx-embedder onnx-worker-8084 onnx-worker-8085
 
 - `docs/ONNX-WORKERS-OPERATIONS.md` (раздел 3.3, 3.4, 6) — авторитетный справочник.
 - `INC-20260709-onnx-batch-deadlock.md`, `INC-20260709-onnx-oom.md` — смежные инциденты.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

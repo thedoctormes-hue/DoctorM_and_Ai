@@ -4,9 +4,12 @@ timestamp: "2026-07-12T00:00:00Z"
 category: tech
 type: other
 severity: medium
-status: closed
+status: retired
 agent: antcat
 title: INC-20260712-gatekeeper-broke-reindex
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260712-gatekeeper-broke-reindex
@@ -62,3 +65,7 @@ root-сервисы перестали запускаться:
   не таймеры/сервисы без порта.
 - Перед мержем hardening-изменений в gatekeeper — тестировать на реальных
   root-сервисах (reindex), а не только unit-тестами.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.
