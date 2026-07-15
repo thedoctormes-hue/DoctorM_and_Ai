@@ -16,9 +16,13 @@
 #     --strict : выходить с кодом 1 при наличии ERROR-нарушений (для гейтов/CI)
 #     --quiet  : только итоговые числа (без расширенных списков)
 #     --strict-closure : ADR-0057 — блокировать НОВЫЕ маскировки закрытия
-#                         (HARD FAIL для незакоммиченных файлов -> exit 1).
-#                         Legacy (уже закоммиченные) пустые закрытия -> WARN
-#                         (видимость бэклога 84, НЕ ломает CI).
+#                         (HARD FAIL для изменённых в changeset файлов -> exit 1).
+#                         Legacy (уже закоммиченные и не менялись относительно
+#                         базы) пустые закрытия -> WARN (видимость бэклога,
+#                         НЕ ломает CI).
+#     --base <ref>     : базовый ref для вычисления changeset (по умолчанию
+#                         origin/main). HARD FAIL срабатывает для файлов,
+#                         изменённых относительно базы ИЛИ незакоммиченных.
 #
 # Подробности: ADR-0056 (Единый реестр инцидентов и обязательный frontmatter).
 #
@@ -29,6 +33,7 @@ LAB_ROOT="/root/LabDoctorM"
 STRICT=0
 QUIET=0
 STRICT_CLOSURE=0
+BASE="origin/main"
 
 # Валидные значения enum (по registering-incident SKILL.md / ADR-0056)
 VALID_STATUS=(open investigating resolved closed)
@@ -57,7 +62,7 @@ while [ $# -gt 0 ]; do
     --lab)   LAB_ROOT="$2"; shift 2 ;;
     --strict) STRICT=1; shift ;;
     --strict-closure) STRICT_CLOSURE=1; shift ;;
-    --quiet)  QUIET=1; shift ;;
+    --base) BASE="$2"; shift 2 ;;
     --help|-h) usage ;;
     *) echo "Unknown arg: $1" >&2; usage ;;
   esac
@@ -171,6 +176,22 @@ is_uncommitted() {
   [ -n "$st" ]
 }
 
+# ADR-0057: файл считается "новым changeset" (HARD FAIL при нарушении закрытия),
+# если он НЕ закоммичен (is_uncommitted) ИЛИ его rel-path входит в множество
+# CHANGED_SET (изменён относительно базы BASE). Иначе -> legacy (WARN).
+is_new_changeset() {
+  local file="$1" rel
+  if is_uncommitted "$file"; then
+    return 0
+  fi
+  [ -z "$GITROOT" ] && return 1
+  case "$file" in
+    "$GITROOT"/*) rel="${file#${GITROOT}/}" ;;
+    *) return 1 ;;
+  esac
+  [ -n "${CHANGED_SET[$rel]:-}" ]
+}
+
 # Возраст timestamp в днях от текущего момента (UTC). Пусто при ошибке.
 age_days() {
   local ts="$1" norm ts_epoch
@@ -211,7 +232,7 @@ check_closure_proof() {
     reason="${reason}verified_by==agent;"
   fi
   if [ -n "$reason" ]; then
-    if is_uncommitted "$file"; then
+    if is_new_changeset "$file"; then
       CLOSURE_FAIL+=("$file [$reason]")
       CLOSURE_FAIL_COUNT=$((CLOSURE_FAIL_COUNT+1))
     else
@@ -241,6 +262,14 @@ NOW_EPOCH="$(date -u +%s)"
 
 # --- scan 1: misplaced incidents (whole lab, outside canonical) ------------
 GITROOT="$(git -C "$CANON_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
+# ADR-0057: множество файлов, изменённых относительно базы BASE (committed
+# changeset). Незакоммиченные учитываются отдельно в is_uncommitted().
+declare -A CHANGED_SET=()
+if [ -n "$GITROOT" ]; then
+  while IFS= read -r c; do
+    [ -n "$c" ] && CHANGED_SET["$c"]=1
+  done < <(git -C "$GITROOT" diff --name-only "${BASE}...HEAD" 2>/dev/null)
+fi
 while IFS= read -r -d '' f; do
   # пропускаем сам канон (и всё, что внутри него)
   case "$f" in
