@@ -1,12 +1,18 @@
 ---
 id: INC-20260715-accepting-work-gitcheckout
 date: 2026-07-15
-status: closed
+status: retired
 severity: medium
 agent: raven
 title: "INC-20260715-accepting-work-gitcheckout"
 resolution: "self-caught + fixed same day (git checkout -- трап: восстановление из индекса вместо HEAD); PDP 82 passed, commit b31202c"
 resolved_at: "2026-07-15"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
+category: tech
+type: incident
+timestamp: 2026-07-15T00:00:00Z
 ---
 
 # INC-20260715-accepting-work-gitcheckout
@@ -37,3 +43,7 @@ resolved_at: "2026-07-15"
 ## Влияние
 - Временно (пока не заметил) аудит мог слать алерты по зарезервированным инфра-портам. Реального ущерба нет (алерты по легитимным портам — шум, не инцидент безопасности).
 - Регрессия закрыта до ухода в прод.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

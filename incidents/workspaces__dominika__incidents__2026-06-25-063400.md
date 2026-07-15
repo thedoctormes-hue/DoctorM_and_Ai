@@ -4,13 +4,16 @@ timestamp: "2026-06-25T06:34:00Z"
 category: process
 type: ignored
 severity: low
-status: closed
+status: retired
 agent: dominika
 title: "INC-027: Нарушение формата ответа — текст вместо цифры"
 date: "2026-06-25T06:34:00Z"
 author: Доминика
 tags: [format, user-request, red-line]
 resolution: Дубликат INC-027 (рассеянная копия в workspaces/*/incidents/). Консолидирован в канон (ADR-0056). Закрыт как дубликат.
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-027: Нарушение формата ответа — текст вместо цифры
@@ -40,3 +43,7 @@ resolution: Дубликат INC-027 (рассеянная копия в workspa
 ## Исправление
 
 - [ ] Добавить в SOUL.md / MEMORY.md правило: «Ответ строго в запрошенном формате»
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.
