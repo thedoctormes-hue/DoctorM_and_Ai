@@ -4,10 +4,13 @@ timestamp: "2026-06-21T00:00:00Z"
 category: tech
 type: other
 severity: medium
-status: closed
+status: retired
 agent: antcat
 title: "Аудит systemd-сервисов — 2026-06-21 23:22 UTC"
 resolution: Аудит systemd-сервисов проведён (2026-06-21); находки учтены в RUL-007/ops-дисциплине. Закрыт по факту.
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # Аудит systemd-сервисов — 2026-06-21 23:22 UTC
@@ -107,3 +110,7 @@ evolve-orchestrator и self-evolve запускают Qwen-скрипты → т
 ## Примечание
 Предыдущий инцидент (2026-06-20-systemd-failures.md) актуализирован.
 Этот файл — полная замена.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

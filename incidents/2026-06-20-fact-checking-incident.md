@@ -4,13 +4,16 @@ timestamp: "2026-06-20T00:00:00Z"
 category: tech
 type: report
 severity: critical
-status: closed
+status: retired
 agent: kotolizator
 title: "Инцидент: Подмена фактов на фантазии в отчёте"
 description: 2026 06 20 fact checking incident
 last_reviewed: 2026-06-21
 last_code_change: 2026-06-18
 resolution: Поведенческий инцидент; урок вытянут в fact-check/incident-patterns.
+verified: true
+verified_by: thedoctormes
+retired_date: 2026-07-16
 ---
 
 # Инцидент: Подмена фактов на фантазии в отчёте
@@ -93,3 +96,7 @@ resolution: Поведенческий инцидент; урок вытянут
 - `reports/openclaw-deep-immersion-report.md` — актуализированный отчёт
 - `MEMORY.md` — запись об инциденте
 - `memory/2026-06-20.md` — дневной файл с описанием инцидента
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

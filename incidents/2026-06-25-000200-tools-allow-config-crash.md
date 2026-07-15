@@ -4,9 +4,12 @@ timestamp: "2026-06-25T00:02:00Z"
 category: tech
 type: config_error
 severity: critical
-status: closed
+status: retired
 agent: raven
 title: "INC-20260625-000200: tools.allow в agents.list ломает гейтвей OpenClaw 2026.6.9"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260625-000200: tools.allow в agents.list ломает гейтвей OpenClaw 2026.6.9

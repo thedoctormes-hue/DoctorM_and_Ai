@@ -4,9 +4,12 @@ timestamp: "2026-06-21T00:00:00Z"
 category: tech
 type: bug
 severity: low
-status: closed
+status: retired
 agent: antcat
 title: "INC-20260621: Миграция plaintext secrets на SecretRef"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260621: Миграция plaintext secrets на SecretRef
@@ -41,3 +44,7 @@ title: "INC-20260621: Миграция plaintext secrets на SecretRef"
 ## Урок
 
 File provider требует вложенный JSON формат для secrets.json. Плоский формат с `/` в ключах не работает с JSON Pointer.
+
+## Решение
+
+Списан per ADR-0057 (closure-integrity): ранее помечен «closed», но без подтверждённого `## Решение` и `verified: true`. Факт устранения из записи не реконструируется — инцидент списывается как не подтверждённый закрытым, без претензии на решённость. При необходимости переоткрыть и довести отдельно.

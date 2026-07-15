@@ -4,9 +4,12 @@ timestamp: "2026-06-21T00:00:00Z"
 category: process
 type: other
 severity: medium
-status: closed
+status: retired
 agent: unknown
 title: "INC-20260621: Штрейкбрехер не отвечал на вопросы ЗавЛаба"
+verified: true
+verified_by: kotolizator
+retired_date: 2026-07-16
 ---
 
 # INC-20260621: Штрейкбрехер не отвечал на вопросы ЗавЛаба
