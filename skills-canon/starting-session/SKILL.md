@@ -1,9 +1,9 @@
 ---
 name: starting-session
 description: "Старт сессии: два режима. ЛЁГКАЯ сводка по 'привет!/hi/здравствуй/стартуем' (инциденты+хвосты+бэклог+блокеры на ЗавЛабе, без засирания контекста) и ГЛУБОКИЙ прогон по 'поехали/старт сессии' (git-скан агента, утечка agents@, handoff, проверка инъекции)."
-version: "3.4.0"
+version: "3.5.0"
 author: "ЗавЛаб"
-last_reviewed: "2026-07-14"
+last_reviewed: "2026-07-15"
 status: active
 metadata: { "openclaw": { "emoji": "🚀" } }
 user-invocable: true
@@ -62,7 +62,33 @@ triggers:
 
 Быстро, дёшево, без тяжёлых операций. Состав (финальный, решение ЗавЛаба 2026-07-14):
 
-1. **Открытые инциденты** — `ls /root/LabDoctorM/projects/DoctorM_and_Ai/incidents/ 2>/dev/null | grep -v README | grep -v template | tail -10`. Только список, что горит.
+1. **Открытые инциденты** — только РЕАЛЬНО активные (файлы со `status: open`/`active` либо БЕЗ frontmatter, т.е. untracked). Файлы `closed`/`resolved` НЕ показывать: реестр — это архив (~149 файлов, активных ~10). Парсим статус ИЗ frontmatter, а не по наличию файла (наивный `ls | tail -10` показывал мусор и терял активные — DDP 2026-07-15):
+   ```bash
+   INC=/root/LabDoctorM/projects/DoctorM_and_Ai/incidents
+   python3 - "$INC" <<'PY'
+   import os, re, sys
+   d=sys.argv[1]
+   total=live=0
+   for fn in sorted(os.listdir(d)):
+       if not fn.endswith('.md'): continue
+       if fn.lower().startswith('readme') or 'template' in fn.lower(): continue
+       total+=1
+       t=open(os.path.join(d,fn),encoding='utf-8',errors='ignore').read()
+       m=re.match(r'^---\s*\n(.*?)\n---', t, re.S)
+       s='untracked'
+       if m:
+           sm=re.search(r'^status:\s*(\S+)', m.group(1), re.M)
+           if sm: s=sm.group(1).strip().strip('"').strip("'")
+       if s in ('open','active','untracked'):
+           print('🔴', fn); live+=1
+       elif s in ('closed','resolved'):
+           pass
+       else:
+           print('⚠️', fn, '(status=%s)' % s)
+   print('Актуальных: %d из %d' % (live, total))
+   PY
+   ```
+   Только список, что горит.
 
 2. **Хвосты (незавершёнка)** — лёгкая проверка своего workspace, БЕЗ полного git-скана всех projects/*:
    ```bash
@@ -100,7 +126,32 @@ triggers:
    - ⚠️ Скрипт `audit_lab.sh` НЕ существует (проверено). Не выполнять. Аудит myrmex.json делать вручную.
    - Строить чеклист ПОД роль агента.
 
-1. **Инциденты:** `ls /root/LabDoctorM/projects/DoctorM_and_Ai/incidents/ 2>/dev/null | grep -v README | grep -v template | tail -10`
+1. **Инциденты:** только РЕАЛЬНО активные (тот же status-фильтр, что в Режиме А, шаг 1) — НЕ показывать `closed`/`resolved` архив:
+   ```bash
+   INC=/root/LabDoctorM/projects/DoctorM_and_Ai/incidents
+   python3 - "$INC" <<'PY'
+   import os, re, sys
+   d=sys.argv[1]
+   total=live=0
+   for fn in sorted(os.listdir(d)):
+       if not fn.endswith('.md'): continue
+       if fn.lower().startswith('readme') or 'template' in fn.lower(): continue
+       total+=1
+       t=open(os.path.join(d,fn),encoding='utf-8',errors='ignore').read()
+       m=re.match(r'^---\s*\n(.*?)\n---', t, re.S)
+       s='untracked'
+       if m:
+           sm=re.search(r'^status:\s*(\S+)', m.group(1), re.M)
+           if sm: s=sm.group(1).strip().strip('"').strip("'")
+       if s in ('open','active','untracked'):
+           print('🔴', fn); live+=1
+       elif s in ('closed','resolved'):
+           pass
+       else:
+           print('⚠️', fn, '(status=%s)' % s)
+   print('Актуальных: %d из %d' % (live, total))
+   PY
+   ```
 
 2. **Незавершённая работа агента** (напоминание, НЕ действие):
    - Вспомнить СВОЮ работу, которую не довёл до конца, и доложить ЗавЛабу.
@@ -205,5 +256,6 @@ triggers:
 - Скил запускается только по команде пользователя (триггер).
 - РЕЖИМ А — основной ежедневный старт (экономия токенов). РЕЖИМ Б — полный аудит, реже.
 - Авто-привязку скила к /new решено НЕ делать (дорого при каждом старте); сводка — лениво по «привет!».
+- v3.5.0 (2026-07-15): Режим А и Б (шаг 1) читают инциденты по РЕАЛЬНОМУ статусу из frontmatter, а не по наличию файла. Фильтр показывает только `open`/`active`/untracked (~10 из ~149), скрывает `closed`/`resolved`. Причина: реестр инцидентов — архив, наивный `ls | tail -10` показывал мусор и терял активные (DDP 2026-07-15). untracked (файлы без frontmatter) трактуются как живые, чтобы не скрыть ручные инциденты.
 - v3.4.0 (2026-07-14): добавлены триггеры привет/hi/здравствуй/стартуем (Режим А, лёгкая сводка); состав сводки зафиксирован (инциденты+хвосты+бэклог+блокеры на ЗавЛабе); исключены инфра (у Доминики) и другие агенты. Разделение на Режим А/Б.
 - v3.3.3 (2026-07-13): чек №2 доведён до рабочего состояния (AGENT_ID, база сравнения, под-чек утечки agents@).
