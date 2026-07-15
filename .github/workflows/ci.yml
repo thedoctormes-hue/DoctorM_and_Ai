@@ -16,7 +16,13 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Check for large files
         run: |
-          git ls-files | xargs ls -la 2>/dev/null | awk '$5 > 5242880 {print $0}' && exit 1 || echo "No large files found"
+          big=$(git ls-files | xargs ls -la 2>/dev/null | awk '$5 > 5242880 {print $0}')
+          if [ -n "$big" ]; then
+            echo "❌ Files larger than 5MB found:"
+            echo "$big"
+            exit 1
+          fi
+          echo "No large files found"
       - name: Python syntax check
         run: python3 -m py_compile $(find . -name "*.py" -not -path "./venv/*" -not -path "./.venv/*" | head -10) || true
 
