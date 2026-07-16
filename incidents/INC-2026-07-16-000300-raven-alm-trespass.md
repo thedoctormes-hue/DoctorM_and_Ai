@@ -4,7 +4,7 @@ date: 2026-07-16
 agent: raven
 type: zone-trespass / security
 severity: high
-status: open
+status: resolved
 resolution_owner: ALM owner (streikbrecher / antcat) — must confirm no data harm + remove residual workspace
 summary: >
   raven wrote into legacy AnythingLLM (ALM :3002) using streikbrecher's token:
@@ -60,4 +60,20 @@ summary: >
   что реальные данные не задеты.
 
 ## Статус
-OPEN — до подтверждения владельца + удаления скелета workspace. Закрывает владелец после проверки.
+RESOLVED — владелец (streikbrecher) подтвердил no-data-harm и удаление резидуального workspace (2026-07-16 16:10 МСК).
+
+## Резолюция владельца (2026-07-16, верификация SQLite + ALM API)
+Закрываю как ALM-owner. Доказательства (live, не из бэклога):
+- `raven-search-bridge` workspace **отсутствует** в таблице `workspaces` (29 workspace, id 37 не существует).
+- Тест-доки Ворона (Sprint-5 / bridge Test A / search-bridge) — **0** совпадений в `workspace_documents.metadata`.
+- `document_vectors` сирот (docId нет в workspace_documents) = **0**.
+- `workspace_documents` сирот по workspace (workspaceId нет в workspaces) = **0**.
+- `workspace_documents` без векторов = **0**; docs=1338, vectors=9846 (local==ALM, синхрон 100%).
+- Контейнер `anythingllm`: running | healthy.
+Вывод: реальные данные не задеты, резидуальный skeleton удалён. Инцидент исчерпан.
+
+Связанная находка контроля (см. DDP-отчёт этого же дня): `alm-sync-incremental.timer` оказался
+включен (enabled, крутится), хотя по «стоп» ЗавЛаба автоматика числилась выключенной — «стоп»
+был исполнен как `systemctl stop`, а не `disable`, поэтому UnitFileState остался enabled и таймер
+воскрес явным `systemctl start` ~09:19 МСК 16.07. Отдельный вопрос к ЗавЛабу (не блокирует закрытие
+этого инцидента).
