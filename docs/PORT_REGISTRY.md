@@ -48,7 +48,7 @@ status: active
 | 9100 | tcp | node_exporter | 0.0.0.0 | Бестия/Сова | Prometheus node exporter | 🔴 Да |
 | 9187 | tcp | postgres_exporter | 0.0.0.0 | Бестия/Сова | PostgreSQL exporter | 🔴 Да |
 | 9443 | tcp | docker-proxy (mtproto-proxy) | 0.0.0.0 | контейнер | опубликованный порт контейнера | 🔴 Да |
-| 8889 | tcp | docker-proxy (searxng) | 0.0.0.0 | контейнер | опубликованный порт контейнера | 🔴 Да |
+| 8889 | tcp | docker-proxy (searxng) | 127.0.0.1 | контейнер | опубликованный порт контейнера (loopback only) | 🟢 Нет (internal / loopback only) |
 | 36713 | udp | docker-proxy (amnezia-awg2) | 0.0.0.0 | контейнер | порт контейнера (VPN) | 🔴 Да |
 | 443 | tcp | xray | 127.0.0.1 | инфра | XRay local (inbound) | 🟢 Нет |
 | 10443 | tcp | xray | 127.0.0.1 | инфра | XRay local | 🟢 Нет |
