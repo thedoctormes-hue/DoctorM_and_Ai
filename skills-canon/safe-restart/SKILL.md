@@ -72,7 +72,7 @@ openclaw gateway stop && sleep 2 && openclaw gateway start
 ```
 ❗ НЕ делать ручной `kill <PID>` / `kill -9` по gateway без необходимости — это прерывает сессии и ведёт к петле из INC-023. Используй `--safe` в первую очередь.
 
-**systemd-сервис (onnx-embedder и др.):**
+**systemd-сервис (любой, кроме удалённого onnx-embedder):**
 ```bash
 sudo systemctl restart <service-name>
 # Проверка статуса:

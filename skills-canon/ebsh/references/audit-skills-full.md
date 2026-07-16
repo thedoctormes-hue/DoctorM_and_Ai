@@ -106,15 +106,10 @@
 - user-invocable: true
 - Проблемы: description 206 символов (лимит 160). В entries зарегистрирован как "git-lab" но не как "gitlab" — скил недоступен по имени папки. requires.binaries: ["jq"] — jq найден в PATH.
 
-### labsearch
-- Статус: ❌ ПРОБЛЕМА
-- SKILL.md: есть (симлинк → /root/LabDoctorM/projects/lab-memory/skills/labsearch)
-- status в frontmatter: active
-- version: "2.0.0"
-- description: есть (261 символ) ← ❌ >160
-- В entries (openclaw.json): нет ← ❌
-- user-invocable: true
-- Проблемы: description 261 символ (лимит 160). Нет в skills.entries.
+### labsearch (❌ УДАЛЁН/DEPRECATED — НЕ использовать)
+- Статус: ❌ УДАЛЁН из системы. Семантический поиск теперь ТОЛЬКО через MCP `memory-gateway__search_memory` (бэкенд ALM/AnythingLLM).
+- Прямые вызовы `lab_search.py` / `labsearch` / `mcp-memory :8087` / `onnx-embedder :8082` — ЗАПРЕЩЕНЫ (см. APPEND_SYSTEM.md).
+- (историческая справка, не актуально) SKILL.md был симлинком → /root/LabDoctorM/projects/lab-memory/skills/labsearch; version 2.0.0; description 261 символ; не в skills.entries.
 
 ### manus-outsourcing
 - Статус: ❌ ПРОБЛЕМА
@@ -210,10 +205,10 @@
 #### 🔴 Отсутствует в `openclaw.json` → `skills.entries` (15 из 16)
 **Единственный скил в entries:** manus-outsourcing.
 Нужно зарегистрировать в entries все кастомные скилы:
-- 300-vision, accepting-work, anti-loop, change-management, colony-disk-exchange, deep-dive, ebsh, fact-check, finishing-session, gitlab, labsearch, registering-incident, research, root-cause-archaeologist, safe-restart, skill-manager, starting-session
+- 300-vision, accepting-work, anti-loop, change-management, colony-disk-exchange, deep-dive, ebsh, fact-check, finishing-session, gitlab, registering-incident, research, root-cause-archaeologist, safe-restart, skill-manager, starting-session
 
 #### 🔴 Description > 160 символов (9 скилов)
-- anti-loop (178), change-management (169), colony-disk-exchange (223), gitlab (206), labsearch (261), manus-outsourcing (258), registering-incident (184), research (217), safe-restart (163)
+- anti-loop (178), change-management (169), colony-disk-exchange (223), gitlab (206), manus-outsourcing (258), registering-incident (184), research (217), safe-restart (163)
 
 #### 🔴 Не семвер-формат version (3 скила)
 - deep-dive: "v1.1" → должно быть "1.1.2" или "1.1.0"

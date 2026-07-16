@@ -52,15 +52,17 @@
 
 [ВЕРИФИЦИРОВАНО: pyproject.toml, package.json, go.mod каждого проекта]
 
-### Семантическая память (Lab Memory Stack)
+### Семантическая память (AnythingLLM / ALM)
 
-- **Движок:** FAISS (IndexFlatIP, 768d, mmap) + EmbeddingGemma-300m (INT8, ONNX)
-- **Индекс:** 12700+ векторов по всем .md артефактам лаборатории
-- **Архитектура:** единый скрипт (symlink в каждый агент), ONNX-эмбеддер как systemd-сервис
-- **Отказоустойчивость:** ONNX упал → systemd restart 5s → fallback grep → fallback memory_search
-- **RAM:** ~35 MB на агент, ~250 MB общий ONNX
+- **Бэкенд:** AnythingLLM (ALM) — контейнер, порт 3002→3001, healthy
+- **Доступ:** строго через MCP-шлюз `memory-gateway` (инструмент `memory-gateway__search_memory`)
+- **Архитектура:** гибридный векторный + лексический поиск (RRF), контекстная сборка
+- **Векторы:** ~17 265 в индексе, 29 workspaces
+- **RAM:** на стороне ALM, агенты не держат индексы
 
-[ВЕРИФИЦИРОВАНО: projects/DoctorM_and_Ai/docs/lab-memory-stack.md, ADR-0052]
+[ВЕРИФИЦИРОВАНО: memory-gateway__gateway_health, ADR-0054]
+
+> ⚠️ Старый Lab Memory Stack (FAISS/ONNX/lab_search.py) УДАЛЁН (2026-07-14). Прямые вызовы `lab_search.py` / `labsearch` / `onnx-embedder :8082` / `mcp-memory :8087` / native `memory_search` — ЗАПРЕЩЕНЫ (см. APPEND_SYSTEM.md).
 
 ---
 

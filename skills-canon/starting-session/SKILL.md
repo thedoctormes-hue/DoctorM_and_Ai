@@ -196,8 +196,7 @@ triggers:
    - Вывод скила НЕ должен ре-стейтить то, что уже в инъекте.
 
 4. **Semантический поиск / fact-check** (точки входа, НЕ мониторинг):
-   - `labsearch` → `lab_search.py` / FAISS (onnx-embedder:8082)
-   - MCP-сервер `memory` (mcp-memory.service, :8087, read-only)
+   - ТОЛЬКО MCP `memory-gateway` (инструмент `memory-gateway__search_memory`, бэкенд ALM/AnythingLLM). Прямые вызовы `lab_search.py` / `labsearch` / `mcp-memory :8087` / `onnx-embedder :8082` / native `memory_search` / REST к AnythingLLM — ЗАПРЕЩЕНЫ (см. APPEND_SYSTEM.md).
    - Правило «НЕ СУЩЕСТВУЕТ ≠ DOWN» (см. полную версию в v3.3.3).
 
 5. **Anti-loop state:** не хранится как файл по умолчанию. Проверяй через скилл anti-loop; если не задано — `{}`.
@@ -219,7 +218,7 @@ triggers:
 ⚠️ Незавершёнка (своё): <project>: N / нет
 ⚠️ Утечка атрибуции (agents@): <список> / нет
 
-🧠 Fact-check: labsearch (onnx:8082) / MCP memory:8087
+🧠 Fact-check: семантическая память — только `memory-gateway__search_memory` (MCP → ALM)
 📎 Контекст: инъекция без дублей ✅ / ⚠️ дублирование — сообщи ЗавЛабу
 🔄 Anti-loop: <state> / {}
 

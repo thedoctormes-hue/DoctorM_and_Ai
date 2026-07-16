@@ -56,8 +56,8 @@ triggers:
 
 ### 4. Lab Semantic Search (семантический поиск по лабе)
 - **ОБЯЗАТЕЛЬНО** перед фактчекингом утверждений о лаборатории: сверься с семантической памятью, чтобы не потерять знания (ADR, правила, инциденты, паттерны).
-- **Первичный путь — MCP-тул `lab_memory_search`** (сервер `http://127.0.0.1:8087/mcp`, systemd: `mcp-memory.service`): `lab_memory_search(query="...", top_k=5)` — гибрид FAISS (семантика) + FTS5 (лексикон, BM25) + RRF-фузия.
-- **Fallback — скрипт:** `python3 /root/LabDoctorM/projects/lab-memory/scripts/lab_search.py search "<запрос>" --limit 5` (тот же гибридный движок; используй, если MCP-сервер :8087 недоступен).
+- **Единственный путь — MCP-тул `memory-gateway__search_memory`** (MCP-сервер `memory-gateway`, бэкенд ALM/AnythingLLM): `memory-gateway__search_memory(query="...", top_k=5)` — гибрид vector+lexical (RRF) по всей лаборатории.
+- Прямые вызовы `lab_memory_search` (mcp-memory :8087), `lab_search.py`, скилла `labsearch`, `onnx-embedder :8082` и native `memory_search` — ЗАПРЕЩЕНЫ (см. APPEND_SYSTEM.md). Если MCP недоступен — fallback на grep по реальным путям, пометь confidence Low.
 - Одного grep по файлам недостаточно — семантический поиск находит релевантные артефакты, которые grep не выцепит.
 - Если оба пути упали → fallback на grep по реальным путям и пометь confidence как Low.
 
@@ -81,7 +81,7 @@ triggers:
 ## Процесс фактчекинга
 
 ### Перед ответом на сложный вопрос:
-1. Проверить через лабораторный семантический поиск (lab_memory_search MCP :8087, fallback — lab_search.py) — найти релевантные ADR/правила/инциденты
+1. Проверить через лабораторный семантический поиск (через MCP `memory-gateway__search_memory`) — найти релевантные ADR/правила/инциденты
 2. Проверить через code verification (grep/cat/ls)
 3. Проверить через cross-reference (2+ источника)
 4. Оценить confidence level
@@ -89,7 +89,7 @@ triggers:
 
 ### Перед рекомендацией:
 1. Проверить текущее состояние (реальные данные)
-2. Проверить через лабораторный семантический поиск (lab_memory_search MCP :8087, fallback — lab_search.py) — прошлые решения (ADR, инциденты, паттерны)
+2. Проверить через лабораторный семантический поиск (через MCP `memory-gateway__search_memory`) — прошлые решения (ADR, инциденты, паттерны)
 3. Проверить внешние лучшие практики
 4. Сформулировать с confidence level
 

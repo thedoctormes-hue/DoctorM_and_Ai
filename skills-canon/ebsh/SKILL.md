@@ -1,6 +1,6 @@
 ---
 name: "ebsh"
-description: "Протокол решения задач: классификация, labsearch, скилы, финализация."
+description: "Протокол решения задач: классификация, semantic search (memory-gateway), скилы, финализация."
 status: active
 version: "1.2.0"
 date: "2026-07-10T18:45:00.000Z"
@@ -81,7 +81,7 @@ triggers:
 
 ## Обязательное правило
 
-**Веб-поиск ТОЛЬКО через research-скил.** Никаких прямых вызовов web_search или web_fetch в рамках протокола ЕБШ. Если labsearch не дал результата — спавним research-агент.
+**Веб-поиск ТОЛЬКО через research-скил.** Никаких прямых вызовов web_search или web_fetch в рамках протокола ЕБШ. Если memory-gateway не дал результата — спавним research-агент.
 
 ## Протокол (4 шага)
 
@@ -106,18 +106,18 @@ triggers:
 
 **Классификация — автоматическая** (LLM по описанию задачи). Без подтверждения пользователя.
 
-### Шаг 1 — Семантический поиск (labsearch)
+### Шаг 1 — Семантический поиск (memory-gateway)
 
-**Устойчивость (снять SPOF):** перед вызовом сделать pre-check эмбеддера — `curl -s --max-time 5 http://127.0.0.1:8082/health`. Если не OK → сразу переходить к fallback (research-агент), не вызывая labsearch. Сам вызов `lab_search.py` обернуть в retry: 1–2 попытки с backoff 3–5с. Только после неудачи ВСЕХ попыток считать labsearch недоступным и спавнить research-агента (веб только через research-скил).
+**Единственный путь — MCP `memory-gateway__search_memory`** (бэкенд ALM/AnythingLLM). Прямые вызовы `lab_search.py` / `labsearch` / `onnx-embedder :8082` / `mcp-memory :8087` — ЗАПРЕЩЕНЫ (см. APPEND_SYSTEM.md).
 
 ```bash
-python3 /root/LabDoctorM/projects/lab-memory/scripts/lab_search.py search "<описание задачи>" --limit 5
+# через MCP-инструмент агента:
+memory-gateway__search_memory(query="<описание задачи>", top_k=5)
 ```
 
-**Пороги:**
-- score >= 0.65 → результат релевантен, используем локальную память
-- score < 0.60 → шум или пусто → спавним research-агент (веб через research-скил)
-- 0.60–0.65 → используем с осторожностью, помечать как «возможно не релевантно»
+**Устойчивость (fallback):** если `memory-gateway` недоступен или вернул пусто — сразу спавнить research-агента (веб только через research-скил). Не пытаться дёргать legacy-пути (`lab_search.py` / `labsearch`).
+
+**Оценка релевантности:** доверяй top-k результатам (rrf_score). Если результаты не по теме или пусто → спавним research-агент.
 
 **Что ищем:**
 - Решения аналогичных задач из памяти
@@ -217,7 +217,7 @@ research + spike (параллельно) → change-management (ждёт оба
 
 ## Обработка ошибок
 
-- **labsearch недоступен** → сразу спавним research-агент
+- **memory-gateway недоступен** → сразу спавним research-агент
 - **Не удалось классифицировать** → спросить пользователя: «Какой тип задачи: [список]?»
 - **Агент упал** → anti-loop перехватывает → повторить или эскалировать
 - **Зависимость не выполнена** → ждать или пропустить с пометкой в отчёте
@@ -258,7 +258,7 @@ research + spike (параллельно) → change-management (ждёт оба
 **ЕБШ:**
 1. Классификация → `audit` (авто)
 2. Сложность → `medium` (из матрицы)
-3. labsearch: «audit starting-session skill» → score 0.72 → нашёл ADR-0056 (skill-creation-standard), incidents
+3. memory-gateway__search_memory: «audit starting-session skill» → нашёл ADR-0056 (skill-creation-standard), incidents
 4. Скилы из матрицы: research (уже использован), fact-check, anti-loop
 5. depends_on пустой → спавнит fact-check + anti-loop параллельно
 6. Собирает результаты → формирует отчёт
