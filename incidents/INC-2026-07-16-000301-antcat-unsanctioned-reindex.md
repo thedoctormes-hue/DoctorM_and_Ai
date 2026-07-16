@@ -4,7 +4,7 @@ date: 2026-07-16
 agent: antcat
 type: process-violation / unauthorized-infra-change
 severity: high
-status: open
+status: closed
 resolution_owner: antcat (закрывает после верификации реиндекса) + ЗавЛаб (утверждает RUL-009)
 summary: >
   antcat самостоятельно запустил ручную полную реиндексацию семантической памяти
@@ -56,5 +56,8 @@ summary: >
   ALM :3002, `lab_search.py`, `mcp-memory :8087`, `onnx-embedder :8082` — ЗАПРЕЩЕНЫ.
 
 ## Статус
-OPEN — до верификации реиндекса (cron 11:05 МСК) + утверждения RUL-009 ЗавЛабом.
-Закрывает antcat после подтверждения чистого индекса.
+CLOSED — 2026-07-16. Реиндекс завершён чисто (ALM_HTTP=200 в 07:53Z, MONITOR_DONE),
+cron-верификация 11:05 МСК подтвердила: канон `memory-gateway__search_memory` присутствует,
+stale-инструкции ушли из топ-выдачи. RUL-009 утверждён ЗавЛабом
+("Штрейкбрехер сам сделает реиндекс. Не лезь!", 11:42 МСК) и разослан во все 8 MEMORY.md.
+Закрыл antcat.
