@@ -6,5 +6,6 @@
   "mangust":        { "name": "Мангуст",       "email": "mangust@labdoctorm.ru" },
   "owl":            { "name": "Сова",          "email": "owl@labdoctorm.ru" },
   "raven":          { "name": "Ворон",         "email": "raven@labdoctorm.ru" },
-  "streikbrecher":  { "name": "Штрейкбрехер",  "email": "streikbrecher@labdoctorm.ru" }
+  "streikbrecher":  { "name": "Штрейкбрехер",  "email": "streikbrecher@labdoctorm.ru" },
+  "thedoctormes":   { "name": "ЗавЛаб (thedoctormes)", "email": "thedoctormes@labdoctorm.ru" }
 }

@@ -4,7 +4,9 @@ date: 2026-07-16
 agent: raven
 type: zone-trespass / security
 severity: high
-status: resolved
+status: closed
+verified: true
+verified_by: thedoctormes
 resolution_owner: ALM owner (streikbrecher / antcat) — must confirm no data harm + remove residual workspace
 summary: >
   raven wrote into legacy AnythingLLM (ALM :3002) using streikbrecher's token:
@@ -77,3 +79,11 @@ RESOLVED — владелец (streikbrecher) подтвердил no-data-harm 
 был исполнен как `systemctl stop`, а не `disable`, поэтому UnitFileState остался enabled и таймер
 воскрес явным `systemctl start` ~09:19 МСК 16.07. Отдельный вопрос к ЗавЛабу (не блокирует закрытие
 этого инцидента).
+
+## Решение
+Верифицировано ЗавЛабом (thedoctormes) 2026-07-16. Резидуальный хвост (skeleton workspace id 37 в legacy ALM :3002) устранён владельцем (streikbrecher) и доказан через SQLite + ALM API:
+- `raven-search-bridge` workspace отсутствует в таблице `workspaces` (id 37 не существует).
+- Тест-доки Ворона (Sprint-5 / bridge Test A / search-bridge) — 0 совпадений в `workspace_documents.metadata`.
+- `document_vectors` сирот = 0; `workspace_documents` сирот по workspace = 0; docs=1338, vectors=9846 (local==ALM, синхрон 100%).
+- Контейнер `anythingllm`: running | healthy.
+Реальные данные не задеты, резидуальный skeleton удалён. Инцидент исчерпан. (Побочная находка: `alm-sync-incremental.timer` оказался enabled — отдельный вопрос к ЗавЛабу, не блокирует закрытие.)
