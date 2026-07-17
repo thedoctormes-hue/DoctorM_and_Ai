@@ -72,6 +72,91 @@ for fn in sorted(os.listdir(inc_dir)):
         short_status.setdefault(s, rstat)
         short_file.setdefault(s.replace('INC-',''), rstat)
 
+# --- 1b. Дообогащаем SSOT из реестра триажа (MASTER_REGISTRY.json, 2026-07-13) ---
+# Реестр incidents/ — канон (SSOT-1). Но реально зарегистрированные в триаже
+# инциденты (напр. INC-20260620-140000) могут отсутствовать в incidents/ и
+# ловиться сканером как NOT_IN_REGISTRY (фантомы, попадающие в часовой отчёт).
+# Подтягиваем их из MASTER_REGISTRY как SSOT-2, ТОЛЬКО если ID ещё нет в
+# registry (incidents/ имеет приоритет). Формат вывода DRIFT не меняется. ADR-0059.
+MASTER_REGISTRY = "/root/LabDoctorM/workspaces/owl/incident-triage/MASTER_REGISTRY.json"
+ALLOWED_STATUS = {"open","investigating","resolved","retired","closed","monitoring","triage"}
+
+def _norm_status(raw):
+    # Приводим статус к допустимому множеству; иначе 'triage'.
+    if not raw:
+        return "triage"
+    s = str(raw).strip().lower()
+    if s in ALLOWED_STATUS:
+        return s
+    # синонимы / неполные формы (порядок: open до closed)
+    if "open" in s or "active" in s:
+        return "open"
+    if "investig" in s:
+        return "investigating"
+    if "resolv" in s:
+        return "resolved"
+    if "clos" in s:
+        return "closed"
+    if "retir" in s:
+        return "retired"
+    if "monitor" in s:
+        return "monitoring"
+    return "triage"
+
+def _extract_inc_id(rec):
+    # Ищем таймстамп-форму INC-ID в полях записи (только она совпадает с токенами
+    # прозы). Возвращаем канонический short_of(...) либо None.
+    cand = []
+    if isinstance(rec, dict):
+        cand += [str(rec.get(k, "")) for k in ("id","incident_id","source_file","title","status_declared")]
+    else:
+        cand = [str(rec)]
+    pat = re.compile(r'INC-(?:\d{4}-\d{2}-\d{2}|\d{8})-\d{6}(?:-[\w-]+)?')
+    for c in cand:
+        m = pat.search(c)
+        if m:
+            sid = short_of(m.group(0))
+            if sid:
+                return sid
+    return None
+
+try:
+    import json
+    with open(MASTER_REGISTRY, encoding="utf-8") as _mf:
+        _mr = json.load(_mf)
+    _entries = []
+    if isinstance(_mr, dict):
+        if isinstance(_mr.get("incidents"), list):
+            _entries = _mr["incidents"]
+        else:
+            # dict, ключи вида INC-... — используем ключ как ID
+            for _k, _v in _mr.items():
+                if isinstance(_k, str) and _k.startswith("INC-"):
+                    _entries.append({"__id__": _k, "__status__": _v})
+    for _e in _entries:
+        if not isinstance(_e, dict):
+            continue
+        _rid = _e.get("__id__") or _extract_inc_id(_e)
+        if not _rid:
+            continue
+        _st = _e.get("__status__")
+        if _st is None:
+            for _f in ("status","state","status_declared"):
+                if _f in _e and _e[_f] is not None:
+                    _st = _e[_f]
+                    break
+        _st = _norm_status(_st)
+        if _rid not in registry:   # incidents/ имеет приоритет
+            registry[_rid] = _st
+            _s = short_of(_rid)
+            if _s:
+                short_status.setdefault(_s, _st)
+                short_file.setdefault(_s.replace("INC-",""), _st)
+except FileNotFoundError:
+    pass  # триаж-реестр отсутствует — не фатально, incidents/ остаётся SSOT
+except Exception as _e2:
+    sys.stderr.write(f"[warn] MASTER_REGISTRY load failed: {_e2}\n")
+
 # --- 2. Сканируем прозу ---
 TOKEN_RE = re.compile(r'INC-(?:\d{4}-\d{2}-\d{2}|\d{8})-\d{6}(?:-[\w-]+)?')
 OPEN_KW = re.compile(r'\b(open|активн|блокер|жду|ожида|требу|confirm|разреш|не закрыт|pending)\b', re.I)
