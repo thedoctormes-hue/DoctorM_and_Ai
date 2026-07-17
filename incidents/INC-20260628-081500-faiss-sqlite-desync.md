@@ -1,5 +1,5 @@
 ---
-id: 2026-06-28-0815-faiss-sqlite-desync
+id: INC-20260628-081500-faiss-sqlite-desync
 timestamp: "2026-06-28T08:15:00Z"
 category: tech
 type: data_loss

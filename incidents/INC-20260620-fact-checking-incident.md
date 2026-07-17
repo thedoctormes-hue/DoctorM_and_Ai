@@ -1,5 +1,5 @@
 ---
-id: 2026-06-20-fact-checking-incident
+id: INC-20260620-fact-checking-incident
 timestamp: "2026-06-20T00:00:00Z"
 category: tech
 type: report

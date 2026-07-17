@@ -1,5 +1,5 @@
 ---
-id: 2026-06-25-000200-tools-allow-config-crash
+id: INC-20260625-000200-tools-allow-config-crash
 timestamp: "2026-06-25T00:02:00Z"
 category: tech
 type: config_error

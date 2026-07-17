@@ -1,5 +1,5 @@
 ---
-id: 2026-06-28-142000-csrf-deploy-failure
+id: INC-20260628-142000-csrf-deploy-failure
 timestamp: "2026-06-28T14:20:00Z"
 category: tech
 type: deploy_failure

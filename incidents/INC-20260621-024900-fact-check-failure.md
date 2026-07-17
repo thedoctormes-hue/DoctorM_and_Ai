@@ -1,5 +1,5 @@
 ---
-id: 2026-06-21-0249-fact-check-failure
+id: INC-20260621-024900-fact-check-failure
 timestamp: "2026-06-21T02:49:00Z"
 category: tech
 type: bug

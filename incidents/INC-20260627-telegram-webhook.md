@@ -1,5 +1,5 @@
 ---
-id: 2026-06-27-telegram-webhook
+id: INC-20260627-telegram-webhook
 timestamp: "2026-06-27T00:00:00Z"
 category: tech
 type: other

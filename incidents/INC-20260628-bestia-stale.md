@@ -1,5 +1,5 @@
 ---
-id: 2026-06-28-bestia-stale
+id: INC-20260628-bestia-stale
 timestamp: "2026-06-28T00:00:00Z"
 category: process
 type: other

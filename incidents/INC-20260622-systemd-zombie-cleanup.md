@@ -1,5 +1,5 @@
 ---
-id: 2026-06-22-systemd-zombie-cleanup
+id: INC-20260622-systemd-zombie-cleanup
 timestamp: "2026-06-22T00:00:00Z"
 category: tech
 type: other

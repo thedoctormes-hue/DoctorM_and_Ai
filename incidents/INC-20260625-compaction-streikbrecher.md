@@ -1,5 +1,5 @@
 ---
-id: 2026-06-25-compaction-streikbrecher
+id: INC-20260625-compaction-streikbrecher
 timestamp: "2026-06-25T00:00:00Z"
 category: tech
 type: config_error

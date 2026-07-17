@@ -1,5 +1,5 @@
 ---
-id: 2026-06-26-reindex-full-data-loss
+id: INC-20260626-reindex-full-data-loss
 timestamp: "2026-06-26T00:00:00Z"
 category: tech
 type: incident

@@ -1,5 +1,5 @@
 ---
-id: 2026-06-21-lab-vault-outage
+id: INC-20260621-lab-vault-outage
 timestamp: "2026-06-21T00:00:00Z"
 category: process
 type: other

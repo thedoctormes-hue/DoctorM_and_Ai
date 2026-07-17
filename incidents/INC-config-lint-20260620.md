@@ -1,5 +1,5 @@
 ---
-id: config-lint-2026-06-20
+id: INC-config-lint-20260620
 timestamp: "2026-06-20T00:00:00Z"
 category: tech
 type: config_error

@@ -1,5 +1,5 @@
 ---
-id: 2026-06-21-systemd-audit
+id: INC-20260621-systemd-audit
 timestamp: "2026-06-21T00:00:00Z"
 category: tech
 type: other

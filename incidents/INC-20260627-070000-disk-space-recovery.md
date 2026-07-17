@@ -1,5 +1,5 @@
 ---
-id: 20260627-070000-disk-space-recovery
+id: INC-20260627-070000-disk-space-recovery
 timestamp: "2026-06-27T07:00:00Z"
 category: tech
 type: bug

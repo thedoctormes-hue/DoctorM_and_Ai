@@ -1,5 +1,5 @@
 ---
-id: 2026-06-21-secrets-migration
+id: INC-20260621-secrets-migration
 timestamp: "2026-06-21T00:00:00Z"
 category: tech
 type: bug

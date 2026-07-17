@@ -1,5 +1,5 @@
 ---
-id: 2026-06-20-systemd-failures
+id: INC-20260620-systemd-failures
 timestamp: "2026-06-20T00:00:00Z"
 category: tech
 type: bug
