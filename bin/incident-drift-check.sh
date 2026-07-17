@@ -7,15 +7,23 @@ set -euo pipefail
 INC_DIR="${1:-/root/LabDoctorM/projects/DoctorM_and_Ai/incidents}"
 shift || true
 
-# Доки по умолчанию (можно переопределить аргументами после $INC_DIR)
+# Доки по умолчанию (можно переопределить аргументами после $INC_DIR).
+# ADR-0059: сканируем ВСЕ агентские workspace (/root/LabDoctorM/workspaces/*/),
+# канон incidents/ — SSOT. Сканер READ-ONLY (только читает, не правит чужое).
 DOCS=("$@")
 if [ ${#DOCS[@]} -eq 0 ]; then
-  DOCS=(
-    /root/LabDoctorM/workspaces/antcat/MEMORY.md
-    /root/LabDoctorM/workspaces/antcat/memory/2026-07-17-backlog.md
-    /root/LabDoctorM/workspaces/antcat/AGENTS.md
-    /root/LabDoctorM/workspaces/antcat/IDENTITY.md
-  )
+  DOCS=()
+  for w in /root/LabDoctorM/workspaces/*/; do
+    [ -d "$w" ] || continue
+    # стабильные доки агента
+    for doc in "$w"MEMORY.md "$w"AGENTS.md "$w"IDENTITY.md; do
+      [ -f "$doc" ] && DOCS+=("$doc")
+    done
+    # ежедневные заметки и бэклоги памяти (динамически, без жёсткой даты)
+    for m in "$w"memory/*.md; do
+      [ -f "$m" ] && DOCS+=("$m")
+    done
+  done
 fi
 
 python3 - "$INC_DIR" "${DOCS[@]}" <<'PY'
@@ -93,7 +101,7 @@ for doc in docs:
 print("=== DRIFT (рассинхрон doc↔registry) ===")
 if flags:
     for doc, ln, tok, st, note in flags:
-        print(f"  ⚠️  {doc}:{ln}  {tok}  [{st}]  {note}")
+        print(f"  🟡  {doc}:{ln}  {tok}  [{st}]  {note}")
 else:
     print("  ✅ рассинхрона нет")
 
