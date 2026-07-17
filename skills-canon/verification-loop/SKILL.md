@@ -1,6 +1,6 @@
 ---
 name: verification-loop
-description: "Автономный технический цикл верификации перед сдачей: 6 фаз (Build/Type/Lint/Test/Security/Diff) + VERIFICATION REPORT (PASS/FAIL/SKIP, Overall READY/NOT READY). Не дублирует accepting-work (процессную приёмку)."
+description: "Технический гейт перед сдачей: 6 фаз (Build/Type/Lint/Test/Security/Diff) + VERIFICATION REPORT."
 version: "1.0.0"
 author: "antcat"
 last_reviewed: "2026-07-17"

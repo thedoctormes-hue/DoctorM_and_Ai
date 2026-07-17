@@ -1,6 +1,6 @@
 ---
 name: security-reviewer
-description: "Статический security-аудит кода перед сдачей: 5 категорий (Secrets / Input Validation / SQLi / Auth / XSS) + SECURITY REPORT. Дополняет accepting-work (который только staged-secrets) и verification-loop (Security-фаза)."
+description: "Статический security-аудит кода: 5 категорий (Secrets/Input/SQLi/Auth/XSS) + SECURITY REPORT."
 version: "1.0.0"
 author: "antcat"
 last_reviewed: "2026-07-17"
