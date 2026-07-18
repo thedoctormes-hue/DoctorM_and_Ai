@@ -46,8 +46,8 @@ root cause (абстрактный) + signal (триггер для агента
 ## I-03 — Git-хаос / хвосты (worktree/branch contamination, прямой main)
 - **Root:** работа вне изолированного worktree; проверка `[ -d "$WT" ]` вместо `git worktree list`; нет guard против коммитов в main; неслитые ветки/грязные деревья.
 - **Signal:** папка worktree есть, но `git worktree list` не видит; uncommitted в main; ветка агента отстала.
-- **Превенция:** старт валидирует через `git worktree list` + ветку + чистый статус; pre-commit блок main; Git Guardian; сессия закрывается чисто.
-- **ID:** INC-008, INC-009 + рецидив хвостов 2026-07-16/17. **Категория: process.**
+- **Превенция:** старт валидирует через `git worktree list` + ветку + чистый статус; Git Guardian; сессия закрывается чисто; **внедрён `bin/check-worktree-isolation.sh`** (вызывается из `git-hooks/pre-commit` и `bin/lab-commit.sh`) — принудительно блокирует коммит в главный checkout `/root/LabDoctorM/projects/DoctorM_and_Ai`, требует изолированный worktree; bypass для инфры/ЗавЛаба: `LAB_ALLOW_MAIN_COMMIT=1`.
+- **ID:** INC-008, INC-009 + рецидив хвостов 2026-07-16/17, **INC-20260718-101833-c4f1d4** (рецидив: antcat съел незакомиченный WIP owl при работе в общем checkout). **Категория: process.**
 - **Confidence:** high
 - **Scope:** global
 
