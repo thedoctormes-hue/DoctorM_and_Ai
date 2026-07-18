@@ -40,6 +40,14 @@ last_code_change: 2026-06-17
 - Имя ветки = `agent-id/feature-name`
 - ЗавЛаб/оркестратор мержит feature-ветки в main
 
+## После merge (cleanup-норма)
+
+- После мержа feature-ветки в main — **удали локальную ветку**: `git branch -d <branch>`
+- Если ветка была запушена — удали и remote-ветку: `git push origin --delete <branch>`
+- Не оставляй stale-ветки (уже слитые в main, ahead=0) — это бардак хвостов и ложные срабатывания аудита
+- Удаляй ТОЛЬКО свои ветки; чужие — только с согласия владельца и ЗавЛаба
+- Подробнее: QUALITY_STANDARDS §12.6
+
 ## Worktree
 
 - Каждый агент работает в своём worktree
