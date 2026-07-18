@@ -61,7 +61,10 @@ is_whitelisted() {
 while IFS= read -r sk; do
   [ -n "$sk" ] || continue
   base=$(basename "$(dirname "$sk")")
-  grep -nE "(skill|Скил|навык)" "$sk" 2>/dev/null | while IFS=: read -r ln line; do
+  # NOTE: пропускаем fenced code-блоки (``` ... ```) — содержимое блоков это
+  # примеры/шаблоны документации, а НЕ реальные ссылки на скилы. Иначе
+  # плейсхолдеры вроде name: "example-skill" ловятся эвристикой как битые ссылки.
+  awk '/^```/{f=!f; next} !f' "$sk" 2>/dev/null | grep -nE "(skill|Скил|навык)" | while IFS=: read -r ln line; do
     echo "$line" | grep -oE "$PAT" | tr -d '`'"'"'"' | while IFS= read -r tok; do
       if is_whitelisted "$tok"; then continue; fi
       if ! echo "$known_skills" | grep -qx "$tok"; then
