@@ -121,4 +121,9 @@ fi
 
 echo "✅ Git hygiene checks passed"
 
+# Worktree isolation guard (PAT-019 I-03)
+if [ -x "$SCRIPT_DIR/check-worktree-isolation.sh" ]; then
+  "$SCRIPT_DIR/check-worktree-isolation.sh" || exit $?
+fi
+
 exec git commit "$@"
