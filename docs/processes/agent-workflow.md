@@ -94,7 +94,13 @@ main → <agent>/<type>-<scope> → merge в main (через Кота или З
 1. Лаборант создаёт ветку через agent-commit.sh
 2. Работает, коммитит
 3. Мерж в main — через Кота (@kotolizator) или ЗавЛаба
-4. После мержа ветка удаляется
+4. После мержа в main локальная ветка удаляется (cleanup-норма, QUALITY_STANDARDS §12.6):
+   ```bash
+   git fetch origin
+   git branch -d <agent>/<type>-<scope>   # git откажет, если не слита
+   git push origin --delete <agent>/<type>-<scope>   # если ветка была запушена
+   ```
+   Не оставляй stale-ветки.
 
 ## Тестирование
 
