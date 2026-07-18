@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# pre-push wrapper: branch-ownership guard (ADR-0059 / PAT-019 I-03)
+# Self-contained: lives in git-hooks/ (global core.hooksPath), calls the
+# logic script in the same directory. Works for any repo via global hookspath.
+HERE="$(cd "$(dirname "$0")" && pwd)"
+exec "$HERE/check-branch-ownership.sh" "$@"
