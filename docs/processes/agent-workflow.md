@@ -28,7 +28,7 @@ projects/<agent>/
 
 ## 9 лаборантов
 
-- **kotolizator** — Инфраструктура, VPN, серверы (workspaces/kotolizator/)
+- **kotolizator** — Координация, аудит, документация (workspaces/kotolizator/)
 - **antcat** — Myrmex Control, бэкенд (workspaces/antcat/)
 - **bestia** — Фронтенд, UI, дизайн (workspaces/bestia/)
 - **raven** — Разведка, мониторинг, контент (workspaces/raven/)
