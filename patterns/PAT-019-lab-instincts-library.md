@@ -31,7 +31,7 @@ root cause (абстрактный) + signal (триггер для агента
 - **Root:** агент утверждает число/статус/факт без live-проверки; inference за fact; сырой fallback (429) как «уверенный бред».
 - **Signal:** цифра/статус без свежего `exec`; негатив проверен только `list-units`, не `is-enabled`; benchmark «из головы».
 - **Превенция:** fact-check обязателен; теги `[VERIFIED]`/`[INFERENCE]`; вывод сабагента = черновик, не факт.
-- **ID:** PAT-05 рецидивы (antcat ×5), INC-016, INC-018, INC-20260629-141900. **Категория: process/fantasy.**
+- **ID:** PAT-05 рецидивы (antcat ×5), INC-016, INC-018, INC-20260629-141900, INC-20260718-220900-72aa8c (antcat: 5 фантазий в плане апгрейда OpenClaw — GPT-5.6, SQLite backup, Cron fixes, SIGUSR1, Cron model selection — все выдуманы без проверки CHANGELOG). **Категория: process/fantasy.**
 - **Confidence:** high
 - **Scope:** global
 
