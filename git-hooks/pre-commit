@@ -22,6 +22,12 @@ if [ -d "$GITDIR/rebase-merge" ] || [ -d "$GITDIR/rebase-apply" ] \
   exit 0
 fi
 
+# Worktree isolation guard (PAT-019 I-03)
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+if [ -n "$REPO_ROOT" ] && [ -x "$REPO_ROOT/bin/check-worktree-isolation.sh" ]; then
+  "$REPO_ROOT/bin/check-worktree-isolation.sh" || exit $?
+fi
+
 # Chain to repo-local pre-commit hook (e.g. GUARDIAN), if present
 LOCAL_HOOK="$GITDIR/hooks/pre-commit"
 if [ -x "$LOCAL_HOOK" ]; then
