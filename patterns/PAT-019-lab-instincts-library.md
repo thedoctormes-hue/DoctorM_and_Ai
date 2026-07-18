@@ -169,7 +169,7 @@ root cause (абстрактный) + signal (триггер для агента
 - **Root:** агент поднимает сервис через `systemctl.real` (обход shim) для «быстрого фикса» и не регистрирует порт в gatekeeper; либо поднимает на порту из `blocked_ports` policy (reserved), который gatekeeper REJECT при регистрации.
 - **Signal:** GK-AUDIT алерт «unauthorized listening socket» (порт слушает, но нет lease); порт в `blocked_ports` (напр. 3000) слушает сервисом; любой ресурс поднят через `systemctl.real` без последующей `gatekeeper__register_port`.
 - **Превенция:** при обходе shim (systemctl.real / kill-switch) — сразу `gatekeeper__register_port` (с пометкой bypass); НЕ поднимать сервисы на портах из `blocked_ports` (выбирать свободный, напр. 3001); gatekeeper должен быть persistent (ADR-0058), иначе lease истекают через 300с и дедуп висит.
-- **ID:** INC-20260717-101833-348a9a (mcp-lab-research :8089 через systemctl.real без регистрации; myrmex-control :3000 reserved). **Категория: process/security.**
+- **ID:** INC-20260717-101833-348a9a (mcp-lab-research :8089 через systemctl.real без регистрации; myrmex-control :3000 reserved); INC-2026-07-18-004130-7d2f4a (bare nginx exec минует shim → orphan держит :443, systemd-юнит failed). **Категория: process/security.**
 - **Confidence:** high
 - **Scope:** project
 
