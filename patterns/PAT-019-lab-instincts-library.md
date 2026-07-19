@@ -47,7 +47,7 @@ root cause (абстрактный) + signal (триггер для агента
 - **Root:** работа вне изолированного worktree; проверка `[ -d "$WT" ]` вместо `git worktree list`; нет guard против коммитов в main; неслитые ветки/грязные деревья.
 - **Signal:** папка worktree есть, но `git worktree list` не видит; uncommitted в main; ветка агента отстала.
 - **Превенция:** старт валидирует через `git worktree list` + ветку + чистый статус; Git Guardian; сессия закрывается чисто; **внедрён `bin/check-worktree-isolation.sh`** (вызывается из `git-hooks/pre-commit` и `bin/lab-commit.sh`) — принудительно блокирует коммит в главный checkout `/root/LabDoctorM/projects/DoctorM_and_Ai`, требует изолированный worktree; bypass для инфры/ЗавЛаба: `LAB_ALLOW_MAIN_COMMIT=1`. **Добавлен `bin/git-add-guard.sh`** (B8.1, 2026-07-19) — блокирует `git add` в главном checkout (git не имеет native pre-stage hook, поэтому stage запрещён через wrapper); агенты обязаны использовать `bin/git-add-guard.sh <файлы>` вместо `git add`; тот же bypass `LAB_ALLOW_MAIN_COMMIT=1`. **Закрывает `INC-20260718-133000-9d4e2a`.**
-- **ID:** INC-008, INC-009 + рецидив хвостов 2026-07-16/17, **INC-20260718-101833-c4f1d4** (рецидив: antcat съел незакомиченный WIP owl при работе в общем checkout). **Категория: process.**, **INC-2026-07-18-193421-bb9733** (рецидив: coordinator not documenting tails at closing)
+- **ID:** INC-008, INC-009 + рецидив хвостов 2026-07-16/17, **INC-20260718-101833-c4f1d4** (рецидив: antcat съел незакомиченный WIP owl при работе в общем checkout), **INC-20260718-131200-7f3a9c** (systemic: agents не чистят stale после merge — нет нормы cleanup), **INC-20260718-133000-9d4e2a** (main checkout грязный: прямая правка + git add без commit, worktree-isolation violation), **INC-2026-07-18-193421-bb9733** (рецидив: coordinator not documenting tails at closing). **Категория: process.**
 - **Confidence:** high
 - **Scope:** global
 
@@ -119,7 +119,7 @@ root cause (абстрактный) + signal (триггер для агента
 - **Root:** агент объявляет «готово»/правит конфиг/закрывает сессию без прохождения обязательных скилов.
 - **Signal:** «сделано»/«закрыто»/правка конфига без ссылки на протокол и его чек-лист.
 - **Превенция:** протокол-скилы обязательны ДО «done»; «done» только когда чек-лист явно пройден. Closure — только verifier ≠ author (ADR-0057).
-- **ID:** INC-020, INC-029, INC-20260627-1006, INC-20260619171500. **Категория: process.**
+- **ID:** INC-020, INC-029, INC-20260627-1006, INC-20260619171500, INC-20260718-115655-ae5b78 (owl: нарушение порядка registering-incident). **Категория: process.**
 - **Confidence:** high
 - **Scope:** global
 
