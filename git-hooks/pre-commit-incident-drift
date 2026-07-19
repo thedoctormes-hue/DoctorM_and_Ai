@@ -1,0 +1,16 @@
+#!/bin/bash
+# Блокирующий гейт: враньё про инциденты не проходит в коммит (Сова, 2026-07-19)
+# Запускает детектор; если находит фантомы/ложные статусы — падает (коммит блокирован).
+OUT=$(mktemp)
+bash /root/LabDoctorM/projects/DoctorM_and_Ai/bin/incident-drift-check.sh > "$OUT" 2>&1
+# считаем реальные флаги (без служебных заголовков)
+flags=$(grep -E 'NOT_IN_REGISTRY|DRIFT' "$OUT" | grep -v 'рассинхрон' | grep -vc '^===')
+if [ "$flags" -eq 0 ]; then
+  rm -f "$OUT"
+  exit 0
+fi
+echo "БЛОК КОММИТА: в заметках найдено враньё про инциденты ($flags шт.):"
+grep -E 'NOT_IN_REGISTRY|DRIFT' "$OUT" | grep -v 'рассинхрон' | grep -v '^===' | head -20
+echo "Исправь ссылки/статусы по реестру incidents/ или запусти авто-чистку."
+rm -f "$OUT"
+exit 1
