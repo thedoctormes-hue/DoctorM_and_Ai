@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # docs-linter.sh — проверка канона документации лабы.
-# Ловит, когда стандарт (ADR/PAT/RUL/QUALITY/SKILL) кладут в папку агента
-# (workspaces/) вместо канона. Не трогает легитимные стандарты в projects/.
-# WARN для доков в docs/ без заголовка (#). Не блокирует README проектов.
+# Внутри репо DoctorM_and_Ai требует, чтобы стандарт (ADR/PAT/RUL/QUALITY/SKILL)
+# лежал строго в каноне (adr/, patterns/, rules/, docs/, skills-canon/).
+# Вне канона — блокирует коммит. Не трогает легитимные README других проектов.
 set -u
 
 TOP="$(git rev-parse --show-toplevel 2>/dev/null)"
@@ -22,21 +22,27 @@ is_standard() {
   esac
 }
 
+in_canon() {
+  case "$1" in
+    adr/*|patterns/*|rules/*|docs/*|skills-canon/*) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 while IFS= read -r f; do
   [ -z "$f" ] && continue
   case "$f" in
     *.md)
       if is_standard "$f"; then
-        # стандарт в папке агента — вне канона, блокируем
-        case "$f" in
-          *workspaces/*)
-            echo "ERR: стандарт в папке агента (вне канона): $f"
-            echo "     клади в projects/DoctorM_and_Ai/{adr,patterns,rules,docs,skills-canon}/"
-            CANON_ERR=$((CANON_ERR+1))
-            ;;
-        esac
+        if in_canon "$f"; then
+          : # ок, в каноне
+        else
+          echo "ERR: стандарт вне канона: $f"
+          echo "     клади в projects/DoctorM_and_Ai/{adr,patterns,rules,docs,skills-canon}/"
+          CANON_ERR=$((CANON_ERR+1))
+        fi
       fi
-      # WARN: док в docs/ без заголовка
+      # WARN: док в docs/ без заголовка (#)
       case "$f" in
         docs/*.md)
           if [ -f "$f" ]; then
