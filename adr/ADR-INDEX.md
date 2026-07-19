@@ -80,6 +80,7 @@ status: active
 | `ADR-044-agent-config-fine-tuning` |  | accepted |
 | `ADR-045-quality-analysis` |  | accepted |
 | `ADR-046-bestia-master-push-rights` | ADR-046: Делегирование bestia push-прав в master (doctorm-unify-protocol) | accepted |
+| `ADR-0060-workspace-storage-policy` | ADR-0060: Политика хранения в воркспейсах агентов | accepted |
 
 ## ⚠️ Коллизии номеров ADR (требуют перенумерации)
 

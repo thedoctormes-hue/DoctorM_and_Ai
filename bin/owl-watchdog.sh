@@ -110,4 +110,12 @@ else
   echo "БРОШЕНО ДОЛЬШЕ СУТОК: ничего, всё чисто"
 fi
 echo ""
+echo "=== ЧИСТОТА ВОРКСПЕЙСОВ (политика хранения ADR-0060) ==="
+LINTER=/root/LabDoctorM/projects/DoctorM_and_Ai/scripts/workspace-linter.sh
+if [ -x "$LINTER" ]; then
+  "$LINTER" || true
+else
+  echo "линтер workspace-linter.sh недоступен (ожидается после деплоя ADR-0060)"
+fi
+echo ""
 echo "=== конец ==="
