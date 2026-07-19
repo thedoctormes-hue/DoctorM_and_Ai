@@ -79,6 +79,7 @@ status: active
 | `ADR-043-agent-config-top5-improvements` |  | accepted |
 | `ADR-044-agent-config-fine-tuning` |  | accepted |
 | `ADR-045-quality-analysis` |  | accepted |
+| `ADR-046-bestia-master-push-rights` | ADR-046: Делегирование bestia push-прав в master (doctorm-unify-protocol) | accepted |
 
 ## ⚠️ Коллизии номеров ADR (требуют перенумерации)
 

@@ -39,8 +39,15 @@ prefix_owner() {
 }
 
 is_priv() {
+  # ADR-0059 privileged identities, authorized to push to protected main/master.
+  # thedoctormes/labdoctor/root = ЗавЛаб / инфра (owner-level).
+  # bestia = ведущий инженер doctorm-unify-protocol; push-права в master делегированы
+  #   ЗавЛабом 2026-07-19 на основе трек-рекорда (честный разбор расхождений по T2,
+  #   добровольный отказ от force-push ранее, точный разбор guard-механизма).
+  #   Права даются РЕАЛЬНОЙ identity bestia (author bestia@labdoctorm.ru, AGENT_ID=bestia),
+  #   НЕ чужой. Governance-решение: adr/ADR-046-bestia-master-push-rights.md
   case "$1" in
-    thedoctormes|labdoctor|root) return 0 ;;
+    thedoctormes|labdoctor|root|bestia) return 0 ;;
     *) return 1 ;;
   esac
 }
