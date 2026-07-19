@@ -84,6 +84,25 @@ while IFS= read -r line; do
   branch="${rref#refs/heads/}"
   prefix="${branch%%/*}"
   owner="$(prefix_owner "$prefix")"
+
+  # Защита главных веток (master/main): push/force-push только привилегированным
+  case "$branch" in
+    master|main)
+      if is_priv "$CURRENT_AGENT" || { [ -n "$AUTHOR_LOCAL" ] && is_priv "$AUTHOR_LOCAL"; }; then
+        : # привилегированным разрешено
+      else
+        BLOCKED=1
+        {
+          echo "BLOCKED by branch-ownership guard (ADR-0059 / protected main):"
+          echo "  ветка '$branch' — защищённая главная ветка"
+          echo "  push инициирован: agent='${CURRENT_AGENT:-<unknown>}' (worktree/AGENT_ID), author-ident='${AUTHOR_LOCAL:-<none>}'"
+          echo "  Разрешено только привилегированным (thedoctormes/labdoctor/root)."
+        } >&2
+      fi
+      continue
+      ;;
+  esac
+
   [ -z "$owner" ] && continue
   [ "$lsha" = "$ZEROS" ] && continue   # delete -> skip
 
