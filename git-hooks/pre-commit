@@ -48,4 +48,11 @@ if [ "$EMAIL" = "$BAD_EMAIL" ] || [ "$NAME" = "$BAD_NAME" ]; then
   exit 1
 fi
 
+# Discipline gates (дисциплина агентов: канон доков + ложь в метаданных)
+for hf in git-hooks/pre-commit-incident-drift git-hooks/pre-commit-docs-linter; do
+  if [ -x "$REPO_ROOT/$hf" ]; then
+    "$REPO_ROOT/$hf" || exit $?
+  fi
+done
+
 exit 0

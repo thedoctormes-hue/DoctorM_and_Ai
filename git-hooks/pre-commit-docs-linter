@@ -1,0 +1,12 @@
+#!/bin/bash
+# pre-commit-docs-linter — блокирующий gate канона документации.
+# Вызывает scripts/docs-linter.sh; если тот нашёл нарушение канона — блокирует коммит.
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+SCRIPT="$REPO_ROOT/scripts/docs-linter.sh"
+if [ -x "$SCRIPT" ]; then
+  if ! "$SCRIPT"; then
+    echo "pre-commit-docs-linter: коммит заблокирован (см. сообщение выше)" >&2
+    exit 1
+  fi
+fi
+exit 0
