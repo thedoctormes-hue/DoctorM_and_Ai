@@ -3,6 +3,7 @@ name: "deep-dive"
 description: "Deep dive: глубокое погружение в тему/проект. Surface mapping, context expansion, anatomy, stress-test, synthesis."
 status: active
 version: "1.2.0"
+last_reviewed: "2026-07-20"
 date: "2026-07-10T07:12:00.000Z"
 author: "ЗавЛаб"
 user-invocable: true
