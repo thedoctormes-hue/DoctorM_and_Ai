@@ -59,6 +59,7 @@ triggers:
 - Веб-поиск ТОЛЬКО через research-скил (прямые web_search/web_fetch запрещены)
 - Семантический поиск ТОЛЬКО через MCP `memory-gateway__search_memory`
 - Не додумывать факты (PAT-005); не таблицы в Telegram (PAT-006)
+- НЕ дублирует ddp: «аудит проекта» / «максимальное погружение в проект» — это зона ddp (цепочка deep-dive→root-cause→fact-check→research). ЕБШ — оркестратор ЛЮБОЙ задачи (>1 шага), не погружение в проект.
 - starting-session обязателен при старте (Stage 0); accepting-work при коде; finishing-session всегда
 
 ## Чек-лист качества
