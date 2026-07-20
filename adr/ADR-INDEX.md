@@ -11,7 +11,7 @@ status: active
 # ADR-INDEX — реестр архитектурных решений лаборатории
 
 > Единый источник истины (SSOT) для списка ADR. Создан 14.07.2026 при консолидации docs/ADR + docs/adr → adr/.
-> Всего ADR-файлов: 62.
+> Всего ADR-файлов: 63.
 
 ## Полный список
 
@@ -27,6 +27,7 @@ status: active
 | `2026-06-29-snablab-kp-parser-position-based` | ADR: Переход KP-парсера на позиционный парсинг | — |
 | `2026-06-29-snablab-security-passlib-to-bcrypt` | ADR: Замена passlib на bcrypt в СнабЛаб | — |
 | `2026-06-29-snablab-test-infrastructure-postgresql` | ADR: Перенос тестов СнабЛаб на PostgreSQL | — |
+| `2026-07-19-gateway-manual-restart` | ADR-2026-07-19: Ручной рестарт гейтвея — только ЗавЛаб | accepted |
 | `ADR-000-template` | ADR-XXX: [Название решения] | proposed |
 | `ADR-001-custom-skills-restructure` | ADR-001: Стандартизация кастомных скилов лаборатории | accepted |
 | `ADR-001-myrmex-control-realizovan` | ADR-001: Myrmex Control: реализован WebSocket сервер (BL-028), Health | accepted |
