@@ -2,6 +2,7 @@
 name: 300-vision
 description: "Анализ изображений через Cohere vision (command-a-plus). Счётчик 300, ротация 4 ключей, замкнутый fallback. OCR, описание, диаграммы, код."
 version: "1.0.0"
+last_reviewed: "2026-07-20"
 status: active
 user-invocable: true
 metadata: {"openclaw":{"requires":{"bins":["python3","base64"]}}}
