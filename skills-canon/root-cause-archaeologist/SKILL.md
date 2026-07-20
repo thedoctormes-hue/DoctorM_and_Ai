@@ -3,6 +3,7 @@ name: "root-cause-archaeologist"
 description: "Root cause archaeologist: 5 Why, system mapping, verification, root constellation."
 status: active
 version: "1.1.0"
+last_reviewed: "2026-07-20"
 date: "2026-06-27T20:58:24.939Z"
 author: "ЗавЛаб"
 user-invocable: true

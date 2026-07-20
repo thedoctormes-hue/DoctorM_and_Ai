@@ -4,6 +4,7 @@ description: "Яндекс-сервисы лаборатории через yand
 author: "Мангуст (mangust)"
 last_reviewed: "2026-07-10"
 version: "1.0.0"
+status: active
 user-invocable: true
 metadata:
   openclaw:
