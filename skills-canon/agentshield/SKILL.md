@@ -1,7 +1,10 @@
 ---
 name: agentshield
-description: Аудит MCP-серверов и hooks на предмет безопасности (неавторизованные серверы, опасные hooks, утечки). Использует gatekeeper MCP для проверки портов/сервисов. НЕ трогает семпамять (RUL-009/010).
-version: 1.0.0
+description: "Аудит MCP-серверов и hooks на предмет безопасности (неавторизованные серверы, опасные hooks, утечки). Использует gatekeeper MCP для проверки портов/сервисов. НЕ трогает семпамять (RUL-009/010)."
+version: "1.0.0"
+status: active
+last_reviewed: "2026-07-20"
+user-invocable: true
 metadata:
   {
     "openclaw":
@@ -42,7 +45,7 @@ metadata:
 - Сетевые серверы: HTTPS? Аутентификация?
 
 ### 2. Hooks (lifecycle)
-- Список hooks (SessionStart/PreCompact/PostToolUse/SessionEnd и др.).
+- Список hooks (command:new / session:compact:before / session:patch / command:stop и др. — реальные события OpenClaw; прямого аналога PostToolUse нет).
 - Каждый hook: что запускает? Не выполняет ли опасные команды (rm -rf, curl | sh)?
 - Не модифицирует ли конфиги/файлы вне зоны ответственности?
 - Не отправляет ли данные наружу без ведома?
