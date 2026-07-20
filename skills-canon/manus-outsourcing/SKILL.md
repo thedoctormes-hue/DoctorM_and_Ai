@@ -304,7 +304,7 @@ python3 webhook_handler.py
    - Презентации → `python-pptx` локально (без кредитов)
    - Документы → `pandoc`, `wkhtmltopdf` локально
    - Изображения → `image_generate` (встроенный инструмент OpenClaw)
-   - Исследования → `web_search` + `web_fetch` (бесплатно)
+   - Исследования → `searxng-gateway__search_web` (веб) / `searxng-gateway__deep_research` (deep research); контент конкретных URL — `web_fetch`
    - Диаграммы → `diagram-maker` скил
 3. **Приоритизация:** если задача срочная → эскалировать ЗавЛабу (возможно ручное выделение кредитов)
 4. **Кэширование результатов:** скачанные файлы на Яндекс Диске не удаляются — проверь `/colony/shared/` прежде чем заказывать повторно
