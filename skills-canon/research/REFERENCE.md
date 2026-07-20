@@ -3,15 +3,17 @@
 ## Архитектура маршрутизации
 
 ```
-Запрос → Оркестратор → Провайдер
+Запрос → searxng-gateway MCP (searxng-gateway__deep_research / __search_web)  ← КАНОН
     │
-    ├── factual (факты, новости) → Tavily (ротация ключей)
-    ├── content (контент страницы) → Firecrawl scrape (ротация ключей)
-    ├── dynamic (JS/SPA сайты) → TinyFish fetch (ротация ключей)
-    ├── broad (метапоиск) → SearXNG (бесконечный, локальный)
-    ├── verify → Tavily × SearXNG кросс-проверка (URL intersection)
-    ├── deep_research → ВСЕ 4 провайдера параллельно + агрегация
-    └── fallback → СЛЕДУЮЩИЙ провайдер в цепочке (РЕАЛИЗОВАНО В КОДЕ)
+    └── (backend) Оркестратор search-orchestrator.sh → SearXNG localhost:8889 (= backend searxng-gateway)
+            │
+            ├── factual (факты, новости) → Tavily (через SearXNG engines=tavily)
+            ├── content (контент страницы) → Firecrawl scrape (через SearXNG engines=firecrawl)
+            ├── dynamic (JS/SPA сайты) → TinyFish fetch (через SearXNG engines=tinyfish)
+            ├── broad (метапоиск) → SearXNG (бесконечный, локальный)
+            ├── verify → Tavily × SearXNG кросс-проверка (URL intersection)
+            ├── deep_research → ВСЕ провайдера параллельно + агрегация
+            └── fallback → СЛЕДУЮЩИЙ провайдер в цепочке (РЕАЛИЗОВАНО В КОДЕ)
 ```
 
 > Fallback реализован функцией `run_chain`: при сбое/429/пустом ответе
@@ -30,13 +32,15 @@
 ## Уровни надёжности
 
 ```
-Уровень 1 (основной): free-api-hunter оркестратор → 15 ключей, 4 провайдера,
-                       ротация + ГАРАНТИРОВАННЫЙ fallback между провайдерами;
-                       при падении внешних провайдеров авто-фолбэк на локальный SearXNG
+Уровень 1 (КАНОН): MCP-тул `searxng-gateway__deep_research` / `__search_web`
+    ↓ при падении MCP-сервера
+Уровень 2 (backend/fallback): оркестратор `search-orchestrator.sh` → шлёт в
+                       SearXNG localhost:8889 (= backend searxng-gateway),
+                       15 ключей, 4 провайдера, ротация + ГАРАНТИРОВАННЫЙ fallback
     ↓ при падении САМОГО оркестратора (процесс недоступен)
-Уровень 2 (fallback): прямой запрос к локальному SearXNG (localhost:8889)
+Уровень 3 (fallback): прямой запрос к локальному SearXNG (localhost:8889)
     ↓ при ошибке
-Уровень 3 (аварийный): сообщить пользователю "Поиск недоступен"
+Уровень 4 (аварийный): сообщить пользователю "Поиск недоступен"
 ```
 
 ## Ротация ключей
