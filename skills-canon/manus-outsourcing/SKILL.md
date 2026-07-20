@@ -2,6 +2,7 @@
 name: manus-outsourcing
 description: "Аутсорсинг задач через Manus API v2. Используй когда нужна презентация, сложное исследование, генерация изображений/диаграмм, документы (PPTX/PDF/XLSX), веб-скрапинг. 5 аккаунтов Manus, ~300 кредитов на аккаунт (live total_credits; ежедневного пополнения 1500 НЕТ — FABRICATED). Выгрузка результатов — только локально, вручную (Яндекс Диск в коде не подключён)."
 version: 2.0.0
+last_reviewed: "2026-07-20"
 date: 2026-06-26
 author: Dominika (Scout)
 status: active
@@ -275,13 +276,13 @@ python3 webhook_handler.py
 
 ⚠️ **Важно:** код скилла НЕ загружает результаты на Яндекс Диск автоматически. Модуль `yandex_disk.py` существует, но НЕ подключён к потоку `get_result`/`download_attachments` (проверено: нет импорта `YandexDisk` в `cli.py`/`manus_client.py`/`webhook_handler.py`). Все артефакты скачиваются **локально** (`output_dir/manus-output/{task_id}/`).
 
-Если нужна выгрузка на Диск — сделай это вручную, например через скилл `colony-disk-exchange` (WebDAV PUT):
+Если нужна выгрузка на Диск — сделай это вручную, например через скилл `yandex-suite` (WebDAV PUT):
 
 ```
 /colony/shared/YYYY-MM-DD_manus-<описание>.<расширение>
 ```
 
-Используй скилл `colony-disk-exchange` для загрузки (WebDAV PUT).
+Используй скилл `yandex-suite` для загрузки (WebDAV PUT).
 
 ## Обработка ошибок
 
