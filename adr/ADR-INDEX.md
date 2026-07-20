@@ -11,7 +11,7 @@ status: active
 # ADR-INDEX — реестр архитектурных решений лаборатории
 
 > Единый источник истины (SSOT) для списка ADR. Создан 14.07.2026 при консолидации docs/ADR + docs/adr → adr/.
-> Всего ADR-файлов: 63.
+> Всего ADR-файлов: 64.
 
 ## Полный список
 
@@ -82,6 +82,7 @@ status: active
 | `ADR-045-quality-analysis` |  | accepted |
 | `ADR-046-bestia-master-push-rights` | ADR-046: Делегирование bestia push-прав в master (doctorm-unify-protocol) | accepted |
 | `ADR-0060-workspace-storage-policy` | ADR-0060: Политика хранения в воркспейсах агентов | accepted |
+| `ADR-2026-07-20-delegation-standard` | ADR: Стандарт делегирования задач между агентами лаборатории | Draft |
 
 ## ⚠️ Коллизии номеров ADR (требуют перенумерации)
 
