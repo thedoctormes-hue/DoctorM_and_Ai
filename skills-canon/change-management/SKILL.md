@@ -111,8 +111,7 @@ triggers:
 
 ### Шаг 3: Выполнение (Execute)
 
-1. Создать бэкап изменяемого файла: `cp file file.bak.$(date +%s)`
- 2>/dev/null
+1. Создать бэкап изменяемого файла: `cp file file.bak.$(date +%s) 2>/dev/null`
 2. Внести изменение
 3. **Если меняется `openclaw.json` или `models.json`** — ОБЯЗАТЕЛЬНО (по ADR-0048):
    - `openclaw config validate` — должен пройти ДО применения
