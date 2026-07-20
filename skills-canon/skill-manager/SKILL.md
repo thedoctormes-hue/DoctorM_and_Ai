@@ -58,7 +58,7 @@ triggers:
 2. Заполнить frontmatter (name, description ≤160, version, author, requires) — валидация автоматическая
 3. `skill_workshop` сам регистрирует скил в `myrmex-control/skill-registry.json` и рассылает allowlist (НЕ руками!)
 4. Проверить: `openclaw skills list | grep <name>` → ready
-5. Контракт-проверка: соответствие канону + запись в реестре + нет битых ссылок (`scripts/skill-link-lint.sh`)
+5. Контракт-проверка: соответствие канону + запись в реестре + нет битых ссылок (`../../scripts/skill-link-lint.sh`)
 
 > 🔴 КРИТИЧНО (allowlist replace≠merge): шаги 2 и 3 ОБЯЗАТЕЛЬНЫ оба.
 > Непустой `agents.list[].skills` **ПОЛНОСТЬЮ ЗАМЕНЯЕТ** `agents.defaults.skills` — он НЕ мержится
